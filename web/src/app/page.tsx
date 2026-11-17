@@ -4,19 +4,23 @@ import { Header } from "@/components/header";
 import { PageSkeleton } from "@/components/page-skeleton";
 import { ScoreBadge } from "@/components/score-badge";
 import { Sparkline } from "@/components/sparkline";
+import { Chip, Disclaimer, EmptyState, Kpi, PageHeading, Pill, ScoreChip, SectionTable } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getLatestAnalyses, getSparklines, type Analysis } from "@/lib/db";
 import {
+  ACTION_ORDER,
   actionTone,
   confidenceLabel,
-  fmtCompact,
   fmtDateTime,
-  fmtPct,
   fmtMoney,
+  fmtPct,
   fmtPrice,
+  fmtRatio,
   pick,
   pickNum,
   pickText,
+  posNegClass,
+  scoreTone,
 } from "@/lib/format";
 
 export default function Home() {
@@ -29,21 +33,21 @@ export default function Home() {
 
 function rowData(a: Analysis) {
   const raw = a.raw_result ?? {};
+  const dp = "dashboard.data_perspective";
   return {
     raw,
     price: pickNum(raw, "current_price"),
     change: pickNum(raw, "change_pct"),
-    action: (pick(raw, "action") as string | undefined) ?? (pick(raw, "decision_type") as string | undefined),
-    signal: pickText(raw, "dashboard.core_conclusion.signal_type"),
+    action: actionTone((pick(raw, "action") as string) ?? (pick(raw, "decision_type") as string)),
     oneLiner: pickText(raw, "dashboard.core_conclusion.one_sentence") || a.analysis_summary || "",
-    confidence: pick(raw, "confidence_level") as string | undefined,
+    confidence: confidenceLabel(pick(raw, "confidence_level") as string),
     position: pickText(raw, "dashboard.battle_plan.position_strategy.suggested_position"),
-    bullish: pick(raw, "dashboard.data_perspective.trend_status.is_bullish") as boolean | undefined,
-    support: pickNum(raw, "dashboard.data_perspective.price_position.support_level"),
-    resistance: pickNum(raw, "dashboard.data_perspective.price_position.resistance_level"),
+    bullish: pick(raw, `${dp}.trend_status.is_bullish`) as boolean | undefined,
+    support: pickNum(raw, `${dp}.price_position.support_level`),
+    resistance: pickNum(raw, `${dp}.price_position.resistance_level`),
     low: pickNum(raw, "market_snapshot.low"),
     high: pickNum(raw, "market_snapshot.high"),
-    volume: pickNum(raw, "market_snapshot.volume"),
+    volRatio: pickNum(raw, "market_snapshot.volume_ratio") ?? pickNum(raw, `${dp}.volume_analysis.volume_ratio`),
   };
 }
 
@@ -56,187 +60,203 @@ async function Dashboard() {
     (max, a) => (!max || a.created_at > max ? a.created_at : max),
     null,
   );
-  const scores = analyses.map((a) => a.sentiment_score).filter((s): s is number => s != null);
-  const avg = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) : null;
-  const counts = rows.reduce<Record<string, number>>((acc, { d }) => {
-    const label = actionTone(d.action).label;
-    acc[label] = (acc[label] ?? 0) + 1;
-    return acc;
-  }, {});
-  const best = rows[0];
-  const worst = rows[rows.length - 1];
 
   return (
     <>
       <Header userName={user.name ?? user.email} active="/" />
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-2">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Painel do dia</h1>
-            <p className="text-sm text-muted">Análise gerada por IA a partir do daily_stock_analysis</p>
-          </div>
-          {lastUpdate && <p className="text-sm text-muted">Atualizado em {fmtDateTime(lastUpdate)}</p>}
-        </div>
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-5 px-4 py-8">
+        <PageHeading title="Painel do dia">
+          {lastUpdate && (
+            <>
+              Atualizado em <span className="mono">{fmtDateTime(lastUpdate)}</span>
+            </>
+          )}
+        </PageHeading>
 
         {rows.length === 0 ? (
-          <div className="card p-10 text-center">
-            <p className="font-medium">Nenhuma análise ainda</p>
-            <p className="mt-1 text-sm text-muted">
-              Rode o workflow “Análise diária de ações” no GitHub Actions para gerar os primeiros relatórios.
-            </p>
-          </div>
+          <EmptyState title="Nenhuma análise ainda">
+            Rode o workflow “Análise diária de ações” no GitHub Actions para gerar os primeiros relatórios.
+          </EmptyState>
         ) : (
           <>
-            {/* Resumo */}
-            <section className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-              <div className="card p-4">
-                <p className="text-xs text-muted">Ações analisadas</p>
-                <p className="mt-1 text-2xl font-semibold tabular-nums">{rows.length}</p>
-              </div>
-              <div className="card p-4">
-                <p className="text-xs text-muted">Nota média</p>
-                <div className="mt-1">
-                  <ScoreBadge score={avg} />
-                </div>
-              </div>
-              <div className="card p-4">
-                <p className="text-xs text-muted">Maior nota</p>
-                <p className="mt-1 font-mono text-lg font-semibold">
-                  {best.a.code} <span className="text-emerald-500">{best.a.sentiment_score ?? "—"}</span>
-                </p>
-              </div>
-              <div className="card p-4">
-                <p className="text-xs text-muted">Menor nota</p>
-                <p className="mt-1 font-mono text-lg font-semibold">
-                  {worst.a.code} <span className="text-red-500">{worst.a.sentiment_score ?? "—"}</span>
-                </p>
-              </div>
-            </section>
-            <div className="mb-6 flex flex-wrap gap-2 text-xs">
-              {Object.entries(counts).map(([label, n]) => (
-                <span key={label} className="rounded-full border border-line bg-surface px-3 py-1">
-                  {label}: <strong className="tabular-nums">{n}</strong>
-                </span>
+            <Summary rows={rows} />
+
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,340px),1fr))] gap-4">
+              {rows.map(({ a, d }) => (
+                <StockCard key={a.code} a={a} d={d} spark={sparks[a.code] ?? []} />
               ))}
             </div>
 
-            {/* Cards */}
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-              {rows.map(({ a, d }) => {
-                const act = actionTone(d.action);
-                return (
-                  <Link
-                    key={a.code}
-                    href={`/acao/${encodeURIComponent(a.code)}`}
-                    className="card group flex flex-col gap-3 p-5 transition hover:border-emerald-500/50"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="font-mono text-lg font-semibold">{a.code}</p>
-                        <p className="truncate text-sm text-muted">{a.name}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-mono tabular-nums">{fmtMoney(d.price, d.raw)}</p>
-                        <p className={`font-mono text-sm tabular-nums ${(d.change ?? 0) >= 0 ? "text-emerald-500" : "text-red-500"}`}>
-                          {fmtPct(d.change)}
-                        </p>
-                      </div>
-                    </div>
-
-                    <Sparkline values={sparks[a.code] ?? []} />
-
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <ScoreBadge score={a.sentiment_score} />
-                      <span className={`${act.cls} tone-bg rounded-full px-2.5 py-1 text-xs font-semibold`}>{act.label}</span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-1.5 text-xs">
-                      {a.trend_prediction && (
-                        <span className="rounded-md bg-surface-2 px-2 py-0.5">Tendência: {a.trend_prediction}</span>
-                      )}
-                      <span className="rounded-md bg-surface-2 px-2 py-0.5">Confiança: {confidenceLabel(d.confidence)}</span>
-                      {d.bullish != null && (
-                        <span className="rounded-md bg-surface-2 px-2 py-0.5">
-                          Médias: {d.bullish ? "alinhadas p/ alta" : "sem alinhamento"}
-                        </span>
-                      )}
-                    </div>
-
-                    {d.oneLiner && <p className="line-clamp-3 text-sm text-muted">{d.oneLiner}</p>}
-
-                    <dl className="mt-auto grid grid-cols-3 gap-x-2 gap-y-2 border-t border-line pt-3 text-xs">
-                      <Stat label="Compra" value={fmtPrice(a.ideal_buy)} />
-                      <Stat label="Stop" value={fmtPrice(a.stop_loss)} />
-                      <Stat label="Alvo" value={fmtPrice(a.take_profit)} />
-                      <Stat label="Suporte" value={fmtPrice(d.support)} />
-                      <Stat label="Resistência" value={fmtPrice(d.resistance)} />
-                      <Stat label="Volume" value={fmtCompact(d.volume)} />
-                    </dl>
-                    {d.position && <p className="text-xs text-muted">{d.position}</p>}
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Tabela comparativa */}
-            <section className="card mt-8 overflow-x-auto">
-              <h2 className="px-5 pt-5 text-sm font-semibold">Comparativo</h2>
-              <table className="mt-3 w-full min-w-190 text-left text-sm">
-                <thead className="text-xs text-muted">
-                  <tr className="border-b border-line">
-                    {["Ação", "Preço", "Dia", "Mín–Máx do dia", "Nota", "Recomendação", "Tendência", "Compra", "Stop", "Alvo", "Potencial"].map((h) => (
-                      <th key={h} className="px-3 py-2 font-medium first:pl-5 last:pr-5">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map(({ a, d }) => {
-                    const upside = d.price && a.take_profit ? ((a.take_profit - d.price) / d.price) * 100 : null;
-                    return (
-                      <tr key={a.code} className="border-b border-line last:border-0 hover:bg-surface-2">
-                        <td className="px-3 py-2 pl-5">
-                          <Link href={`/acao/${encodeURIComponent(a.code)}`} className="font-mono font-semibold hover:underline">
-                            {a.code}
-                          </Link>
-                        </td>
-                        <td className="px-3 py-2 font-mono tabular-nums whitespace-nowrap">{fmtMoney(d.price, d.raw)}</td>
-                        <td className={`px-3 py-2 font-mono tabular-nums ${(d.change ?? 0) >= 0 ? "text-emerald-500" : "text-red-500"}`}>
-                          {fmtPct(d.change)}
-                        </td>
-                        <td className="px-3 py-2 font-mono tabular-nums whitespace-nowrap">
-                          {fmtPrice(d.low)} – {fmtPrice(d.high)}
-                        </td>
-                        <td className="px-3 py-2 font-mono">{a.sentiment_score ?? "—"}</td>
-                        <td className="px-3 py-2">{actionTone(d.action).label}</td>
-                        <td className="px-3 py-2">{a.trend_prediction ?? "—"}</td>
-                        <td className="px-3 py-2 font-mono tabular-nums">{fmtPrice(a.ideal_buy)}</td>
-                        <td className="px-3 py-2 font-mono tabular-nums">{fmtPrice(a.stop_loss)}</td>
-                        <td className="px-3 py-2 font-mono tabular-nums">{fmtPrice(a.take_profit)}</td>
-                        <td className={`px-3 py-2 pr-5 font-mono tabular-nums ${(upside ?? 0) >= 0 ? "text-emerald-500" : "text-red-500"}`}>
-                          {fmtPct(upside)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </section>
+            <Comparison rows={rows} />
           </>
         )}
 
-        <p className="mt-10 text-xs text-muted">
-          Conteúdo gerado automaticamente por IA, apenas para estudo. Não é recomendação de investimento.
-        </p>
+        <Disclaimer>
+          Conteúdo gerado por IA a partir de dados do Yahoo Finance. Não é recomendação de investimento.
+        </Disclaimer>
       </main>
     </>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+type Row = { a: Analysis; d: ReturnType<typeof rowData> };
+
+function Summary({ rows }: { rows: Row[] }) {
+  const scores = rows.map((r) => r.a.sentiment_score).filter((s): s is number => s != null);
+  const avg = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) : null;
+  const best = rows[0];
+  const worst = rows[rows.length - 1];
+
+  const counts = new Map<string, { label: string; tone: ReturnType<typeof actionTone>["tone"]; n: number }>();
+  for (const { d } of rows) {
+    const c = counts.get(d.action.key) ?? { label: d.action.label, tone: d.action.tone, n: 0 };
+    c.n += 1;
+    counts.set(d.action.key, c);
+  }
+  const ordered = [...counts.entries()].sort(
+    ([a], [b]) => (ACTION_ORDER.indexOf(a) + 1 || 99) - (ACTION_ORDER.indexOf(b) + 1 || 99),
+  );
+
+  return (
+    <>
+      <section className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+        <Kpi label="Ações analisadas">
+          <span className="kpi__value">{rows.length}</span>
+        </Kpi>
+        <Kpi label="Nota média">
+          <span className="kpi__value">{avg ?? "—"}</span>
+          {avg != null && <Pill tone={scoreTone(avg).tone} size="sm">{scoreTone(avg).label}</Pill>}
+        </Kpi>
+        <ExtremeKpi label="Maior nota" row={best} />
+        <ExtremeKpi label="Menor nota" row={worst} />
+      </section>
+
+      <div className="flex flex-wrap gap-2">
+        {ordered.map(([key, c]) => (
+          <span key={key} className={`pill ${c.tone} tone-bg px-3 py-[5px] text-[13px] font-medium`}>
+            {c.label}: <span className="mono font-bold">{c.n}</span>
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
+
+function ExtremeKpi({ label, row }: { label: string; row: Row }) {
+  const tone = scoreTone(row.a.sentiment_score).tone;
+  return (
+    <Kpi label={label}>
+      <span className="flex items-baseline gap-2.5">
+        <span className={`kpi__value ${tone} tone-fg`}>{row.a.sentiment_score ?? "—"}</span>
+        <span className="mono text-[13px] text-muted">{row.a.code}</span>
+      </span>
+    </Kpi>
+  );
+}
+
+function StockCard({ a, d, spark }: { a: Analysis; d: Row["d"]; spark: number[] }) {
+  return (
+    <Link href={`/acao/${encodeURIComponent(a.code)}`} className="card card--link flex flex-col gap-3.5 p-5">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="mono text-base font-semibold">{a.code}</p>
+          <p className="mt-0.5 truncate text-xs text-muted">{a.name}</p>
+        </div>
+        <div className="shrink-0 text-right">
+          <p className="mono text-base font-semibold">{fmtMoney(d.price, d.raw)}</p>
+          <p className={`mono mt-0.5 text-xs ${posNegClass(d.change)}`}>{fmtPct(d.change)}</p>
+        </div>
+      </div>
+
+      <Sparkline values={spark} height={40} />
+
+      <div className="flex items-center gap-2.5">
+        <ScoreBadge score={a.sentiment_score} showLabel />
+        <Pill tone={d.action.tone} className="ml-auto">{d.action.label}</Pill>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        {a.trend_prediction && <Chip label="Tendência:" value={<span className="font-sans">{a.trend_prediction}</span>} />}
+        <Chip label="Confiança:" value={<span className="font-sans">{d.confidence}</span>} />
+        {d.bullish != null && <Chip label={d.bullish ? "Médias alinhadas (alta)" : "Médias sem alinhamento"} />}
+      </div>
+
+      {d.oneLiner && <p className="line-clamp-3 text-[13px] leading-[1.55] text-muted">{d.oneLiner}</p>}
+
+      <dl className="mt-auto grid grid-cols-3 gap-x-3 gap-y-2.5 border-t border-line pt-3">
+        <Stat label="Compra" value={fmtPrice(a.ideal_buy)} strong />
+        <Stat label="Stop" value={fmtPrice(a.stop_loss)} strong cls="neg" />
+        <Stat label="Alvo" value={fmtPrice(a.take_profit)} strong cls="pos" />
+        <Stat label="Suporte" value={fmtPrice(d.support)} />
+        <Stat label="Resistência" value={fmtPrice(d.resistance)} />
+        <Stat label="Volume" value={fmtRatio(d.volRatio)} />
+      </dl>
+
+      {d.position && (
+        <p className="text-xs text-muted">
+          Posição sugerida: <span className="font-medium text-foreground">{d.position}</span>
+        </p>
+      )}
+    </Link>
+  );
+}
+
+function Stat({ label, value, strong, cls = "" }: { label: string; value: string; strong?: boolean; cls?: string }) {
   return (
     <div>
-      <dt className="text-muted">{label}</dt>
-      <dd className="font-mono tabular-nums">{value}</dd>
+      <dt className="stat__label">{label}</dt>
+      <dd className={`stat__value ${strong ? "font-medium" : ""} ${value === "—" ? "" : cls}`}>{value}</dd>
     </div>
+  );
+}
+
+function Comparison({ rows }: { rows: Row[] }) {
+  return (
+    <SectionTable title="Comparativo" legend="Potencial = (alvo − preço) ÷ preço" minWidth={760}>
+      <thead>
+        <tr>
+          <th>Ação</th>
+          <th className="num">Preço</th>
+          <th className="num">Dia</th>
+          <th className="num">Mín–Máx</th>
+          <th className="center">Nota</th>
+          <th>Recomendação</th>
+          <th>Tendência</th>
+          <th className="num">Compra</th>
+          <th className="num">Stop</th>
+          <th className="num">Alvo</th>
+          <th className="num">Potencial</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map(({ a, d }) => {
+          const upside = d.price && a.take_profit ? ((a.take_profit - d.price) / d.price) * 100 : null;
+          return (
+            <tr key={a.code}>
+              <td>
+                <Link
+                  href={`/acao/${encodeURIComponent(a.code)}`}
+                  className="mono font-semibold underline decoration-line underline-offset-[3px]"
+                >
+                  {a.code}
+                </Link>
+              </td>
+              <td className="num">{fmtMoney(d.price, d.raw)}</td>
+              <td className={`num ${posNegClass(d.change)}`}>{fmtPct(d.change)}</td>
+              <td className="num text-muted">
+                {d.low != null && d.high != null ? `${fmtPrice(d.low)} – ${fmtPrice(d.high)}` : "—"}
+              </td>
+              <td className="center"><ScoreChip score={a.sentiment_score} /></td>
+              <td><Pill tone={d.action.tone} size="sm">{d.action.label}</Pill></td>
+              <td>{a.trend_prediction ?? "—"}</td>
+              <td className="num">{fmtPrice(a.ideal_buy)}</td>
+              <td className="num neg">{fmtPrice(a.stop_loss)}</td>
+              <td className="num pos">{fmtPrice(a.take_profit)}</td>
+              <td className={`num font-semibold ${posNegClass(upside)}`}>{fmtPct(upside)}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </SectionTable>
   );
 }

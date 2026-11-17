@@ -1,39 +1,41 @@
 import Link from "next/link";
 import { logout } from "@/app/login/actions";
+import { Logo } from "@/components/icons";
 
 const NAV = [
   { href: "/", label: "Painel" },
   { href: "/swing", label: "Swing Trade" },
-];
+] as const;
 
 export function Header({ userName, active }: { userName: string; active?: "/" | "/swing" }) {
   return (
-    <header className="border-b border-line">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-            <span className="text-lg">📈</span> <span className="hidden sm:inline">Análise de Ações</span>
-          </Link>
-          <nav className="flex gap-1 text-sm">
-            {NAV.map((n) => (
+    <header className="border-b border-line bg-surface">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3">
+        <Link href="/" className="flex items-center gap-2.5 text-[15px] font-semibold">
+          <Logo size={32} radius={8} />
+          Análise de Ações
+        </Link>
+        <nav aria-label="Principal" className="flex gap-1">
+          {NAV.map((n) => {
+            const isActive = active === n.href;
+            return (
               <Link
                 key={n.href}
                 href={n.href}
-                className={`rounded-lg px-3 py-1.5 transition hover:bg-surface-2 ${
-                  active === n.href ? "bg-surface-2 font-medium" : "text-muted"
+                aria-current={isActive ? "page" : undefined}
+                className={`rounded-lg px-3 py-2 text-[13px] transition-colors hover:bg-surface-2 ${
+                  isActive ? "bg-surface-2 font-semibold" : "text-muted"
                 }`}
               >
                 {n.label}
               </Link>
-            ))}
-          </nav>
-        </div>
-        <div className="flex items-center gap-3 text-sm">
-          <span className="hidden text-muted md:inline">{userName}</span>
+            );
+          })}
+        </nav>
+        <div className="ml-auto flex items-center gap-3">
+          <span className="text-[13px] text-muted">{userName}</span>
           <form action={logout}>
-            <button className="rounded-lg border border-line px-3 py-1.5 transition hover:bg-surface-2">
-              Sair
-            </button>
+            <button className="btn-ghost">Sair</button>
           </form>
         </div>
       </div>

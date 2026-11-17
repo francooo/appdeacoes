@@ -1,37 +1,36 @@
 "use client";
 
 import { useActionState } from "react";
+import { AlertCircle } from "@/components/icons";
 import { login, type LoginState } from "./actions";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState<LoginState, FormData>(login, {});
 
   return (
-    <form action={action} className="card space-y-4 p-6">
-      <label className="block">
-        <span className="mb-1.5 block text-sm font-medium">E-mail</span>
-        <input name="email" type="email" required autoComplete="email" className="input" />
-      </label>
-      <label className="block">
-        <span className="mb-1.5 block text-sm font-medium">Senha</span>
+    <form action={action} className="card flex flex-col gap-4 p-5">
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="email" className="text-[13px] font-medium">E-mail</label>
+        <input id="email" name="email" type="email" required autoComplete="email" className="input" />
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="password" className="text-[13px] font-medium">Senha</label>
         <input
+          id="password"
           name="password"
           type="password"
           required
           autoComplete="current-password"
           className="input"
         />
-      </label>
+      </div>
       {state.error && (
-        <p role="alert" className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-500">
+        <div role="alert" className="alert-error">
+          <AlertCircle size={16} />
           {state.error}
-        </p>
+        </div>
       )}
-      <button
-        type="submit"
-        disabled={pending}
-        className="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:opacity-60"
-      >
+      <button type="submit" disabled={pending} className="btn-primary w-full">
         {pending ? "Entrando…" : "Entrar"}
       </button>
     </form>

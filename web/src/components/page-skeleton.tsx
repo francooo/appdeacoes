@@ -1,12 +1,17 @@
 export function PageSkeleton() {
   return (
-    <div className="animate-pulse" aria-busy="true" aria-label="Carregando">
-      <div className="h-14 border-b border-line" />
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">
-        <div className="mb-6 h-8 w-48 rounded bg-surface-2" />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div aria-busy="true" aria-label="Carregando">
+      <div className="h-[57px] border-b border-line bg-surface" />
+      <main className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-8">
+        <div className="skeleton h-8 w-48" />
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3">
+          {Array.from({ length: 4 }, (_, i) => (
+            <div key={i} className="skeleton h-24 rounded-xl" />
+          ))}
+        </div>
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,340px),1fr))] gap-4">
           {Array.from({ length: 6 }, (_, i) => (
-            <div key={i} className="card h-56" />
+            <div key={i} className="skeleton h-72 rounded-xl" />
           ))}
         </div>
       </main>

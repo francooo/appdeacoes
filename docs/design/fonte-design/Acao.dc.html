@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Detalhe da ação · PETR4</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.t-light{--bg:#f7f8fa;--fg:#14171c;--surface:#ffffff;--surface2:#eef0f3;--line:#e2e5ea;--muted:#5d6673;--pos:#047857;--neg:#c81e1e;--su-fg:#047857;--up-fg:#047857;--ne-fg:#b45309;--dn-fg:#c81e1e}
+.t-dark{--bg:#0b0e13;--fg:#e8ebf0;--surface:#12161d;--surface2:#1b2029;--line:#232a35;--muted:#8b95a5;--pos:#34d399;--neg:#f87171;--su-fg:#34d399;--up-fg:#6ee7b7;--ne-fg:#fbbf24;--dn-fg:#f87171}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.su{--tone:#059669;--tone-fg:var(--su-fg)}
+.up{--tone:#10b981;--tone-fg:var(--up-fg)}
+.ne{--tone:#d97706;--tone-fg:var(--ne-fg)}
+.dn{--tone:#dc2626;--tone-fg:var(--dn-fg)}
+.tone-bg{background:color-mix(in srgb,var(--tone) 15%,transparent);color:var(--tone-fg)}
+.tone-fg{color:var(--tone-fg)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:inherit;text-decoration:none}
+.row:hover{background:var(--surface2)}
+.navl:hover{background:var(--surface2)}
+.ghost:hover{background:var(--surface2)}
+.back:hover{color:var(--fg)!important}
+</style>
+</helmet>
+<div class="{{theme}}" style="min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-size: 14px">
+
+<header style="background: var(--surface); border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px">
+<span style="display: inline-flex; width: 32px; height: 32px; border-radius: 8px; align-items: center; justify-content: center; background: #059669; color: #ffffff">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>
+</span>
+Análise de Ações
+</a>
+<nav aria-label="Principal" style="display: flex; gap: 4px">
+<a href="Main.dc.html" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface2)">Painel</a>
+<a href="Swing.dc.html" class="navl" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; color: var(--muted)">Swing Trade</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: var(--muted)">usuario@exemplo.com</span>
+<a href="Login.dc.html" class="ghost" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 500">Sair</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 16px; display: flex; flex-direction: column; gap: 16px">
+
+<a href="Main.dc.html" class="back" style="font-size: 13px; color: var(--muted); align-self: flex-start">← Voltar ao painel</a>
+
+<!-- 1. Cabeçalho -->
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+<div>
+<div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
+<h1 class="mono" style="margin: 0; font-size: 30px; font-weight: 600">PETR4</h1>
+<span style="font-size: 16px; color: var(--muted)">Petróleo Brasileiro S.A. – Petrobras</span>
+</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 6px">Análise de <span class="mono">16/11/2026 18:36</span> · modelo <span class="mono">openai/gpt-oss-120b</span></div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 30px; font-weight: 600">R$ 44,02</div>
+<div class="mono neg" style="font-size: 14px">−0,44 (−0,98%)</div>
+</div>
+</div>
+
+<!-- 2 + 3 -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 2 1 560px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Conclusão</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 56px; border-radius: 10px; font-size: 26px; font-weight: 700">55</span>
+<div><div class="ne tone-fg" style="font-size: 14px; font-weight: 600">Lateral</div><div style="font-size: 12px; color: var(--muted)">nota de 0 a 100</div></div>
+</div>
+<span class="ne tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Observar</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px">
+<span><span style="color: var(--muted)">Recomendação:</span> Aguardar confirmação</span>
+<span><span style="color: var(--muted)">Tendência:</span> Lateral</span>
+<span><span style="color: var(--muted)">Confiança:</span> Média</span>
+</div>
+</div>
+<p style="margin: 0; font-size: 17px; font-weight: 500; line-height: 1.45; padding: 14px 16px; border-radius: 8px; background: var(--surface2)">Petrobras oscila entre R$ 42,10 e R$ 46,30 sem direção definida; dividendos seguram o preço, mas falta gatilho para nova alta.</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted)">O papel fechou em queda de 0,98%, acompanhando o recuo do Brent. As médias de 5 e 20 dias estão entrelaçadas e o RSI em 48 indica equilíbrio entre compradores e vendedores. Os fundamentos seguem sólidos (P/L de 4,1 e dividend yield acima de 12%), mas o mercado aguarda sinais sobre a política de preços e o plano de investimentos antes de uma nova pernada.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 14px">
+<div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px">Se você não tem a ação</div>
+<div style="font-size: 13px; line-height: 1.55">Aguarde o rompimento de R$ 46,30 com volume ou um recuo até a faixa de R$ 42,50 para entrar com stop curto.</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 14px">
+<div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px">Se você já tem a ação</div>
+<div style="font-size: 13px; line-height: 1.55">Mantenha a posição pelos dividendos e proteja com stop em R$ 41,40, abaixo do suporte de 20 dias.</div>
+</div>
+</div>
+</section>
+
+<section style="flex: 1 1 320px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Pontos de entrada e saída</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Compra ideal</div><div class="mono" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 42,60</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Compra secundária</div><div class="mono" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 43,20</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Stop loss</div><div class="mono neg" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 41,40</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 47,50</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px">
+<div style="display: flex; justify-content: space-between"><span style="color: var(--muted)">Potencial até o alvo</span><span class="mono pos" style="font-weight: 600">+7,91%</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: var(--muted)">Risco até o stop</span><span class="mono neg" style="font-weight: 600">−5,95%</span></div>
+</div>
+<div style="border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; color: var(--muted)">Posição sugerida</div>0% para novas entradas; manter até 15% para quem já tem.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Plano de entrada</div>Metade em R$ 42,60 e metade após fechamento acima de R$ 46,30.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Controle de risco</div>Perda máxima de 1% do capital por operação.</div>
+</div>
+</section>
+</div>
+
+<!-- 4 + 5 -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 2 1 560px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Gráfico · 60 pregões</h2>
+<div style="display: flex; gap: 14px; font-size: 12px; color: var(--muted)">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 2px; background: #10b981"></span>Fechamento</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 2px; background: #38bdf8"></span>MM5</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 2px; background: #fbbf24"></span>MM20</span>
+</div>
+</div>
+<svg viewBox="0 0 720 240" width="100%" role="img" aria-label="Gráfico de fechamento da PETR4 nos últimos 60 pregões com MM5 e MM20" style="display: block; overflow: visible">
+<line x1="0" y1="{{chart.g1}}" x2="672" y2="{{chart.g1}}" stroke="var(--line)" stroke-dasharray="4 4"></line>
+<line x1="0" y1="{{chart.g2}}" x2="672" y2="{{chart.g2}}" stroke="var(--line)" stroke-dasharray="4 4"></line>
+<line x1="0" y1="{{chart.g3}}" x2="672" y2="{{chart.g3}}" stroke="var(--line)" stroke-dasharray="4 4"></line>
+<text x="720" y="{{chart.g1}}" text-anchor="end" dy="4" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">{{chart.l1}}</text>
+<text x="720" y="{{chart.g2}}" text-anchor="end" dy="4" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">{{chart.l2}}</text>
+<text x="720" y="{{chart.g3}}" text-anchor="end" dy="4" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">{{chart.l3}}</text>
+<polyline points="{{chart.ma20}}" fill="none" stroke="#fbbf24" stroke-width="1.5"></polyline>
+<polyline points="{{chart.ma5}}" fill="none" stroke="#38bdf8" stroke-width="1.5"></polyline>
+<polyline points="{{chart.close}}" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linejoin="round"></polyline>
+<text x="0" y="236" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">20/08/2026</text>
+<text x="672" y="236" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">16/11/2026</text>
+</svg>
+</section>
+
+<section style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Pregão</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 13px">
+<sc-for list="{{pregao}}" as="k" hint-placeholder-count="6">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">{{k.l}}</span><span class="mono">{{k.v}}</span></div>
+</sc-for>
+</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Indicadores</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 13px">
+<sc-for list="{{indic}}" as="k" hint-placeholder-count="16">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">{{k.l}}</span><span class="mono {{k.c}}">{{k.v}}</span></div>
+</sc-for>
+</div>
+</div>
+</section>
+</div>
+
+<!-- 6 -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px">
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Checklist da operação</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.45">
+<sc-for list="{{checklist}}" as="i" hint-placeholder-count="5">
+<li style="display: flex; gap: 10px"><span class="{{i.c}} tone-bg mono" style="flex: none; display: inline-flex; width: 20px; height: 20px; border-radius: 6px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">{{i.m}}</span><span>{{i.t}}</span></li>
+</sc-for>
+</ul>
+</section>
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.5">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">O que fazer agora</h2>
+<div><div style="font-size: 12px; color: var(--muted)">Ação imediata</div>Não abrir posição nova. Manter quem já está posicionado.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Próxima checagem</div>Após o fechamento de 18/11 ou se o Brent variar mais de 3%.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Condições a acompanhar</div>
+<ul style="margin: 4px 0 0; padding-left: 18px"><li>Fechamento acima de R$ 46,30 com volume ≥ 1,3×</li><li>Perda do suporte de R$ 42,10</li><li>Anúncio de reajuste de combustíveis</li></ul></div>
+</section>
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Composição da nota</h2>
+<sc-for list="{{weights}}" as="w" hint-placeholder-count="4">
+<div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>{{w.l}}</span><span class="mono" style="color: var(--muted)">{{w.v}}%</span></div>
+<div style="height: 6px; border-radius: 999px; background: var(--surface2)"><div style="height: 6px; border-radius: 999px; background: #10b981; width: {{w.w}}"></div></div>
+</div>
+</sc-for>
+<div style="border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; line-height: 1.45">
+<div><span style="color: var(--muted)">Sinal mais forte de alta:</span> dividend yield de 12,4%</div>
+<div><span style="color: var(--muted)">Sinal mais forte de baixa:</span> queda do Brent na semana</div>
+<div><span style="color: var(--muted)">Ajuste de nota:</span> <span class="mono neg">−3</span> por incerteza política</div>
+</div>
+</section>
+</div>
+
+<!-- 7 Fundamentos e manchetes -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px"><h2 style="margin: 0; font-size: 14px; font-weight: 600">Fundamentos</h2><span style="font-size: 11px; color: var(--muted); background: var(--surface2); border-radius: 6px; padding: 2px 8px">B3</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; font-size: 13px">
+<sc-for list="{{fund}}" as="k" hint-placeholder-count="10">
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">{{k.l}}</span><span class="mono" style="text-align: right">{{k.v}}</span></div>
+</sc-for>
+</div>
+</section>
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Manchetes</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<sc-for list="{{news}}" as="n" hint-placeholder-count="6">
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">{{n.t}}</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">{{n.d}}</span> · {{n.s}}</div>
+</li>
+</sc-for>
+</ul>
+</section>
+</div>
+
+<!-- 8 Notícias · Catalisadores -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.55">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Notícias e resultados</h2>
+<div><div style="font-size: 12px; color: var(--muted)">Últimas notícias</div>Brent recua com aumento de estoques nos EUA; Petrobras confirma calendário de dividendos intermediários e mantém produção acima de 2,8 milhões de barris/dia.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Sentimento</div><span class="ne tone-bg" style="display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; margin-top: 4px">Neutro</span></div>
+<div><div style="font-size: 12px; color: var(--muted)">Perspectiva de resultados</div>Lucro do 4º trimestre deve ficar estável, com menor preço do petróleo compensado por mais volume exportado.</div>
+</section>
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px; font-size: 13px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Catalisadores e alertas</h2>
+<div><div style="font-size: 12px; color: var(--muted); margin-bottom: 6px">Catalisadores positivos</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px">
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #10b981"></span>Pagamento de dividendos em dezembro</li>
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #10b981"></span>Novas plataformas entrando em operação no pré-sal</li>
+</ul></div>
+<div><div style="font-size: 12px; color: var(--muted); margin-bottom: 6px">Alertas de risco</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px">
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #dc2626"></span>Interferência na política de preços</li>
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #dc2626"></span>Brent abaixo de US$ 65 por barril</li>
+</ul></div>
+<div style="font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px">Limitações: manchetes em inglês de veículos internacionais; preço-alvo médio com 3 dias de atraso.</div>
+</section>
+</div>
+
+<!-- 9 Textos do relatório -->
+<section style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 600">Textos do relatório</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 16px">
+<sc-for list="{{texts}}" as="t" hint-placeholder-count="9">
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">{{t.h}}</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">{{t.b}}</p>
+</div>
+</sc-for>
+</div>
+</section>
+
+<!-- 10 Histórico -->
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="padding: 16px 20px; border-bottom: 1px solid var(--line)"><h2 style="margin: 0; font-size: 14px; font-weight: 600">Histórico de análises</h2></div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="text-align: left; color: var(--muted); font-size: 12px">
+<th style="padding: 10px 20px; font-weight: 500">Data</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: center">Nota</th>
+<th style="padding: 10px 12px; font-weight: 500">Recomendação</th>
+<th style="padding: 10px 12px; font-weight: 500">Tendência</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Compra</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Stop</th>
+<th style="padding: 10px 20px; font-weight: 500; text-align: right">Alvo</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{history}}" as="h" hint-placeholder-count="8">
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">{{h.d}}</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono {{h.c}} tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">{{h.s}}</span></td>
+<td style="padding: 10px 12px">{{h.r}}</td>
+<td style="padding: 10px 12px">{{h.t}}</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">{{h.b}}</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">{{h.st}}</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">{{h.a}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<p style="margin: 8px 0 0; font-size: 12px; color: var(--muted); text-align: center">Conteúdo gerado por IA a partir de dados do Yahoo Finance. Não é recomendação de investimento.</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":3300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const fmt = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let x = 4242; const r = () => { x = (x * 9301 + 49297) % 233280; return x / 233280; };
+    const raw = []; let p = 100;
+    for (let i = 0; i < 80; i++) { p = p * (1 + Math.sin(i / 9) * 0.004 + (r() - 0.5) * 0.03); raw.push(p); }
+    const k = 44.02 / raw[raw.length - 1];
+    const all = raw.map((v) => v * k);
+    const ma = (n, i) => { const s = all.slice(Math.max(0, i - n + 1), i + 1); return s.reduce((a, b) => a + b, 0) / s.length; };
+    const idx = all.map((_, i) => i).slice(20);
+    const closes = idx.map((i) => all[i]), m5 = idx.map((i) => ma(5, i)), m20 = idx.map((i) => ma(20, i));
+    const vals = closes.concat(m5, m20);
+    const mn = Math.min(...vals) * 0.995, mx = Math.max(...vals) * 1.005;
+    const W = 672, top = 10, bot = 210;
+    const y = (v) => (bot - (v - mn) / (mx - mn) * (bot - top)).toFixed(1);
+    const pts = (arr) => arr.map((v, i) => (i * W / (arr.length - 1)).toFixed(1) + ',' + y(v)).join(' ');
+    const mid = (mn + mx) / 2;
+    const chart = { close: pts(closes), ma5: pts(m5), ma20: pts(m20), g1: y(mx * 0.998), g2: y(mid), g3: y(mn * 1.002), l1: fmt(mx * 0.998), l2: fmt(mid), l3: fmt(mn * 1.002) };
+    const pregao = [
+      { l: 'Abertura', v: '44,48' }, { l: 'Máxima', v: '44,71' }, { l: 'Mínima', v: '43,82' },
+      { l: 'Fech. anterior', v: '44,46' }, { l: 'Amplitude', v: '2,02%' }, { l: 'Volume', v: '38,4 mi' }
+    ];
+    const indic = [
+      { l: 'MM5', v: '44,31', c: '' }, { l: 'MM10', v: '44,12', c: '' }, { l: 'MM20', v: '43,96', c: '' }, { l: 'MM60', v: '43,40', c: '' },
+      { l: 'Desvio MM5', v: '−0,65%', c: 'neg' }, { l: 'Força tendência', v: 'Fraca', c: '' },
+      { l: 'Suporte', v: '42,10', c: '' }, { l: 'Resistência', v: '46,30', c: '' },
+      { l: 'RSI 14', v: '48,2', c: '' }, { l: 'MACD', v: '+0,08', c: 'pos' },
+      { l: 'Volume rel.', v: '1,02×', c: '' }, { l: 'Var. 5d', v: '−1,74%', c: 'neg' },
+      { l: 'Var. 20d', v: '+2,11%', c: 'pos' }, { l: 'Var. 60d', v: '+5,38%', c: 'pos' },
+      { l: 'Máx. 52 sem.', v: '49,12', c: '' }, { l: 'Mín. 52 sem.', v: '35,66', c: '' }
+    ];
+    const checklist = [
+      { m: '✓', c: 'su', t: 'Fundamentos sólidos e dividendos previsíveis' },
+      { m: '✓', c: 'su', t: 'Preço acima da MM60' },
+      { m: '!', c: 'ne', t: 'Médias de curto prazo sem alinhamento' },
+      { m: '!', c: 'ne', t: 'Volume na média, sem confirmação' },
+      { m: '✕', c: 'dn', t: 'Brent em queda na semana' }
+    ];
+    const weights = [
+      { l: 'Técnicos', v: 35, w: '35%' }, { l: 'Fundamentos', v: 30, w: '30%' },
+      { l: 'Mercado', v: 20, w: '20%' }, { l: 'Notícias', v: 15, w: '15%' }
+    ];
+    const fund = [
+      { l: 'Setor', v: 'Energia' }, { l: 'Indústria', v: 'Óleo e gás integrado' },
+      { l: 'Valor de mercado', v: 'R$ 572,8 bi' }, { l: 'P/L', v: '4,1' },
+      { l: 'P/L projetado', v: '4,6' }, { l: 'P/VP', v: '1,12' },
+      { l: 'ROE', v: '27,3%' }, { l: 'Dividend yield', v: '12,4%' },
+      { l: 'Consenso', v: 'Compra' }, { l: 'Preço-alvo médio', v: 'R$ 49,80' }
+    ];
+    const news = [
+      { t: 'Oil slips as U.S. crude inventories rise more than expected', d: '16/11', s: 'Reuters' },
+      { t: 'Petrobras sets record date for interim dividend payment', d: '14/11', s: 'Bloomberg' },
+      { t: 'Brazil fuel prices: analysts see room for diesel cut', d: '13/11', s: 'Valor International' },
+      { t: 'Petrobras output tops 2.8 million barrels per day in October', d: '11/11', s: 'Reuters' },
+      { t: 'Emerging-market energy stocks lag as Brent falls', d: '10/11', s: 'Financial Times' },
+      { t: 'Petrobras board reviews 2027–2031 investment plan', d: '07/11', s: 'Bloomberg' }
+    ];
+    const texts = [
+      { h: 'Pontos-chave', b: '• Lateralização entre R$ 42,10 e R$ 46,30\n• Dividend yield acima de 12%\n• Brent pressiona no curto prazo' },
+      { h: 'Justificativa', b: 'A nota 55 reflete equilíbrio entre bons fundamentos e técnico neutro, com ajuste negativo pelo risco político.' },
+      { h: 'Riscos', b: 'Mudança na política de preços, queda adicional do petróleo e revisão do plano de investimentos.' },
+      { h: 'Curto prazo', b: 'Oscilação dentro da faixa atual; rompimento depende de volume e de notícias do setor.' },
+      { h: 'Médio prazo', b: 'Viés levemente positivo se o Brent se estabilizar acima de US$ 70 e os dividendos forem mantidos.' },
+      { h: 'Análise técnica', b: 'RSI em 48 e MACD perto de zero indicam ausência de tendência. MM60 ascendente segura o preço.' },
+      { h: 'Médias móveis', b: 'MM5 e MM20 entrelaçadas; preço 0,65% abaixo da MM5.' },
+      { h: 'Volume', b: 'Volume de 38,4 milhões, em linha com a média dos últimos 5 pregões.' },
+      { h: 'Setor', b: 'Petroleiras globais recuam com expectativa de oferta maior em 2027.' }
+    ];
+    const history = [
+      ['16/11/2026', 55, 'Observar', 'Lateral', '42,60', '41,40', '47,50'],
+      ['13/11/2026', 58, 'Observar', 'Lateral', '43,10', '41,80', '47,90'],
+      ['12/11/2026', 61, 'Manter', 'Alta', '43,40', '42,00', '48,20'],
+      ['11/11/2026', 63, 'Manter', 'Alta', '43,20', '41,90', '48,00'],
+      ['10/11/2026', 60, 'Observar', 'Lateral', '42,90', '41,60', '47,40'],
+      ['07/11/2026', 57, 'Observar', 'Lateral', '42,40', '41,20', '46,90'],
+      ['06/11/2026', 52, 'Observar', 'Lateral', '41,90', '40,70', '46,30'],
+      ['05/11/2026', 48, 'Observar', 'Baixa', '41,50', '40,30', '45,80']
+    ].map((h) => ({ d: h[0], s: h[1], c: h[1] > 70 ? 'su' : h[1] > 60 ? 'up' : h[1] >= 40 ? 'ne' : 'dn', r: h[2], t: h[3], b: h[4], st: h[5], a: h[6] }));
+    return { theme: this.props.dark ? 't-dark' : 't-light', chart, pregao, indic, checklist, weights, fund, news, texts, history };
+  }
+}
+</script>
+</body>
+</html>

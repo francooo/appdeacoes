@@ -2,33 +2,47 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 import { Header } from "@/components/header";
+import { ArrowLeft } from "@/components/icons";
 import { PageSkeleton } from "@/components/page-skeleton";
-import { PriceChart } from "@/components/price-chart";
+import { ChartLegend, PriceChart } from "@/components/price-chart";
 import { ScoreBadge } from "@/components/score-badge";
+import { Card, Disclaimer, Pill, ScoreChip, SectionTable } from "@/components/ui";
 import { requireUser } from "@/lib/auth";
 import { getAnalysesForCode, getDailyBars } from "@/lib/db";
 import {
   actionTone,
+  checklistItem,
   confidenceLabel,
+  fmtChange,
   fmtCompact,
+  fmtDate,
   fmtDateTime,
-  fmtPct,
+  fmtDayMonth,
+  fmtDecimal,
   fmtMoney,
+  fmtMoneyCompact,
+  fmtPct,
+  fmtPctAbs,
   fmtPrice,
+  fmtRatio,
+  fmtSigned,
   pick,
   pickList,
   pickNum,
   pickText,
+  posNegClass,
   recommendationLabel,
+  sentimentTone,
+  trendStrengthLabel,
 } from "@/lib/format";
 
-/** Textos do relatório exibidos como seções na parte de baixo. */
+/** Textos do relatório (cada cartão só aparece se houver conteúdo). */
 const SECTIONS: { key: string; title: string }[] = [
   { key: "key_points", title: "Pontos-chave" },
   { key: "buy_reason", title: "Justificativa" },
   { key: "risk_warning", title: "Riscos" },
-  { key: "short_term_outlook", title: "Curto prazo (1–3 dias)" },
-  { key: "medium_term_outlook", title: "Médio prazo (1–2 semanas)" },
+  { key: "short_term_outlook", title: "Curto prazo" },
+  { key: "medium_term_outlook", title: "Médio prazo" },
   { key: "trend_analysis", title: "Tendência" },
   { key: "technical_analysis", title: "Análise técnica" },
   { key: "ma_analysis", title: "Médias móveis" },
@@ -43,11 +57,13 @@ const SECTIONS: { key: string; title: string }[] = [
 ];
 
 const ATTRIBUTION: { key: string; label: string }[] = [
-  { key: "technical_indicators", label: "Indicadores técnicos" },
+  { key: "technical_indicators", label: "Técnicos" },
   { key: "fundamentals", label: "Fundamentos" },
-  { key: "market_conditions", label: "Condições de mercado" },
-  { key: "news_sentiment", label: "Notícias / sentimento" },
+  { key: "market_conditions", label: "Mercado" },
+  { key: "news_sentiment", label: "Notícias" },
 ];
+
+type KV = { label: string; value: string; cls?: string };
 
 export default function StockPage({ params }: PageProps<"/acao/[code]">) {
   return (
@@ -65,310 +81,358 @@ async function StockDetail({ params }: { params: Promise<{ code: string }> }) {
 
   const latest = history[0];
   const raw = latest.raw_result ?? {};
-  const dash = "dashboard";
+  const D = "dashboard";
   const price = pickNum(raw, "current_price");
   const change = pickNum(raw, "change_pct");
+  const prevClose = pickNum(raw, "market_snapshot.prev_close");
   const act = actionTone((pick(raw, "action") as string) ?? (pick(raw, "decision_type") as string));
-  const sections = SECTIONS.map((s) => ({ ...s, text: pickText(raw, s.key) })).filter((s) => s.text);
+  const isB3 = pick(raw, "currency") === "BRL";
 
-  const checklist = pickList(raw, `${dash}.battle_plan.action_checklist`);
-  const watchConditions = pickList(raw, `${dash}.phase_decision.watch_conditions`);
-  const limitations = pickList(raw, `${dash}.phase_decision.data_limitations`);
-  const catalysts = pickList(raw, `${dash}.intelligence.positive_catalysts`);
-  const riskAlerts = pickList(raw, `${dash}.intelligence.risk_alerts`);
-  const rawScore = pickNum(raw, `${dash}.decision_score_calibration.raw_score`);
-  const adjusted = pickNum(raw, `${dash}.decision_score_calibration.adjusted_score`);
-  const guardrail = pickText(raw, `${dash}.decision_score_calibration.guardrail_reason`);
+  // ---------- Pregão e indicadores
+  const pregao: KV[] = [
+    { label: "Abertura", value: fmtPrice(pickNum(raw, "market_snapshot.open")) },
+    { label: "Máxima", value: fmtPrice(pickNum(raw, "market_snapshot.high")) },
+    { label: "Mínima", value: fmtPrice(pickNum(raw, "market_snapshot.low")) },
+    { label: "Fech. anterior", value: fmtPrice(prevClose) },
+    { label: "Amplitude", value: fmtPctAbs(pickNum(raw, "market_snapshot.amplitude")) },
+    { label: "Volume", value: fmtCompact(pickNum(raw, "market_snapshot.volume")) },
+  ];
+  const pp = `${D}.data_perspective.price_position`;
+  const bias = pickNum(raw, `${pp}.bias_ma5`);
+  const macd = pickNum(raw, "technicals.macd");
+  const chg = (k: string) => pickNum(raw, `technicals.${k}`);
+  const indicators: KV[] = [
+    { label: "MM5", value: fmtPrice(pickNum(raw, `${pp}.ma5`)) },
+    { label: "MM10", value: fmtPrice(pickNum(raw, `${pp}.ma10`)) },
+    { label: "MM20", value: fmtPrice(pickNum(raw, `${pp}.ma20`)) },
+    { label: "MM60", value: fmtPrice(chg("ma60")) },
+    { label: "Desvio MM5", value: fmtPct(bias), cls: posNegClass(bias) },
+    { label: "Força tendência", value: trendStrengthLabel(pickNum(raw, `${D}.data_perspective.trend_status.trend_score`)) },
+    { label: "Suporte", value: fmtPrice(pickNum(raw, `${pp}.support_level`)) },
+    { label: "Resistência", value: fmtPrice(pickNum(raw, `${pp}.resistance_level`)) },
+    { label: "RSI 14", value: fmtDecimal(chg("rsi14")) },
+    { label: "MACD", value: fmtSigned(macd), cls: posNegClass(macd) },
+    {
+      label: "Volume rel.",
+      value: fmtRatio(pickNum(raw, "market_snapshot.volume_ratio") ?? pickNum(raw, `${D}.data_perspective.volume_analysis.volume_ratio`)),
+    },
+    { label: "Var. 5d", value: fmtPct(chg("chg_5d")), cls: posNegClass(chg("chg_5d")) },
+    { label: "Var. 20d", value: fmtPct(chg("chg_20d")), cls: posNegClass(chg("chg_20d")) },
+    { label: "Var. 60d", value: fmtPct(chg("chg_60d")), cls: posNegClass(chg("chg_60d")) },
+    { label: "Máx. 52 sem.", value: fmtPrice(chg("high_52w")) },
+    { label: "Mín. 52 sem.", value: fmtPrice(chg("low_52w")) },
+  ].filter((i) => i.value !== "—");
 
-  const snapshot: [string, string][] = [
-    ["Abertura", fmtPrice(pickNum(raw, "market_snapshot.open"))],
-    ["Máxima", fmtPrice(pickNum(raw, "market_snapshot.high"))],
-    ["Mínima", fmtPrice(pickNum(raw, "market_snapshot.low"))],
-    ["Fech. anterior", fmtPrice(pickNum(raw, "market_snapshot.prev_close"))],
-    ["Amplitude", fmtPct(pickNum(raw, "market_snapshot.amplitude"))],
-    ["Volume", fmtCompact(pickNum(raw, "market_snapshot.volume"))],
-  ];
-  const technicals: [string, string][] = [
-    ["MM5", fmtPrice(pickNum(raw, `${dash}.data_perspective.price_position.ma5`))],
-    ["MM10", fmtPrice(pickNum(raw, `${dash}.data_perspective.price_position.ma10`))],
-    ["MM20", fmtPrice(pickNum(raw, `${dash}.data_perspective.price_position.ma20`))],
-    ["Desvio da MM5", fmtPct(pickNum(raw, `${dash}.data_perspective.price_position.bias_ma5`))],
-    ["Suporte", fmtPrice(pickNum(raw, `${dash}.data_perspective.price_position.support_level`))],
-    ["Resistência", fmtPrice(pickNum(raw, `${dash}.data_perspective.price_position.resistance_level`))],
-    ["Força da tendência", String(pickNum(raw, `${dash}.data_perspective.trend_status.trend_score`) ?? "—")],
-    ["Volume", pickText(raw, `${dash}.data_perspective.volume_analysis.volume_status`) || "—"],
-  ];
-  if (pick(raw, "technicals")) {
-    technicals.push(
-      ["RSI (14)", String(pickNum(raw, "technicals.rsi14") ?? "—")],
-      ["MACD", `${pickNum(raw, "technicals.macd") ?? "—"} / sinal ${pickNum(raw, "technicals.macd_signal") ?? "—"}`],
-      ["MM60", fmtPrice(pickNum(raw, "technicals.ma60"))],
-      ["Var. 5 dias", fmtPct(pickNum(raw, "technicals.chg_5d"))],
-      ["Var. 20 dias", fmtPct(pickNum(raw, "technicals.chg_20d"))],
-      ["Var. 60 dias", fmtPct(pickNum(raw, "technicals.chg_60d"))],
-      ["Máx. 52 sem.", fmtPrice(pickNum(raw, "technicals.high_52w"))],
-      ["Mín. 52 sem.", fmtPrice(pickNum(raw, "technicals.low_52w"))],
-    );
-  }
-  const fundamentals: [string, string][] | null = pick(raw, "fundamentals")
+  // ---------- Fundamentos e manchetes (análises da B3)
+  const fundamentals: KV[] | null = pick(raw, "fundamentals")
     ? [
-        ["Setor", pickText(raw, "fundamentals.sector") || "—"],
-        ["Indústria", pickText(raw, "fundamentals.industry") || "—"],
-        ["Valor de mercado", fmtCompact(pickNum(raw, "fundamentals.market_cap"))],
-        ["P/L", fmtPrice(pickNum(raw, "fundamentals.pe"))],
-        ["P/L projetado", fmtPrice(pickNum(raw, "fundamentals.forward_pe"))],
-        ["P/VP", fmtPrice(pickNum(raw, "fundamentals.pb"))],
-        ["ROE", fmtPct(pickNum(raw, "fundamentals.roe")).replace("+", "")],
-        ["Dividend yield", fmtPct(pickNum(raw, "fundamentals.dividend_yield")).replace("+", "")],
-        ["Consenso analistas", `${recommendationLabel(pick(raw, "fundamentals.recommendation"))}${pickNum(raw, "fundamentals.analysts") ? ` (${pickNum(raw, "fundamentals.analysts")})` : ""}`],
-        ["Preço-alvo médio", fmtMoney(pickNum(raw, "fundamentals.target_mean"), raw)],
+        { label: "Setor", value: pickText(raw, "fundamentals.sector") || "—" },
+        { label: "Indústria", value: pickText(raw, "fundamentals.industry") || "—" },
+        { label: "Valor de mercado", value: fmtMoneyCompact(pickNum(raw, "fundamentals.market_cap"), raw) },
+        { label: "P/L", value: fmtPrice(pickNum(raw, "fundamentals.pe")) },
+        { label: "P/L projetado", value: fmtPrice(pickNum(raw, "fundamentals.forward_pe")) },
+        { label: "P/VP", value: fmtPrice(pickNum(raw, "fundamentals.pb")) },
+        { label: "ROE", value: fmtPctAbs(pickNum(raw, "fundamentals.roe"), 1) },
+        { label: "Dividend yield", value: fmtPctAbs(pickNum(raw, "fundamentals.dividend_yield")) },
+        { label: "Consenso", value: recommendationLabel(pick(raw, "fundamentals.recommendation")) },
+        { label: "Preço-alvo médio", value: fmtMoney(pickNum(raw, "fundamentals.target_mean"), raw) },
       ]
     : null;
-  const newsItems = (Array.isArray(pick(raw, "news")) ? (pick(raw, "news") as { title: string; date?: string; publisher?: string }[]) : []).filter((n) => n?.title);
+  const news = (Array.isArray(pick(raw, "news")) ? (pick(raw, "news") as { title?: string; date?: string; publisher?: string }[]) : [])
+    .filter((n) => n?.title);
+
+  // ---------- Plano
+  const potential = price && latest.take_profit ? ((latest.take_profit - price) / price) * 100 : null;
+  const riskToStop = price && latest.stop_loss ? ((latest.stop_loss - price) / price) * 100 : null;
+  const rawScore = pickNum(raw, `${D}.decision_score_calibration.raw_score`);
+  const adjusted = pickNum(raw, `${D}.decision_score_calibration.adjusted_score`);
+  const scoreDelta = rawScore != null && adjusted != null && rawScore !== adjusted ? adjusted - rawScore : null;
+  const sections = SECTIONS.map((s) => ({ ...s, text: pickText(raw, s.key) })).filter((s) => s.text);
+  const sentiment = pickText(raw, `${D}.intelligence.sentiment_summary`);
+  const limitations = pickList(raw, `${D}.phase_decision.data_limitations`);
 
   return (
     <>
-      <Header userName={user.name ?? user.email} />
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">
-        <Link href="/" className="text-sm text-muted hover:text-foreground">
-          ← Voltar ao painel
+      <Header userName={user.name ?? user.email} active="/" />
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-4 px-4 py-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 self-start text-[13px] text-muted hover:text-foreground">
+          <ArrowLeft size={14} /> Voltar ao painel
         </Link>
 
         {/* Cabeçalho */}
-        <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="font-mono text-3xl font-semibold">{latest.code}</h1>
-            <p className="text-muted">{latest.name}</p>
-            <p className="mt-1 text-xs text-muted">
-              Análise de {fmtDateTime(latest.created_at)}
-              {pickText(raw, "model_used") && ` · modelo ${pickText(raw, "model_used")}`}
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h1 className="mono text-[30px] font-semibold leading-none">{latest.code}</h1>
+              <span className="text-base text-muted">{latest.name}</span>
+            </div>
+            <p className="mt-1.5 text-xs text-muted">
+              Análise de <span className="mono">{fmtDateTime(latest.created_at)}</span>
+              {pickText(raw, "model_used") && (
+                <> · modelo <span className="mono">{pickText(raw, "model_used")}</span></>
+              )}
             </p>
           </div>
           <div className="text-right">
-            <p className="font-mono text-2xl tabular-nums">{fmtMoney(price, raw)}</p>
-            <p className={`font-mono tabular-nums ${(change ?? 0) >= 0 ? "text-emerald-500" : "text-red-500"}`}>
-              {fmtPct(change)}
+            <p className="mono text-[30px] font-semibold leading-none">{fmtMoney(price, raw)}</p>
+            <p className={`mono mt-1.5 text-sm ${posNegClass(change)}`}>
+              {fmtChange(price != null && prevClose != null ? price - prevClose : null, change)}
             </p>
           </div>
         </div>
 
-        {/* Conclusão */}
-        <section className="mt-6 grid gap-4 lg:grid-cols-3">
-          <div className="card space-y-4 p-5 lg:col-span-2">
+        {/* Conclusão + entrada/saída */}
+        <div className="flex flex-wrap gap-4">
+          <section className="card flex min-w-0 grow-[2] basis-[560px] flex-col gap-4 p-5">
             <div className="flex flex-wrap items-center gap-4">
-              <ScoreBadge score={latest.sentiment_score} large />
-              <span className={`${act.cls} tone-bg rounded-full px-3 py-1 text-sm font-semibold`}>{act.label}</span>
-              <div className="text-sm">
-                <p><span className="text-muted">Recomendação: </span><strong>{latest.operation_advice ?? "—"}</strong></p>
-                <p><span className="text-muted">Tendência: </span>{latest.trend_prediction ?? "—"}</p>
-                <p><span className="text-muted">Confiança: </span>{confidenceLabel(pick(raw, "confidence_level") as string)}</p>
+              <ScoreBadge score={latest.sentiment_score} large showLabel caption="nota de 0 a 100" />
+              <Pill tone={act.tone} size="md">{act.label}</Pill>
+              <div className="flex flex-wrap gap-x-[18px] gap-y-1.5 text-[13px]">
+                <span><span className="text-muted">Recomendação: </span>{latest.operation_advice ?? "—"}</span>
+                <span><span className="text-muted">Tendência: </span>{latest.trend_prediction ?? "—"}</span>
+                <span><span className="text-muted">Confiança: </span>{confidenceLabel(pick(raw, "confidence_level") as string)}</span>
               </div>
             </div>
-            {pickText(raw, `${dash}.core_conclusion.one_sentence`) && (
-              <p className="rounded-lg bg-surface-2 p-3 text-sm font-medium">
-                {pickText(raw, `${dash}.core_conclusion.one_sentence`)}
+            {pickText(raw, `${D}.core_conclusion.one_sentence`) && (
+              <p className="rounded-lg bg-surface-2 px-4 py-3.5 text-[17px] font-medium leading-[1.45]">
+                {pickText(raw, `${D}.core_conclusion.one_sentence`)}
               </p>
             )}
-            {latest.analysis_summary && <p className="leading-relaxed whitespace-pre-line">{latest.analysis_summary}</p>}
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Advice title="Se você não tem a ação" text={pickText(raw, `${dash}.core_conclusion.position_advice.no_position`)} />
-              <Advice title="Se você já tem a ação" text={pickText(raw, `${dash}.core_conclusion.position_advice.has_position`)} />
-            </div>
-          </div>
-
-          <div className="card p-5">
-            <h2 className="mb-3 text-sm font-semibold">Pontos de entrada e saída</h2>
-            <dl className="space-y-2 text-sm">
-              {[
-                ["Compra ideal", latest.ideal_buy],
-                ["Compra secundária", latest.secondary_buy],
-                ["Stop loss", latest.stop_loss],
-                ["Alvo (take profit)", latest.take_profit],
-              ].map(([label, v]) => (
-                <div key={label as string} className="flex justify-between border-b border-line pb-2 last:border-0">
-                  <dt className="text-muted">{label}</dt>
-                  <dd className="font-mono tabular-nums">{fmtPrice(v as number | null)}</dd>
-                </div>
-              ))}
-            </dl>
-            {price && latest.take_profit && latest.stop_loss && (
-              <p className="mt-3 text-xs text-muted">
-                Potencial até o alvo:{" "}
-                <span className="font-mono text-emerald-500">{fmtPct(((latest.take_profit - price) / price) * 100)}</span>
-                {" · "}Risco até o stop:{" "}
-                <span className="font-mono text-red-500">{fmtPct(((latest.stop_loss - price) / price) * 100)}</span>
-              </p>
+            {latest.analysis_summary && (
+              <p className="whitespace-pre-line text-sm leading-[1.65] text-muted">{latest.analysis_summary}</p>
             )}
-            <div className="mt-4 space-y-2 border-t border-line pt-4 text-sm">
-              <Field label="Posição sugerida" text={pickText(raw, `${dash}.battle_plan.position_strategy.suggested_position`)} />
-              <Field label="Plano de entrada" text={pickText(raw, `${dash}.battle_plan.position_strategy.entry_plan`)} />
-              <Field label="Controle de risco" text={pickText(raw, `${dash}.battle_plan.position_strategy.risk_control`)} />
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3">
+              <Advice title="Se você não tem a ação" text={pickText(raw, `${D}.core_conclusion.position_advice.no_position`)} />
+              <Advice title="Se você já tem a ação" text={pickText(raw, `${D}.core_conclusion.position_advice.has_position`)} />
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* Gráfico + pregão */}
-        <section className="mt-4 grid gap-4 lg:grid-cols-3">
-          <div className="card p-5 lg:col-span-2">
-            <h2 className="mb-3 text-sm font-semibold">Preço — últimos {bars.length} pregões</h2>
+          <section className="card flex grow basis-[320px] flex-col gap-3.5 p-5">
+            <h2 className="card-title">Pontos de entrada e saída</h2>
+            <div className="grid grid-cols-2 gap-2.5">
+              <MiniLevel label="Compra ideal" value={fmtPrice(latest.ideal_buy)} />
+              <MiniLevel label="Compra secundária" value={fmtPrice(latest.secondary_buy)} />
+              <MiniLevel label="Stop loss" value={fmtPrice(latest.stop_loss)} cls="neg" />
+              <MiniLevel label="Alvo" value={fmtPrice(latest.take_profit)} cls="pos" />
+            </div>
+            <div className="flex flex-col gap-1.5 text-[13px]">
+              <div className="flex justify-between">
+                <span className="text-muted">Potencial até o alvo</span>
+                <span className={`mono font-semibold ${posNegClass(potential)}`}>{fmtPct(potential)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Risco até o stop</span>
+                <span className={`mono font-semibold ${posNegClass(riskToStop)}`}>{fmtPct(riskToStop)}</span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2.5 border-t border-line pt-3 text-[13px] leading-normal">
+              <Field label="Posição sugerida" text={pickText(raw, `${D}.battle_plan.position_strategy.suggested_position`)} />
+              <Field label="Plano de entrada" text={pickText(raw, `${D}.battle_plan.position_strategy.entry_plan`)} />
+              <Field label="Controle de risco" text={pickText(raw, `${D}.battle_plan.position_strategy.risk_control`)} />
+            </div>
+          </section>
+        </div>
+
+        {/* Gráfico + pregão/indicadores */}
+        <div className="flex flex-wrap gap-4">
+          <Card className="min-w-0 grow-[2] basis-[560px]" title={`Gráfico · ${bars.length} pregões`} aside={<ChartLegend />}>
             <PriceChart bars={bars} />
+          </Card>
+          <div className="flex grow basis-[320px] flex-col gap-4">
+            <Card title="Pregão">
+              <KeyValues items={pregao} />
+            </Card>
+            {indicators.length > 0 && (
+              <Card title="Indicadores">
+                <KeyValues items={indicators} />
+              </Card>
+            )}
           </div>
-          <div className="card p-5">
-            <h2 className="mb-3 text-sm font-semibold">Pregão</h2>
-            <KeyValues items={snapshot} />
-            <h2 className="mt-5 mb-3 text-sm font-semibold">Indicadores</h2>
-            <KeyValues items={technicals} />
-          </div>
-        </section>
+        </div>
 
-        {/* Plano de ação + composição da nota */}
-        <section className="mt-4 grid gap-4 lg:grid-cols-3">
-          <Panel title="Checklist da operação">
-            {checklist.length ? (
-              <ul className="space-y-1.5 text-sm">
-                {checklist.map((c) => <li key={c}>{c}</li>)}
+        {/* Checklist, agora, composição */}
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
+          <Card title="Checklist da operação">
+            {pickList(raw, `${D}.battle_plan.action_checklist`).length ? (
+              <ul className="flex flex-col gap-2.5 text-[13px] leading-[1.45]">
+                {pickList(raw, `${D}.battle_plan.action_checklist`).map((c) => {
+                  const item = checklistItem(c);
+                  return (
+                    <li key={c} className="flex gap-2.5">
+                      <span className={`${item.tone} tone-bg mono inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-xs font-bold`}>
+                        {item.glyph}
+                      </span>
+                      <span>{item.text}</span>
+                    </li>
+                  );
+                })}
               </ul>
-            ) : <Empty />}
-          </Panel>
+            ) : (
+              <p className="text-[13px] text-muted">Sem checklist nesta análise.</p>
+            )}
+          </Card>
 
-          <Panel title="O que fazer agora">
-            <div className="space-y-2 text-sm">
-              <Field label="Ação imediata" text={pickText(raw, `${dash}.phase_decision.immediate_action`)} />
-              <Field label="Próxima checagem" text={pickText(raw, `${dash}.phase_decision.next_check_time`)} />
-              {watchConditions.length > 0 && (
+          <Card title="O que fazer agora">
+            <div className="flex flex-col gap-3 text-[13px] leading-normal">
+              <Field label="Ação imediata" text={pickText(raw, `${D}.phase_decision.immediate_action`)} />
+              <Field label="Próxima checagem" text={pickText(raw, `${D}.phase_decision.next_check_time`)} />
+              {pickList(raw, `${D}.phase_decision.watch_conditions`).length > 0 && (
                 <div>
-                  <p className="text-xs text-muted">Condições para acompanhar</p>
-                  <ul className="mt-1 list-disc space-y-1 pl-4">
-                    {watchConditions.map((w) => <li key={w}>{w}</li>)}
+                  <p className="text-xs text-muted">Condições a acompanhar</p>
+                  <ul className="mt-1 list-disc pl-[18px]">
+                    {pickList(raw, `${D}.phase_decision.watch_conditions`).map((w) => <li key={w}>{w}</li>)}
                   </ul>
                 </div>
               )}
             </div>
-          </Panel>
+          </Card>
 
-          <Panel title="Composição da nota">
-            <div className="space-y-2.5">
+          <Card title="Composição da nota">
+            <div className="flex flex-col gap-3 text-[13px]">
               {ATTRIBUTION.map(({ key, label }) => {
-                const v = pickNum(raw, `${dash}.signal_attribution.${key}`) ?? 0;
+                const v = pickNum(raw, `${D}.signal_attribution.${key}`) ?? 0;
                 return (
                   <div key={key}>
-                    <div className="flex justify-between text-xs">
-                      <span className="text-muted">{label}</span>
-                      <span className="font-mono">{v}%</span>
+                    <div className="mb-[5px] flex justify-between">
+                      <span>{label}</span>
+                      <span className="mono text-muted">{v}%</span>
                     </div>
-                    <div className="mt-1 h-1.5 rounded-full bg-surface-2">
-                      <div className="h-1.5 rounded-full bg-emerald-500" style={{ width: `${Math.min(100, Math.max(0, v))}%` }} />
-                    </div>
+                    <div className="bar"><span style={{ width: `${Math.min(100, Math.max(0, v))}%` }} /></div>
                   </div>
                 );
               })}
+              <div className="flex flex-col gap-1.5 border-t border-line pt-2.5 leading-[1.45]">
+                <InlineField label="Sinal mais forte de alta" text={pickText(raw, `${D}.signal_attribution.strongest_bullish_signal`)} />
+                <InlineField label="Sinal mais forte de baixa" text={pickText(raw, `${D}.signal_attribution.strongest_bearish_signal`)} />
+                {scoreDelta != null && (
+                  <p>
+                    <span className="text-muted">Ajuste de nota: </span>
+                    <span className={`mono font-semibold ${posNegClass(scoreDelta)}`}>{fmtSigned(scoreDelta, 0)}</span>
+                    {pickText(raw, `${D}.decision_score_calibration.guardrail_reason`) &&
+                      ` por ${pickText(raw, `${D}.decision_score_calibration.guardrail_reason`).replace(/\.$/, "").toLowerCase()}`}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="mt-4 space-y-2 border-t border-line pt-3 text-sm">
-              <Field label="Sinal mais forte de alta" text={pickText(raw, `${dash}.signal_attribution.strongest_bullish_signal`)} />
-              <Field label="Sinal mais forte de baixa" text={pickText(raw, `${dash}.signal_attribution.strongest_bearish_signal`)} />
-              {rawScore != null && adjusted != null && rawScore !== adjusted && (
-                <p className="text-xs text-muted">
-                  Nota original da IA <strong className="font-mono">{rawScore}</strong> ajustada para{" "}
-                  <strong className="font-mono">{adjusted}</strong>
-                  {guardrail && `: ${guardrail}`}
-                </p>
-              )}
-            </div>
-          </Panel>
-        </section>
+          </Card>
+        </div>
 
-        {(fundamentals || newsItems.length > 0) && (
-          <section className="mt-4 grid gap-4 md:grid-cols-2">
+        {/* Fundamentos + manchetes */}
+        {(fundamentals || news.length > 0) && (
+          <div className="flex flex-wrap gap-4">
             {fundamentals && (
-              <Panel title="Fundamentos (Yahoo Finance)">
-                <KeyValues items={fundamentals} />
-              </Panel>
+              <Card className="min-w-0 grow basis-[420px]" title="Fundamentos" aside={isB3 ? <span className="tag text-muted">B3</span> : undefined}>
+                <dl className="grid grid-cols-2 gap-x-5 gap-y-2 text-[13px]">
+                  {fundamentals.map((f) => (
+                    <div key={f.label} className="flex justify-between gap-3 border-b border-line py-1">
+                      <dt className="text-muted">{f.label}</dt>
+                      <dd className="mono truncate text-right">{f.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </Card>
             )}
-            {newsItems.length > 0 && (
-              <Panel title="Manchetes recentes">
-                <ul className="space-y-2 text-sm">
-                  {newsItems.map((n) => (
-                    <li key={n.title} className="border-b border-line pb-2 last:border-0">
-                      <p>{n.title}</p>
-                      <p className="text-xs text-muted">{[n.date, n.publisher].filter(Boolean).join(" · ")}</p>
+            {news.length > 0 && (
+              <Card className="min-w-0 grow basis-[420px]" title="Manchetes">
+                <ul className="-mt-2.5">
+                  {news.map((n) => (
+                    <li key={n.title} className="border-b border-line py-2.5">
+                      <p className="text-[13px] font-medium leading-[1.4]">{n.title}</p>
+                      <p className="mt-[3px] text-xs text-muted">
+                        {n.date && <span className="mono">{fmtDayMonth(n.date)}</span>}
+                        {n.date && n.publisher && " · "}
+                        {n.publisher}
+                      </p>
                     </li>
                   ))}
                 </ul>
-              </Panel>
+              </Card>
             )}
-          </section>
+          </div>
         )}
 
-        {/* Inteligência */}
-        <section className="mt-4 grid gap-4 md:grid-cols-2">
-          <Panel title="Notícias e resultados">
-            <div className="space-y-2 text-sm">
-              <Field label="Últimas notícias" text={pickText(raw, `${dash}.intelligence.latest_news`)} />
-              <Field label="Sentimento" text={pickText(raw, `${dash}.intelligence.sentiment_summary`)} />
-              <Field label="Perspectiva de resultados" text={pickText(raw, `${dash}.intelligence.earnings_outlook`)} />
+        {/* Notícias e resultados + catalisadores */}
+        <div className="flex flex-wrap gap-4">
+          <Card className="min-w-0 grow basis-[420px]" title="Notícias e resultados">
+            <div className="flex flex-col gap-3 text-[13px] leading-[1.55]">
+              <Field label="Últimas notícias" text={pickText(raw, `${D}.intelligence.latest_news`)} />
+              {sentiment && (
+                <div>
+                  <p className="text-xs text-muted">Sentimento</p>
+                  <Pill tone={sentimentTone(sentiment).tone} size="sm" className="mt-1">{sentimentTone(sentiment).label}</Pill>
+                  <p className="mt-1.5">{sentiment}</p>
+                </div>
+              )}
+              <Field label="Perspectiva de resultados" text={pickText(raw, `${D}.intelligence.earnings_outlook`)} />
             </div>
-          </Panel>
-          <Panel title="Catalisadores e alertas">
-            <div className="space-y-3 text-sm">
-              <List title="Catalisadores positivos" items={catalysts} tone="text-emerald-500" />
-              <List title="Alertas de risco" items={riskAlerts} tone="text-red-500" />
-              {limitations.length > 0 && <List title="Limitações dos dados" items={limitations} tone="text-muted" />}
+          </Card>
+          <Card className="min-w-0 grow basis-[420px]" title="Catalisadores e alertas">
+            <div className="flex flex-col gap-3.5 text-[13px]">
+              <DotList title="Catalisadores positivos" items={pickList(raw, `${D}.intelligence.positive_catalysts`)} color="#10b981" />
+              <DotList title="Alertas de risco" items={pickList(raw, `${D}.intelligence.risk_alerts`)} color="#dc2626" />
+              {limitations.length > 0 && (
+                <p className="border-t border-line pt-2.5 text-xs text-muted">Limitações: {limitations.join("; ")}</p>
+              )}
             </div>
-          </Panel>
-        </section>
+          </Card>
+        </div>
 
         {/* Textos do relatório */}
         {sections.length > 0 && (
-          <section className="mt-4 grid gap-4 md:grid-cols-2">
-            {sections.map((s) => (
-              <article key={s.key} className="card p-5">
-                <h2 className="mb-2 text-sm font-semibold">{s.title}</h2>
-                <p className="text-sm leading-relaxed whitespace-pre-line text-muted">{s.text}</p>
-              </article>
-            ))}
-          </section>
+          <>
+            <h2 className="mt-2 text-base font-semibold">Textos do relatório</h2>
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,360px),1fr))] gap-4">
+              {sections.map((s) => (
+                <article key={s.key} className="card p-5">
+                  <h3 className="mb-2 text-sm font-semibold">{s.title}</h3>
+                  <p className="whitespace-pre-line text-sm leading-[1.65] text-muted">{s.text}</p>
+                </article>
+              ))}
+            </div>
+          </>
         )}
 
         {/* Histórico */}
-        <section className="card mt-4 overflow-x-auto p-5">
-          <h2 className="mb-3 text-sm font-semibold">Histórico de análises</h2>
-          <table className="w-full text-left text-sm">
-            <thead className="text-xs text-muted">
-              <tr>
-                {["Data", "Nota", "Recomendação", "Tendência", "Compra", "Stop", "Alvo"].map((h) => (
-                  <th key={h} className="py-2 pr-4 font-medium">{h}</th>
-                ))}
+        <SectionTable title="Histórico de análises" minWidth={680}>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th className="center">Nota</th>
+              <th>Recomendação</th>
+              <th>Tendência</th>
+              <th className="num">Compra</th>
+              <th className="num">Stop</th>
+              <th className="num">Alvo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {history.map((h) => (
+              <tr key={h.id}>
+                <td className="mono">{fmtDate(h.created_at)}</td>
+                <td className="center"><ScoreChip score={h.sentiment_score} /></td>
+                <td>{h.operation_advice ?? "—"}</td>
+                <td>{h.trend_prediction ?? "—"}</td>
+                <td className="num">{fmtPrice(h.ideal_buy)}</td>
+                <td className="num neg">{fmtPrice(h.stop_loss)}</td>
+                <td className="num pos">{fmtPrice(h.take_profit)}</td>
               </tr>
-            </thead>
-            <tbody>
-              {history.map((h) => (
-                <tr key={h.id} className="border-t border-line">
-                  <td className="py-2 pr-4 whitespace-nowrap">{fmtDateTime(h.created_at)}</td>
-                  <td className="py-2 pr-4 font-mono">{h.sentiment_score ?? "—"}</td>
-                  <td className="py-2 pr-4">{h.operation_advice ?? "—"}</td>
-                  <td className="py-2 pr-4">{h.trend_prediction ?? "—"}</td>
-                  <td className="py-2 pr-4 font-mono">{fmtPrice(h.ideal_buy)}</td>
-                  <td className="py-2 pr-4 font-mono">{fmtPrice(h.stop_loss)}</td>
-                  <td className="py-2 pr-4 font-mono">{fmtPrice(h.take_profit)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+            ))}
+          </tbody>
+        </SectionTable>
 
-        <p className="mt-10 text-xs text-muted">
-          Conteúdo gerado automaticamente por IA, apenas para estudo. Não é recomendação de investimento.
-        </p>
+        <Disclaimer>
+          Conteúdo gerado por IA a partir de dados do Yahoo Finance. Não é recomendação de investimento.
+        </Disclaimer>
       </main>
     </>
   );
 }
 
-function Panel({ title, children }: { title: string; children: ReactNode }) {
+function MiniLevel({ label, value, cls = "" }: { label: string; value: string; cls?: string }) {
   return (
-    <div className="card p-5">
-      <h2 className="mb-3 text-sm font-semibold">{title}</h2>
-      {children}
+    <div className="rounded-lg border border-line p-3">
+      <p className="text-[11px] text-muted">{label}</p>
+      <p className={`mono mt-1 text-[17px] font-semibold ${value === "—" ? "" : cls}`}>{value}</p>
     </div>
   );
 }
@@ -383,44 +447,55 @@ function Field({ label, text }: { label: string; text: string }) {
   );
 }
 
+function InlineField({ label, text }: { label: string; text: string }) {
+  if (!text) return null;
+  return (
+    <p>
+      <span className="text-muted">{label}: </span>
+      {text}
+    </p>
+  );
+}
+
 function Advice({ title, text }: { title: string; text: string }) {
   if (!text) return null;
   return (
-    <div className="rounded-lg border border-line p-3 text-sm">
-      <p className="mb-1 text-xs font-semibold text-muted">{title}</p>
-      <p>{text}</p>
+    <div className="rounded-lg border border-line p-3.5">
+      <p className="mb-1.5 text-xs font-semibold text-muted">{title}</p>
+      <p className="text-[13px] leading-[1.55]">{text}</p>
     </div>
   );
 }
 
-function KeyValues({ items }: { items: [string, string][] }) {
+function KeyValues({ items }: { items: KV[] }) {
   return (
-    <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-      {items.map(([k, v]) => (
-        <div key={k}>
-          <dt className="text-xs text-muted">{k}</dt>
-          <dd className="font-mono tabular-nums">{v}</dd>
+    <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-[13px]">
+      {items.map((i) => (
+        <div key={i.label} className="flex justify-between gap-2">
+          <dt className="truncate text-muted">{i.label}</dt>
+          <dd className={`mono whitespace-nowrap ${i.cls ?? ""}`}>{i.value}</dd>
         </div>
       ))}
     </dl>
   );
 }
 
-function List({ title, items, tone }: { title: string; items: string[]; tone: string }) {
+function DotList({ title, items, color }: { title: string; items: string[]; color: string }): ReactNode {
   return (
     <div>
-      <p className="text-xs text-muted">{title}</p>
+      <p className="mb-1.5 text-xs text-muted">{title}</p>
       {items.length ? (
-        <ul className={`mt-1 list-disc space-y-1 pl-4 ${tone}`}>
-          {items.map((i) => <li key={i}><span className="text-foreground">{i}</span></li>)}
+        <ul className="flex flex-col gap-1.5">
+          {items.map((i) => (
+            <li key={i} className="flex gap-2 leading-[1.45]">
+              <span className="mt-[6px] h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: color }} />
+              <span>{i}</span>
+            </li>
+          ))}
         </ul>
       ) : (
-        <p className="mt-1 text-muted">Nenhum identificado.</p>
+        <p className="text-muted">Nenhum identificado.</p>
       )}
     </div>
   );
-}
-
-function Empty() {
-  return <p className="text-sm text-muted">Sem dados nesta análise.</p>;
 }

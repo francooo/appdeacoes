@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do dia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.t-light{--bg:#f7f8fa;--fg:#14171c;--surface:#ffffff;--surface2:#eef0f3;--line:#e2e5ea;--muted:#5d6673;--pos:#047857;--neg:#c81e1e;--su-fg:#047857;--up-fg:#047857;--ne-fg:#b45309;--dn-fg:#c81e1e}
+.t-dark{--bg:#0b0e13;--fg:#e8ebf0;--surface:#12161d;--surface2:#1b2029;--line:#232a35;--muted:#8b95a5;--pos:#34d399;--neg:#f87171;--su-fg:#34d399;--up-fg:#6ee7b7;--ne-fg:#fbbf24;--dn-fg:#f87171}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.su{--tone:#059669;--tone-fg:var(--su-fg)}
+.up{--tone:#10b981;--tone-fg:var(--up-fg)}
+.ne{--tone:#d97706;--tone-fg:var(--ne-fg)}
+.dn{--tone:#dc2626;--tone-fg:var(--dn-fg)}
+.tone-bg{background:color-mix(in srgb,var(--tone) 15%,transparent);color:var(--tone-fg)}
+.tone-fg{color:var(--tone-fg)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:inherit;text-decoration:none}
+.hov{transition:border-color .15s}
+.hov:hover{border-color:color-mix(in srgb,#10b981 55%,transparent)!important}
+.row:hover{background:var(--surface2)}
+.navl:hover{background:var(--surface2)}
+.ghost:hover{background:var(--surface2)}
+</style>
+</head>
+<body>
+<div class="t-light" style="min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-size: 14px">
+
+<header style="background: var(--surface); border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<a href="painel.html" style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px">
+<span style="display: inline-flex; width: 32px; height: 32px; border-radius: 8px; align-items: center; justify-content: center; background: #059669; color: #ffffff">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7" /><polyline points="15 7 21 7 21 13" /></svg>
+</span>
+Análise de Ações
+</a>
+<nav aria-label="Principal" style="display: flex; gap: 4px">
+<a href="painel.html" aria-current="page" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface2)">Painel</a>
+<a href="swing.html" class="navl" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; color: var(--muted)">Swing Trade</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: var(--muted)">usuario@exemplo.com</span>
+<a href="login.html" class="ghost" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 500">Sair</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 16px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em">Painel do dia</h1>
+<span style="font-size: 13px; color: var(--muted)">Atualizado em <span class="mono">16/11/2026 18:42</span></span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Ações analisadas</div>
+<div class="mono" style="font-size: 26px; font-weight: 600; margin-top: 6px">12</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Nota média</div>
+<div style="display: flex; align-items: center; gap: 10px; margin-top: 6px"><span class="mono" style="font-size: 26px; font-weight: 600">54</span><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Lateral</span></div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Maior nota</div>
+<div style="display: flex; align-items: baseline; gap: 10px; margin-top: 6px"><span class="mono su tone-fg" style="font-size: 26px; font-weight: 600">78</span><span class="mono" style="font-size: 13px; color: var(--muted)">WEGE3</span></div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Menor nota</div>
+<div style="display: flex; align-items: baseline; gap: 10px; margin-top: 6px"><span class="mono dn tone-fg" style="font-size: 26px; font-weight: 600">31</span><span class="mono" style="font-size: 13px; color: var(--muted)">MGLU3</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span class="su tone-bg" style="border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 500">Comprar: <span class="mono" style="font-weight: 700">3</span></span>
+<span class="up tone-bg" style="border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 500">Manter: <span class="mono" style="font-weight: 700">2</span></span>
+<span class="ne tone-bg" style="border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 500">Observar: <span class="mono" style="font-weight: 700">5</span></span>
+<span class="dn tone-bg" style="border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 500">Reduzir: <span class="mono" style="font-weight: 700">1</span></span>
+<span class="dn tone-bg" style="border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 500">Vender: <span class="mono" style="font-weight: 700">1</span></span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 16px">
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">WEGE3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">WEG</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 52,18</div>
+<div class="mono pos" style="font-size: 12px; margin-top: 2px">+1,42%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,37.0 L10.3,25.4 L20.7,32.3 L31.0,32.2 L41.4,20.7 L51.7,26.3 L62.1,26.6 L72.4,24.1 L82.8,18.8 L93.1,22.3 L103.4,28.2 L113.8,16.1 L124.1,15.8 L134.5,20.4 L144.8,17.9 L155.2,20.3 L165.5,26.6 L175.9,19.1 L186.2,21.0 L196.6,22.9 L206.9,30.9 L217.2,20.1 L227.6,24.5 L237.9,14.5 L248.3,13.7 L258.6,18.2 L269.0,14.5 L279.3,15.2 L289.7,8.0 L300.0,3.0 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,37.0 10.3,25.4 20.7,32.3 31.0,32.2 41.4,20.7 51.7,26.3 62.1,26.6 72.4,24.1 82.8,18.8 93.1,22.3 103.4,28.2 113.8,16.1 124.1,15.8 134.5,20.4 144.8,17.9 155.2,20.3 165.5,26.6 175.9,19.1 186.2,21.0 196.6,22.9 206.9,30.9 217.2,20.1 227.6,24.5 237.9,14.5 248.3,13.7 258.6,18.2 269.0,14.5 279.3,15.2 289.7,8.0 300.0,3.0" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono su tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">78</span>
+<span class="su tone-fg" style="font-size: 13px; font-weight: 500">Forte alta</span>
+<span class="su tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Comprar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Forte alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias alinhadas (alta)</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Rompeu a resistência de R$ 51,40 com volume acima da média; médias alinhadas e RSI em 64 sustentam a continuidade do movimento.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 51,66</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 49,05</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 58,44</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 49,83</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 54,53</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">2,10×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">até 30% da carteira</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">ITUB4</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Itaú Unibanco</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 38,74</div>
+<div class="mono pos" style="font-size: 12px; margin-top: 2px">+0,63%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,34.4 L10.3,24.7 L20.7,17.3 L31.0,25.7 L41.4,29.7 L51.7,37.0 L62.1,28.9 L72.4,33.2 L82.8,30.7 L93.1,24.7 L103.4,29.5 L113.8,29.5 L124.1,34.8 L134.5,30.3 L144.8,35.4 L155.2,28.4 L165.5,18.5 L175.9,21.8 L186.2,15.1 L196.6,17.3 L206.9,25.3 L217.2,22.4 L227.6,21.3 L237.9,30.7 L248.3,25.3 L258.6,18.9 L269.0,16.8 L279.3,15.8 L289.7,16.0 L300.0,3.0 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,34.4 10.3,24.7 20.7,17.3 31.0,25.7 41.4,29.7 51.7,37.0 62.1,28.9 72.4,33.2 82.8,30.7 93.1,24.7 103.4,29.5 113.8,29.5 124.1,34.8 134.5,30.3 144.8,35.4 155.2,28.4 165.5,18.5 175.9,21.8 186.2,15.1 196.6,17.3 206.9,25.3 217.2,22.4 227.6,21.3 237.9,30.7 248.3,25.3 258.6,18.9 269.0,16.8 279.3,15.8 289.7,16.0 300.0,3.0" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono su tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">72</span>
+<span class="su tone-fg" style="font-size: 13px; font-weight: 500">Forte alta</span>
+<span class="su tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Comprar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias alinhadas (alta)</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Tendência de alta consistente acima da MM20, ROE elevado e consenso de compra dos analistas reforçam o viés positivo.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 38,35</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 36,42</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 43,39</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 37,00</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 40,48</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">1,30×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">até 30% da carteira</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">SUZB3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Suzano</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 58,90</div>
+<div class="mono pos" style="font-size: 12px; margin-top: 2px">+0,88%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,37.0 L10.3,29.0 L20.7,30.3 L31.0,22.8 L41.4,19.3 L51.7,29.6 L62.1,36.8 L72.4,23.4 L82.8,23.9 L93.1,32.7 L103.4,36.4 L113.8,24.5 L124.1,10.4 L134.5,21.3 L144.8,9.4 L155.2,17.1 L165.5,13.4 L175.9,3.0 L186.2,12.5 L196.6,15.3 L206.9,24.0 L217.2,30.5 L227.6,22.8 L237.9,29.5 L248.3,17.9 L258.6,24.8 L269.0,24.5 L279.3,21.3 L289.7,30.4 L300.0,33.5 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,37.0 10.3,29.0 20.7,30.3 31.0,22.8 41.4,19.3 51.7,29.6 62.1,36.8 72.4,23.4 82.8,23.9 93.1,32.7 103.4,36.4 113.8,24.5 124.1,10.4 134.5,21.3 144.8,9.4 155.2,17.1 165.5,13.4 175.9,3.0 186.2,12.5 196.6,15.3 206.9,24.0 217.2,30.5 227.6,22.8 237.9,29.5 248.3,17.9 258.6,24.8 269.0,24.5 279.3,21.3 289.7,30.4 300.0,33.5" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono up tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">66</span>
+<span class="up tone-fg" style="font-size: 13px; font-weight: 500">Alta</span>
+<span class="su tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Comprar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias alinhadas (alta)</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Pullback saudável até a MM10 com celulose firme; vale aumentar a posição com stop abaixo do suporte de 20 dias.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 58,31</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 55,37</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 65,97</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 56,25</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 61,55</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">1,10×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">até 20% da carteira</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">BBAS3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Banco do Brasil</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 27,15</div>
+<div class="mono pos" style="font-size: 12px; margin-top: 2px">+0,22%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,18.5 L10.3,12.0 L20.7,25.0 L31.0,27.1 L41.4,12.8 L51.7,26.8 L62.1,23.1 L72.4,16.0 L82.8,20.3 L93.1,17.1 L103.4,19.1 L113.8,21.9 L124.1,12.2 L134.5,11.8 L144.8,7.7 L155.2,3.0 L165.5,7.6 L175.9,10.2 L186.2,8.9 L196.6,12.1 L206.9,21.5 L217.2,8.6 L227.6,23.2 L237.9,25.9 L248.3,37.0 L258.6,29.8 L269.0,31.4 L279.3,24.8 L289.7,13.8 L300.0,6.2 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,18.5 10.3,12.0 20.7,25.0 31.0,27.1 41.4,12.8 51.7,26.8 62.1,23.1 72.4,16.0 82.8,20.3 93.1,17.1 103.4,19.1 113.8,21.9 124.1,12.2 134.5,11.8 144.8,7.7 155.2,3.0 165.5,7.6 175.9,10.2 186.2,8.9 196.6,12.1 206.9,21.5 217.2,8.6 227.6,23.2 237.9,25.9 248.3,37.0 258.6,29.8 269.0,31.4 279.3,24.8 289.7,13.8 300.0,6.2" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono up tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">61</span>
+<span class="up tone-fg" style="font-size: 13px; font-weight: 500">Alta</span>
+<span class="up tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Manter</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Recuperação gradual após resultado do trimestre; dividend yield atrativo, mas inadimplência do agro ainda pesa.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 26,34</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 25,52</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 30,41</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 25,93</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 28,37</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">0,90×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">manter posição atual</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">ITSA4</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Itaúsa</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 11,32</div>
+<div class="mono pos" style="font-size: 12px; margin-top: 2px">+0,18%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,32.2 L10.3,30.7 L20.7,26.8 L31.0,33.4 L41.4,37.0 L51.7,29.0 L62.1,21.1 L72.4,22.1 L82.8,26.1 L93.1,17.7 L103.4,17.4 L113.8,11.3 L124.1,10.0 L134.5,3.0 L144.8,6.2 L155.2,13.4 L165.5,20.2 L175.9,12.8 L186.2,5.9 L196.6,7.4 L206.9,11.7 L217.2,10.9 L227.6,14.0 L237.9,12.7 L248.3,14.9 L258.6,19.6 L269.0,21.4 L279.3,16.6 L289.7,16.1 L300.0,22.9 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,32.2 10.3,30.7 20.7,26.8 31.0,33.4 41.4,37.0 51.7,29.0 62.1,21.1 72.4,22.1 82.8,26.1 93.1,17.7 103.4,17.4 113.8,11.3 124.1,10.0 134.5,3.0 144.8,6.2 155.2,13.4 165.5,20.2 175.9,12.8 186.2,5.9 196.6,7.4 206.9,11.7 217.2,10.9 227.6,14.0 237.9,12.7 248.3,14.9 258.6,19.6 269.0,21.4 279.3,16.6 289.7,16.1 300.0,22.9" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">59</span>
+<span class="ne tone-fg" style="font-size: 13px; font-weight: 500">Lateral</span>
+<span class="up tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Manter</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Lateral</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Segue o Itaú com desconto de holding; movimento lateral entre R$ 11,00 e R$ 11,60 sem gatilho claro.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 10,98</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 10,64</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 12,11</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 10,81</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 11,83</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">0,80×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">manter posição atual</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">PETR4</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Petrobras</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 44,02</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-0,98%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,16.8 L10.3,17.1 L20.7,19.8 L31.0,14.8 L41.4,13.1 L51.7,3.0 L62.1,5.9 L72.4,14.3 L82.8,22.8 L93.1,24.1 L103.4,22.4 L113.8,26.2 L124.1,29.8 L134.5,33.7 L144.8,23.3 L155.2,23.7 L165.5,17.1 L175.9,17.6 L186.2,22.3 L196.6,24.6 L206.9,30.0 L217.2,37.0 L227.6,35.8 L237.9,30.7 L248.3,29.2 L258.6,25.1 L269.0,29.3 L279.3,21.1 L289.7,27.9 L300.0,29.7 L300,40 Z" fill="#ef4444" fill-opacity="0.1" />
+<polyline points="0.0,16.8 10.3,17.1 20.7,19.8 31.0,14.8 41.4,13.1 51.7,3.0 62.1,5.9 72.4,14.3 82.8,22.8 93.1,24.1 103.4,22.4 113.8,26.2 124.1,29.8 134.5,33.7 144.8,23.3 155.2,23.7 165.5,17.1 175.9,17.6 186.2,22.3 196.6,24.6 206.9,30.0 217.2,37.0 227.6,35.8 237.9,30.7 248.3,29.2 258.6,25.1 269.0,29.3 279.3,21.1 289.7,27.9 300.0,29.7" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">55</span>
+<span class="ne tone-fg" style="font-size: 13px; font-weight: 500">Lateral</span>
+<span class="ne tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Observar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Lateral</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Preço lateral entre suporte e resistência, com petróleo volátil. Dividendos sustentam, mas falta confirmação de tendência.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 42,70</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 41,38</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 47,10</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 42,04</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 46,00</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">1,00×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">0% · aguardar sinal</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">VALE3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Vale</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 61,45</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-0,41%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,30.0 L10.3,31.1 L20.7,35.8 L31.0,37.0 L41.4,33.2 L51.7,29.4 L62.1,26.8 L72.4,23.4 L82.8,28.3 L93.1,24.7 L103.4,23.1 L113.8,20.2 L124.1,24.1 L134.5,21.7 L144.8,20.1 L155.2,16.0 L165.5,15.8 L175.9,20.8 L186.2,19.0 L196.6,20.0 L206.9,22.1 L217.2,18.8 L227.6,15.6 L237.9,11.5 L248.3,8.5 L258.6,12.0 L269.0,14.7 L279.3,9.9 L289.7,5.8 L300.0,3.0 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,30.0 10.3,31.1 20.7,35.8 31.0,37.0 41.4,33.2 51.7,29.4 62.1,26.8 72.4,23.4 82.8,28.3 93.1,24.7 103.4,23.1 113.8,20.2 124.1,24.1 134.5,21.7 144.8,20.1 155.2,16.0 165.5,15.8 175.9,20.8 186.2,19.0 196.6,20.0 206.9,22.1 217.2,18.8 227.6,15.6 237.9,11.5 248.3,8.5 258.6,12.0 269.0,14.7 279.3,9.9 289.7,5.8 300.0,3.0" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">52</span>
+<span class="ne tone-fg" style="font-size: 13px; font-weight: 500">Lateral</span>
+<span class="ne tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Observar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Lateral</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Baixa</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Minério estável na China e médias entrelaçadas; aguardar rompimento de R$ 63,20 para nova entrada.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 59,61</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 57,76</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 65,75</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 58,68</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 64,22</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">0,90×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">0% · aguardar sinal</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">B3SA3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">B3</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 13,88</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-0,29%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,3.0 L10.3,4.9 L20.7,3.4 L31.0,7.6 L41.4,10.0 L51.7,7.1 L62.1,10.2 L72.4,9.7 L82.8,6.3 L93.1,8.0 L103.4,6.0 L113.8,8.2 L124.1,4.8 L134.5,7.9 L144.8,9.3 L155.2,10.7 L165.5,12.9 L175.9,12.5 L186.2,16.2 L196.6,17.0 L206.9,18.4 L217.2,18.6 L227.6,22.2 L237.9,25.7 L248.3,29.7 L258.6,28.5 L269.0,31.0 L279.3,34.5 L289.7,34.0 L300.0,37.0 L300,40 Z" fill="#ef4444" fill-opacity="0.1" />
+<polyline points="0.0,3.0 10.3,4.9 20.7,3.4 31.0,7.6 41.4,10.0 51.7,7.1 62.1,10.2 72.4,9.7 82.8,6.3 93.1,8.0 103.4,6.0 113.8,8.2 124.1,4.8 134.5,7.9 144.8,9.3 155.2,10.7 165.5,12.9 175.9,12.5 186.2,16.2 196.6,17.0 206.9,18.4 217.2,18.6 227.6,22.2 237.9,25.7 248.3,29.7 258.6,28.5 269.0,31.0 279.3,34.5 289.7,34.0 300.0,37.0" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">49</span>
+<span class="ne tone-fg" style="font-size: 13px; font-weight: 500">Lateral</span>
+<span class="ne tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Observar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Lateral</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Volume financeiro da bolsa em queda limita receitas; preço preso abaixo da MM60.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 13,46</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 13,05</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 14,85</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 13,26</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 14,50</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">0,80×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">0% · aguardar sinal</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">ABEV3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Ambev</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 13,05</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-0,15%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,14.8 L10.3,17.6 L20.7,19.2 L31.0,17.4 L41.4,17.0 L51.7,14.2 L62.1,13.7 L72.4,15.7 L82.8,13.0 L93.1,10.8 L103.4,7.7 L113.8,5.5 L124.1,3.8 L134.5,3.0 L144.8,7.5 L155.2,4.9 L165.5,9.9 L175.9,13.7 L186.2,14.1 L196.6,14.7 L206.9,16.0 L217.2,19.3 L227.6,20.7 L237.9,23.1 L248.3,25.5 L258.6,28.6 L269.0,31.8 L279.3,34.8 L289.7,36.8 L300.0,37.0 L300,40 Z" fill="#ef4444" fill-opacity="0.1" />
+<polyline points="0.0,14.8 10.3,17.6 20.7,19.2 31.0,17.4 41.4,17.0 51.7,14.2 62.1,13.7 72.4,15.7 82.8,13.0 93.1,10.8 103.4,7.7 113.8,5.5 124.1,3.8 134.5,3.0 144.8,7.5 155.2,4.9 165.5,9.9 175.9,13.7 186.2,14.1 196.6,14.7 206.9,16.0 217.2,19.3 227.6,20.7 237.9,23.1 248.3,25.5 258.6,28.6 269.0,31.8 279.3,34.8 289.7,36.8 300.0,37.0" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">46</span>
+<span class="ne tone-fg" style="font-size: 13px; font-weight: 500">Lateral</span>
+<span class="ne tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Observar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Lateral</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Baixa</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Margens pressionadas por custos e volumes fracos; sem sinal técnico de reversão.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 12,66</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 12,27</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 13,96</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 12,46</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 13,64</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">0,70×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">0% · aguardar sinal</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">BBDC4</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Bradesco</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 15,62</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-0,70%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,3.0 L10.3,12.9 L20.7,25.4 L31.0,29.4 L41.4,21.3 L51.7,15.9 L62.1,6.0 L72.4,18.3 L82.8,14.3 L93.1,22.5 L103.4,13.6 L113.8,20.9 L124.1,22.4 L134.5,34.4 L144.8,29.9 L155.2,37.0 L165.5,32.7 L175.9,29.9 L186.2,22.4 L196.6,24.3 L206.9,27.0 L217.2,20.8 L227.6,18.6 L237.9,21.2 L248.3,22.8 L258.6,19.9 L269.0,30.1 L279.3,36.2 L289.7,26.4 L300.0,19.3 L300,40 Z" fill="#ef4444" fill-opacity="0.1" />
+<polyline points="0.0,3.0 10.3,12.9 20.7,25.4 31.0,29.4 41.4,21.3 51.7,15.9 62.1,6.0 72.4,18.3 82.8,14.3 93.1,22.5 103.4,13.6 113.8,20.9 124.1,22.4 134.5,34.4 144.8,29.9 155.2,37.0 165.5,32.7 175.9,29.9 186.2,22.4 196.6,24.3 206.9,27.0 217.2,20.8 227.6,18.6 237.9,21.2 248.3,22.8 258.6,19.9 269.0,30.1 279.3,36.2 289.7,26.4 300.0,19.3" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">42</span>
+<span class="ne tone-fg" style="font-size: 13px; font-weight: 500">Lateral</span>
+<span class="ne tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Observar</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Baixa</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Reestruturação em andamento e rentabilidade abaixo dos pares; MACD negativo, mas RSI perto de sobrevenda.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 15,15</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 14,68</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 16,71</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 14,92</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 16,32</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">1,00×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">0% · aguardar sinal</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">RENT3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Localiza</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 41,20</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-1,85%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,3.0 L10.3,8.0 L20.7,7.1 L31.0,12.0 L41.4,15.1 L51.7,13.6 L62.1,15.5 L72.4,13.9 L82.8,13.5 L93.1,12.9 L103.4,17.9 L113.8,16.7 L124.1,19.4 L134.5,20.4 L144.8,21.6 L155.2,20.8 L165.5,21.6 L175.9,24.7 L186.2,27.3 L196.6,28.1 L206.9,28.9 L217.2,29.8 L227.6,26.9 L237.9,26.6 L248.3,25.4 L258.6,28.9 L269.0,33.3 L279.3,34.9 L289.7,34.1 L300.0,37.0 L300,40 Z" fill="#ef4444" fill-opacity="0.1" />
+<polyline points="0.0,3.0 10.3,8.0 20.7,7.1 31.0,12.0 41.4,15.1 51.7,13.6 62.1,15.5 72.4,13.9 82.8,13.5 93.1,12.9 103.4,17.9 113.8,16.7 124.1,19.4 134.5,20.4 144.8,21.6 155.2,20.8 165.5,21.6 175.9,24.7 186.2,27.3 196.6,28.1 206.9,28.9 217.2,29.8 227.6,26.9 237.9,26.6 248.3,25.4 258.6,28.9 269.0,33.3 279.3,34.9 289.7,34.1 300.0,37.0" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono dn tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">36</span>
+<span class="dn tone-fg" style="font-size: 13px; font-weight: 500">Baixa</span>
+<span class="dn tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Reduzir</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Baixa</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Média</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Perdeu a MM60 com volume forte; juros altos encarecem a dívida e a depreciação da frota pressiona o lucro.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 39,96</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 38,73</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 44,08</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 39,35</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 43,05</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">1,40×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">reduzir para 10%</span></div>
+</a>
+
+<a href="acao-petr4.html" class="hov" style="display: flex; flex-direction: column; gap: 14px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="display: flex; justify-content: space-between; gap: 12px">
+<div>
+<div class="mono" style="font-size: 16px; font-weight: 600">MGLU3</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">Magazine Luiza</div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 16px; font-weight: 600">R$ 8,94</div>
+<div class="mono neg" style="font-size: 12px; margin-top: 2px">-3,12%</div>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,5.3 L10.3,3.0 L20.7,5.1 L31.0,4.6 L41.4,5.1 L51.7,4.5 L62.1,3.6 L72.4,4.6 L82.8,5.4 L93.1,9.3 L103.4,12.9 L113.8,15.9 L124.1,19.7 L134.5,18.0 L144.8,21.3 L155.2,24.7 L165.5,27.3 L175.9,26.4 L186.2,26.2 L196.6,27.0 L206.9,27.7 L217.2,30.8 L227.6,33.5 L237.9,32.5 L248.3,30.7 L258.6,30.5 L269.0,34.3 L279.3,35.2 L289.7,36.7 L300.0,37.0 L300,40 Z" fill="#ef4444" fill-opacity="0.1" />
+<polyline points="0.0,5.3 10.3,3.0 20.7,5.1 31.0,4.6 41.4,5.1 51.7,4.5 62.1,3.6 72.4,4.6 82.8,5.4 93.1,9.3 103.4,12.9 113.8,15.9 124.1,19.7 134.5,18.0 144.8,21.3 155.2,24.7 165.5,27.3 175.9,26.4 186.2,26.2 196.6,27.0 206.9,27.7 217.2,30.8 227.6,33.5 237.9,32.5 248.3,30.7 258.6,30.5 269.0,34.3 279.3,35.2 289.7,36.7 300.0,37.0" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="mono dn tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: 8px; font-size: 15px; font-weight: 700">31</span>
+<span class="dn tone-fg" style="font-size: 13px; font-weight: 500">Baixa</span>
+<span class="dn tone-bg" style="margin-left: auto; border-radius: 999px; padding: 3px 12px; font-size: 12px; font-weight: 600">Vender</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Tendência: <span style="color: var(--fg)">Baixa</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Confiança: <span style="color: var(--fg)">Alta</span></span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Médias sem alinhamento</span>
+</div>
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden">Sequência de mínimas mais baixas, RSI em 28 e consumo fraco; risco elevado de continuar caindo.</p>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 12px; padding-top: 12px; border-top: 1px solid var(--line)">
+<div><div style="font-size: 11px; color: var(--muted)">Compra</div><div class="mono" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 8,67</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono neg" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 8,40</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 13px; font-weight: 500; margin-top: 2px">R$ 9,57</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Suporte</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 8,54</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Resistência</div><div class="mono" style="font-size: 13px; margin-top: 2px">R$ 9,34</div></div>
+<div><div style="font-size: 11px; color: var(--muted)">Volume</div><div class="mono" style="font-size: 13px; margin-top: 2px">1,80×</div></div>
+</div>
+<div style="font-size: 12px; color: var(--muted)">Posição sugerida: <span style="color: var(--fg); font-weight: 500">zerar posição</span></div>
+</a>
+
+</div>
+
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Comparativo</h2>
+<span style="font-size: 12px; color: var(--muted)">Potencial = (alvo − preço) ÷ preço</span>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 13px">
+<thead>
+<tr style="text-align: left; color: var(--muted); font-size: 12px">
+<th style="padding: 10px 20px; font-weight: 500">Ação</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Preço</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Dia</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Mín–Máx</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: center">Nota</th>
+<th style="padding: 10px 12px; font-weight: 500">Recomendação</th>
+<th style="padding: 10px 12px; font-weight: 500">Tendência</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Compra</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Stop</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Alvo</th>
+<th style="padding: 10px 20px; font-weight: 500; text-align: right">Potencial</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">WEGE3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 52,18</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">+1,42%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">51,55 – 52,75</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">78</span></td>
+<td style="padding: 10px 12px"><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Comprar</span></td>
+<td style="padding: 10px 12px">Forte alta</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 51,66</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 49,05</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 58,44</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+12,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">ITUB4</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 38,74</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">+0,63%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">38,28 – 39,17</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">72</span></td>
+<td style="padding: 10px 12px"><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Comprar</span></td>
+<td style="padding: 10px 12px">Alta</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 38,35</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 36,42</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 43,39</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+12,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">SUZB3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 58,90</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">+0,88%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">58,19 – 59,55</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono up tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">66</span></td>
+<td style="padding: 10px 12px"><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Comprar</span></td>
+<td style="padding: 10px 12px">Alta</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 58,31</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 55,37</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 65,97</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+12,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">BBAS3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 27,15</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">+0,22%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">26,82 – 27,45</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono up tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">61</span></td>
+<td style="padding: 10px 12px"><span class="up tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Manter</span></td>
+<td style="padding: 10px 12px">Alta</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 26,34</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 25,52</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 30,41</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+12,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">ITSA4</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 11,32</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">+0,18%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">11,18 – 11,44</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">59</span></td>
+<td style="padding: 10px 12px"><span class="up tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Manter</span></td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 10,98</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 10,64</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 12,11</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">PETR4</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 44,02</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-0,98%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">43,49 – 44,50</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">55</span></td>
+<td style="padding: 10px 12px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Observar</span></td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 42,70</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 41,38</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 47,10</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">VALE3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 61,45</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-0,41%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">60,71 – 62,13</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">52</span></td>
+<td style="padding: 10px 12px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Observar</span></td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 59,61</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 57,76</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 65,75</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">B3SA3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 13,88</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-0,29%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">13,71 – 14,03</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">49</span></td>
+<td style="padding: 10px 12px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Observar</span></td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 13,46</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 13,05</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 14,85</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">ABEV3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 13,05</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-0,15%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">12,89 – 13,19</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">46</span></td>
+<td style="padding: 10px 12px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Observar</span></td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 12,66</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 12,27</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 13,96</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">BBDC4</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 15,62</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-0,70%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">15,43 – 15,79</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">42</span></td>
+<td style="padding: 10px 12px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Observar</span></td>
+<td style="padding: 10px 12px">Baixa</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 15,15</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 14,68</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 16,71</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">RENT3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 41,20</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-1,85%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">40,71 – 41,65</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono dn tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">36</span></td>
+<td style="padding: 10px 12px"><span class="dn tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Reduzir</span></td>
+<td style="padding: 10px 12px">Baixa</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 39,96</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 38,73</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 44,08</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td style="padding: 10px 20px"><a href="acao-petr4.html" class="mono" style="font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line)">MGLU3</a></td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 8,94</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">-3,12%</td>
+<td class="mono" style="padding: 10px 12px; text-align: right; color: var(--muted)">8,83 – 9,04</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono dn tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">31</span></td>
+<td style="padding: 10px 12px"><span class="dn tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Vender</span></td>
+<td style="padding: 10px 12px">Baixa</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">R$ 8,67</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">R$ 8,40</td>
+<td class="mono pos" style="padding: 10px 12px; text-align: right">R$ 9,57</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right; font-weight: 600">+7,00%</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<p style="margin: 8px 0 0; font-size: 12px; color: var(--muted); text-align: center">Conteúdo gerado por IA a partir de dados do Yahoo Finance. Não é recomendação de investimento.</p>
+</main>
+</div>
+</body>
+</html>

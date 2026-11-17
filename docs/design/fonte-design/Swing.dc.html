@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Swing Trade</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.t-light{--bg:#f7f8fa;--fg:#14171c;--surface:#ffffff;--surface2:#eef0f3;--line:#e2e5ea;--muted:#5d6673;--pos:#047857;--neg:#c81e1e;--su-fg:#047857;--up-fg:#047857;--ne-fg:#b45309;--dn-fg:#c81e1e}
+.t-dark{--bg:#0b0e13;--fg:#e8ebf0;--surface:#12161d;--surface2:#1b2029;--line:#232a35;--muted:#8b95a5;--pos:#34d399;--neg:#f87171;--su-fg:#34d399;--up-fg:#6ee7b7;--ne-fg:#fbbf24;--dn-fg:#f87171}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.su{--tone:#059669;--tone-fg:var(--su-fg)}
+.up{--tone:#10b981;--tone-fg:var(--up-fg)}
+.ne{--tone:#d97706;--tone-fg:var(--ne-fg)}
+.dn{--tone:#dc2626;--tone-fg:var(--dn-fg)}
+.tone-bg{background:color-mix(in srgb,var(--tone) 15%,transparent);color:var(--tone-fg)}
+.tone-fg{color:var(--tone-fg)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:inherit;text-decoration:none}
+.row:hover{background:var(--surface2)}
+.navl:hover{background:var(--surface2)}
+.ghost:hover{background:var(--surface2)}
+summary{cursor:pointer}
+</style>
+</helmet>
+<div class="{{theme}}" style="min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-size: 14px">
+
+<header style="background: var(--surface); border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px">
+<span style="display: inline-flex; width: 32px; height: 32px; border-radius: 8px; align-items: center; justify-content: center; background: #059669; color: #ffffff">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7"></polyline><polyline points="15 7 21 7 21 13"></polyline></svg>
+</span>
+Análise de Ações
+</a>
+<nav aria-label="Principal" style="display: flex; gap: 4px">
+<a href="Main.dc.html" class="navl" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; color: var(--muted)">Painel</a>
+<a href="Swing.dc.html" aria-current="page" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface2)">Swing Trade</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: var(--muted)">usuario@exemplo.com</span>
+<a href="Login.dc.html" class="ghost" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 500">Sair</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 16px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em">Swing Trade · B3</h1>
+<span style="font-size: 13px; color: var(--muted)">Varredura de <span class="mono">16/11/2026 18:47</span></span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Ações varridas</div>
+<div class="mono" style="font-size: 26px; font-weight: 600; margin-top: 6px">90</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">universo de ações líquidas</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Passaram no filtro</div>
+<div class="mono" style="font-size: 26px; font-weight: 600; margin-top: 6px">74</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">liquidez ≥ R$ 20 mi/dia</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Avaliadas pela IA</div>
+<div style="display: flex; align-items: center; gap: 10px; margin-top: 6px"><span class="mono" style="font-size: 26px; font-weight: 600">8</span><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">3 Operar</span></div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">nota ≥ 55 e com setup</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Ibovespa (20 dias)</div>
+<div class="mono pos" style="font-size: 26px; font-weight: 600; margin-top: 6px">+2,35%</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">acima da MM50</div>
+</div>
+</div>
+
+<details style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 14px 20px">
+<summary style="font-size: 14px; font-weight: 600">Como as ações são escolhidas</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 28px; margin-top: 14px; font-size: 13px; line-height: 1.55; color: var(--muted)">
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Pontuação (0–100)</div>Tendência (30), momento (30), força relativa contra o Ibovespa (20) e setup (20). Penalidade de −15 para RSI acima de 75 e para preço mais de 8% acima da MM20.</div>
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Setups</div>Rompimento com volume, pullback na MM20 e tendência de alta. Ações sem setup não vão para a IA.</div>
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Stop e alvos</div>Stop no maior valor entre a mínima de 10 pregões e preço − 2×ATR. Alvo 1 = 2× o risco; alvo 2 = 3× o risco.</div>
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Tamanho da posição</div><span class="mono" style="color: var(--fg)">quantidade = (capital × 1%) ÷ (entrada − stop)</span></div>
+</div>
+</details>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 16px">
+<sc-for list="{{picks}}" as="p" hint-placeholder-count="8">
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#{{p.rank}}</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">{{p.code}}</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">{{p.setup}}</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">{{p.name}}</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="{{p.vCls}} tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">{{p.verdict}}</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">{{p.score}}</span> · conf. {{p.conf}}</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="{{p.sp.area}}" fill="{{p.sp.color}}" fill-opacity="0.1"></path>
+<polyline points="{{p.sp.line}}" fill="none" stroke="{{p.sp.color}}" stroke-width="1.6" vector-effect="non-scaling-stroke"></polyline>
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">{{p.entry}}</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">{{p.stop}}</div><div class="mono neg" style="font-size: 11px">{{p.stopPct}}</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">{{p.t1}}</div><div class="mono pos" style="font-size: 11px">{{p.t1Pct}}</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">{{p.t2}}</div><div class="mono pos" style="font-size: 11px">{{p.t2Pct}}</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<sc-for list="{{p.chips}}" as="ch" hint-placeholder-count="7">
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">{{ch.l}} <span class="mono" style="color: var(--fg)">{{ch.v}}</span></span>
+</sc-for>
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">{{p.tese}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>{{p.gatilho}}</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>{{p.gestao}}</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><sc-for list="{{p.checklist}}" as="i" hint-placeholder-count="3"><li>{{i}}</li></sc-for></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><sc-for list="{{p.riscos}}" as="i" hint-placeholder-count="2"><li>{{i}}</li></sc-for></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><sc-for list="{{p.sinais}}" as="i" hint-placeholder-count="2"><li>{{i}}</li></sc-for></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><sc-for list="{{p.noticias}}" as="i" hint-placeholder-count="2"><li>{{i}}</li></sc-for></ul></div>
+</div>
+</details>
+</article>
+</sc-for>
+</div>
+
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Ranking completo (top 30)</h2>
+<span style="font-size: 12px; color: var(--muted)">Desempate por força relativa</span>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 900px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="text-align: left; color: var(--muted); font-size: 12px">
+<th style="padding: 10px 20px; font-weight: 500">#</th>
+<th style="padding: 10px 12px; font-weight: 500">Ação</th>
+<th style="padding: 10px 12px; font-weight: 500">Setup</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: center">Nota</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Preço</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Stop</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Alvo 2R</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Risco</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">RSI</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">vs Ibov</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Liquidez</th>
+<th style="padding: 10px 20px; font-weight: 500">IA</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{rank}}" as="r" hint-placeholder-count="30">
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">{{r.rank}}</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">{{r.code}}</td>
+<td style="padding: 9px 12px">{{r.setup}}</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono {{r.sCls}} tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">{{r.score}}</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">{{r.price}}</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">{{r.stop}}</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">{{r.t1}}</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">{{r.risk}}</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">{{r.rsi}}</td>
+<td class="mono {{r.rsCls}}" style="padding: 9px 12px; text-align: right">{{r.rs}}</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">{{r.liq}}</td>
+<td style="padding: 9px 20px"><span class="{{r.vCls}}" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">{{r.ia}}</span></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<p style="margin: 8px 0 0; font-size: 12px; color: var(--muted); text-align: center; line-height: 1.6">Swing trade envolve risco de perda. Critérios técnicos sem backtest e vereditos gerados por IA. Não é recomendação de investimento.</p>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":1440,"height":4500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const fmt = (v, d = 2) => v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+    const pct = (v) => (v > 0 ? '+' : v < 0 ? '−' : '') + fmt(Math.abs(v)) + '%';
+    const spark = (seed, last, drift) => {
+      let x = seed; const r = () => { x = (x * 9301 + 49297) % 233280; return x / 233280; };
+      let p = 100; const vals = [];
+      for (let i = 0; i < 60; i++) { p = p * (1 + drift + (r() - 0.5) * 0.03); vals.push(p); }
+      const k = last / vals[59]; const v2 = vals.map((v) => v * k);
+      const w = 300, h = 40, mn = Math.min(...v2), mx = Math.max(...v2), sx = w / 59;
+      const pts = v2.map((v, i) => (i * sx).toFixed(1) + ',' + (h - 3 - (v - mn) / (mx - mn || 1) * (h - 6)).toFixed(1));
+      return { line: pts.join(' '), area: 'M0,' + h + ' L' + pts.join(' L') + ' L' + w + ',' + h + ' Z', color: v2[59] >= v2[0] ? '#10b981' : '#ef4444' };
+    };
+    const vTone = { Operar: 'su', Aguardar: 'ne', Evitar: 'dn' };
+    const scoreCls = (s) => s > 70 ? 'su' : s > 60 ? 'up' : s >= 40 ? 'ne' : 'dn';
+    const bySetup = {
+      'Pullback na MM20': {
+        gatilho: 'Comprar se o próximo pregão fechar acima da máxima do candle de toque na MM20.',
+        gestao: 'Realizar metade no alvo 1 e subir o stop para o preço de entrada; restante no alvo 2.',
+        checklist: ['Preço acima da MM50', 'Toque na MM20 nos últimos 3 pregões', 'RSI entre 50 e 68'],
+        sinais: ['MM20 inclinada para cima', 'Força relativa positiva em 60 dias']
+      },
+      'Rompimento com volume': {
+        gatilho: 'Entrada no fechamento acima da máxima de 20 pregões, com volume ≥ 1,3× a média.',
+        gestao: 'Stop móvel na mínima dos 3 últimos pregões após atingir o alvo 1.',
+        checklist: ['Rompimento confirmado no fechamento', 'Volume acima de 1,3×', 'Sem resistência próxima'],
+        sinais: ['Volume crescente', 'MACD acelerando']
+      },
+      'Tendência de alta': {
+        gatilho: 'Entrada em recuo até a EMA9 com candle de reversão.',
+        gestao: 'Manter enquanto fechar acima da EMA9; sair na perda da MM20.',
+        checklist: ['Preço e MM20 acima da MM50', 'Preço acima da EMA9', 'Distância da MM20 menor que 8%'],
+        sinais: ['Topos e fundos ascendentes', 'Acima do Ibovespa em 20 dias']
+      }
+    };
+    const sel = [
+      ['CXSE3', 'Caixa Seguridade', 'Pullback na MM20', 90, 'Aguardar', 'média', 15.42, 0.36, 61.3, 3.8, 48.2, 1.1, 1.4, 'Seguradora com receita recorrente e dividendos altos. O pullback está bem formado, mas o volume fraco no toque pede confirmação antes da entrada.', ['Resultado do 4º tri pode frustrar', 'Volume abaixo da média'], ['Caixa Seguridade raises payout guidance']],
+      ['EMBR3', 'Embraer', 'Rompimento com volume', 86, 'Operar', 'alta', 68.30, 1.70, 64.8, 6.2, 312.5, 1.8, 3.1, 'Rompeu a máxima de 20 pregões com volume 1,8× a média, puxado por novas encomendas da aviação executiva. Momento e força relativa fortes.', ['Câmbio pode reverter ganhos', 'RSI perto de 70'], ['Embraer books 30 E2 orders at Dubai Airshow']],
+      ['SBSP3', 'Sabesp', 'Tendência de alta', 82, 'Operar', 'média', 121.40, 2.60, 58.4, 4.1, 285.0, 1.2, 2.7, 'Tendência de alta limpa após a privatização, com revisão tarifária favorável. Preço respeita a EMA9 há 12 pregões.', ['Risco regulatório', 'Valuation esticado'], ['Sabesp tariff review approved by regulator']],
+      ['TOTS3', 'Totvs', 'Pullback na MM20', 79, 'Operar', 'média', 41.85, 0.98, 55.2, 2.9, 96.4, 0.9, 2.2, 'Recuo ordenado até a MM20 depois de resultado forte em SaaS. Relação risco/retorno de 1:3 com stop curto.', ['Juros altos afetam múltiplos de tecnologia'], ['Totvs recurring revenue grows 17% year over year']],
+      ['EQTL3', 'Equatorial', 'Tendência de alta', 74, 'Aguardar', 'média', 36.20, 0.71, 66.9, 2.4, 140.8, 1.0, 2.1, 'Tendência firme, mas o preço está 6% acima da MM20; melhor esperar recuo para reduzir o risco.', ['Distância da MM20', 'Alavancagem elevada'], ['Equatorial wins transmission auction lots']],
+      ['PRIO3', 'PRIO', 'Rompimento com volume', 71, 'Aguardar', 'baixa', 44.10, 1.35, 62.0, -0.8, 260.2, 1.5, 3.2, 'O rompimento técnico é válido, mas o Brent em queda enfraquece a tese. Aguardar estabilização do petróleo.', ['Brent em queda', 'Correlação alta com commodities'], ['Oil slips as U.S. crude inventories rise']],
+      ['CPLE6', 'Copel', 'Tendência de alta', 66, 'Evitar', 'baixa', 11.95, 0.24, 71.8, 1.6, 120.3, 0.8, 1.9, 'RSI perto de 72 e preço longe da MM20 indicam movimento esticado. A IA prefere evitar nova entrada agora.', ['Sobrecompra', 'Possível realização'], ['Copel announces share buyback program']],
+      ['RADL3', 'Raia Drogasil', 'Pullback na MM20', 61, 'Evitar', 'baixa', 24.60, 0.62, 50.4, -1.2, 110.7, 0.7, 1.5, 'Força relativa negativa em 20 dias e margens pressionadas. O pullback ocorre em tendência que perde força.', ['Força relativa negativa', 'Competição no varejo farmacêutico'], ['Raia Drogasil margins squeezed by competition']]
+    ];
+    const picks = sel.map((s, i) => {
+      const [code, name, setup, score, verdict, conf, price, atr, rsi, rs, liq, volr, dmm, tese, riscos, noticias] = s;
+      const stop = Math.max(price - 2 * atr, price * 0.94 - i * 0.01);
+      const risk = price - stop, t1 = price + 2 * risk, t2 = price + 3 * risk;
+      const b = bySetup[setup];
+      return {
+        rank: i + 1, code, name, setup, score, verdict, conf, tese, riscos, noticias,
+        vCls: vTone[verdict], gatilho: b.gatilho, gestao: b.gestao, checklist: b.checklist, sinais: b.sinais,
+        sp: spark(91 + i * 17, price, rs > 0 ? 0.003 : 0.0005),
+        entry: 'R$ ' + fmt(price), stop: 'R$ ' + fmt(stop), stopPct: pct(-risk / price * 100),
+        t1: 'R$ ' + fmt(t1), t1Pct: pct(2 * risk / price * 100), t2: 'R$ ' + fmt(t2), t2Pct: pct(3 * risk / price * 100),
+        chips: [
+          { l: 'RSI', v: fmt(rsi, 1) }, { l: 'ATR', v: fmt(atr) }, { l: 'vs Ibov', v: pct(rs) },
+          { l: 'Liquidez', v: 'R$ ' + fmt(liq, 1) + ' mi' }, { l: 'Volume', v: fmt(volr, 1) + '×' },
+          { l: 'dist. MM20', v: pct(dmm) }, { l: 'Horizonte', v: '5–15 pregões' }
+        ],
+        _row: { price, stop, t1, risk: risk / price * 100, rsi, rs, liq }
+      };
+    });
+    const rest = [
+      ['GGBR4', 'Tendência de alta', 60], ['CMIG4', 'Pullback na MM20', 59], ['KLBN11', 'Sem setup', 58], ['VIVT3', 'Tendência de alta', 57],
+      ['TIMS3', 'Sem setup', 56], ['RAIL3', 'Pullback na MM20', 55], ['HYPE3', 'Sem setup', 54], ['BBSE3', 'Tendência de alta', 53],
+      ['ENEV3', 'Sem setup', 52], ['CSMG3', 'Sem setup', 51], ['FLRY3', 'Sem setup', 50], ['MULT3', 'Tendência de alta', 49],
+      ['LREN3', 'Sem setup', 48], ['ASAI3', 'Sem setup', 47], ['SMTO3', 'Sem setup', 46], ['CYRE3', 'Pullback na MM20', 45],
+      ['DIRR3', 'Sem setup', 44], ['POMO4', 'Sem setup', 43], ['VBBR3', 'Sem setup', 42], ['UGPA3', 'Sem setup', 41],
+      ['BRAP4', 'Sem setup', 40], ['EGIE3', 'Sem setup', 39]
+    ];
+    let x = 777; const rnd = () => { x = (x * 9301 + 49297) % 233280; return x / 233280; };
+    const rank = picks.map((p) => ({
+      rank: p.rank, code: p.code, setup: p.setup, score: p.score, sCls: scoreCls(p.score),
+      price: fmt(p._row.price), stop: fmt(p._row.stop), t1: fmt(p._row.t1), risk: fmt(p._row.risk) + '%',
+      rsi: fmt(p._row.rsi, 1), rs: pct(p._row.rs), rsCls: p._row.rs >= 0 ? 'pos' : 'neg', liq: fmt(p._row.liq, 1) + ' mi',
+      ia: p.verdict, vCls: p.vCls + ' tone-bg'
+    })).concat(rest.map((r, i) => {
+      const price = 8 + rnd() * 60, risk = 3 + rnd() * 5, stop = price * (1 - risk / 100), t1 = price * (1 + 2 * risk / 100);
+      const rs = (rnd() - 0.45) * 8;
+      return {
+        rank: i + 9, code: r[0], setup: r[1], score: r[2], sCls: scoreCls(r[2]),
+        price: fmt(price), stop: fmt(stop), t1: fmt(t1), risk: fmt(risk) + '%',
+        rsi: fmt(42 + rnd() * 28, 1), rs: pct(rs), rsCls: rs >= 0 ? 'pos' : 'neg', liq: fmt(25 + rnd() * 200, 1) + ' mi',
+        ia: '—', vCls: ''
+      };
+    }));
+    return { theme: this.props.dark ? 't-dark' : 't-light', picks, rank };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system · Análise de Ações</title>
+<link rel="icon" href="../icones/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 32px 16px 64px; display: flex; flex-direction: column; gap: 40px; }
+  h1 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.02em; }
+  h2 { margin: 0 0 16px; font-size: 18px; font-weight: 600; }
+  h3 { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .grid { display: grid; gap: 16px; }
+  .swatch { overflow: hidden; }
+  .swatch__color { height: 72px; border-bottom: 1px solid var(--line); }
+  .swatch__meta { padding: 10px 12px; font-size: 12px; line-height: 1.5; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .icon { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 14px 8px; font-size: 11px; color: var(--muted); text-align: center; }
+  .icon img { width: 24px; height: 24px; }
+  .t-dark .icon img { filter: invert(1); }
+  .toggle { position: fixed; right: 16px; bottom: 16px; }
+  code { font-family: var(--font-mono); font-size: 12px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; }
+  table.spec { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.spec td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+  <img src="../icones/logo.svg" width="48" height="48" alt="">
+  <div>
+    <h1>Design system</h1>
+    <div style="color: var(--muted); margin-top: 4px">Análise de Ações · tokens, tipografia, ícones e componentes</div>
+  </div>
+</header>
+
+<section>
+  <h2>Princípios</h2>
+  <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr))">
+    <div class="card" style="padding: 16px"><b>Dados em primeiro lugar</b><p style="margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5">Números em Geist Mono com algarismos tabulares.</p></div>
+    <div class="card" style="padding: 16px"><b>Cor com significado</b><p style="margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5">Verde = alta, vermelho = baixa/risco, âmbar = cautela. Nunca decorativa.</p></div>
+    <div class="card" style="padding: 16px"><b>Superfícies discretas</b><p style="margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5">Borda fina e sem sombra; o destaque vem do conteúdo.</p></div>
+    <div class="card" style="padding: 16px"><b>Claro e escuro</b><p style="margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5">Segue <code>prefers-color-scheme</code>.</p></div>
+    <div class="card" style="padding: 16px"><b>Degradação elegante</b><p style="margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5">Campo ausente vira “—”; bloco vazio não aparece.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>Cores de superfície</h2>
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(170px, 1fr))">
+    <div class="card swatch"><div class="swatch__color" style="background: var(--background)"></div><div class="swatch__meta"><b>--background</b><br><span class="mono">#f7f8fa / #0b0e13</span></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: var(--foreground)"></div><div class="swatch__meta"><b>--foreground</b><br><span class="mono">#14171c / #e8ebf0</span></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: var(--surface)"></div><div class="swatch__meta"><b>--surface</b><br><span class="mono">#ffffff / #12161d</span></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: var(--surface-2)"></div><div class="swatch__meta"><b>--surface-2</b><br><span class="mono">#eef0f3 / #1b2029</span></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: var(--line)"></div><div class="swatch__meta"><b>--line</b><br><span class="mono">#e2e5ea / #232a35</span></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: var(--muted)"></div><div class="swatch__meta"><b>--muted</b><br><span class="mono">#5d6673 / #8b95a5</span></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Tons semânticos</h2>
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr))">
+    <div class="card swatch"><div class="swatch__color" style="background: #059669"></div><div class="swatch__meta"><b>.tone-strong-up</b> <span class="mono">#059669</span><br>Forte alta · Comprar · Operar<div class="row" style="margin-top: 8px"><span class="pill su tone-bg">Comprar</span><span class="mono su tone-fg" style="font-weight: 600">78</span></div></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: #10b981"></div><div class="swatch__meta"><b>.tone-up</b> <span class="mono">#10b981</span><br>Alta · Manter<div class="row" style="margin-top: 8px"><span class="pill up tone-bg">Manter</span><span class="mono up tone-fg" style="font-weight: 600">64</span></div></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: #d97706"></div><div class="swatch__meta"><b>.tone-neutral</b> <span class="mono">#d97706</span><br>Lateral · Observar · Aguardar<div class="row" style="margin-top: 8px"><span class="pill ne tone-bg">Observar</span><span class="mono ne tone-fg" style="font-weight: 600">55</span></div></div></div>
+    <div class="card swatch"><div class="swatch__color" style="background: #dc2626"></div><div class="swatch__meta"><b>.tone-down</b> <span class="mono">#dc2626</span><br>Baixa · Reduzir · Vender · Evitar<div class="row" style="margin-top: 8px"><span class="pill dn tone-bg">Vender</span><span class="mono dn tone-fg" style="font-weight: 600">31</span></div></div></div>
+  </div>
+  <p style="font-size: 12px; color: var(--muted); margin: 12px 0 0">Fundo do tom: <code>color-mix(in srgb, var(--tone) 15%, transparent)</code>. No tema claro o texto usa um tom mais escuro (<code>--su-fg</code>, <code>--ne-fg</code>…) para manter contraste de 4,5:1.</p>
+</section>
+
+<section>
+  <h2>Tipografia</h2>
+  <div class="card" style="padding: 0">
+    <table class="spec">
+      <tr><td style="border-top: 0; width: 220px; color: var(--muted)">Título de página</td><td style="border-top: 0"><span style="font-size: 24px; font-weight: 600; letter-spacing: -0.02em">Painel do dia</span></td><td style="border-top: 0"><code>Geist 24/600 · -0.02em</code></td></tr>
+      <tr><td style="color: var(--muted)">Código da ação (detalhe)</td><td><span class="mono" style="font-size: 30px; font-weight: 600">PETR4</span></td><td><code>Geist Mono 30/600</code></td></tr>
+      <tr><td style="color: var(--muted)">Valor de KPI</td><td><span class="mono" style="font-size: 26px; font-weight: 600">R$ 44,02</span></td><td><code>Geist Mono 26/600 tabular</code></td></tr>
+      <tr><td style="color: var(--muted)">Título de cartão</td><td><span style="font-size: 14px; font-weight: 600">Pontos de entrada e saída</span></td><td><code>Geist 14/600</code></td></tr>
+      <tr><td style="color: var(--muted)">Corpo de relatório</td><td><span style="font-size: 14px; line-height: 1.65">O papel fechou em queda de 0,98%, acompanhando o recuo do Brent.</span></td><td><code>Geist 14 · 1.65</code></td></tr>
+      <tr><td style="color: var(--muted)">Rótulo</td><td><span style="font-size: 12px; color: var(--muted)">Compra ideal</span></td><td><code>Geist 12 · muted</code></td></tr>
+      <tr><td style="color: var(--muted)">Número em tabela</td><td><span class="mono" style="font-size: 13px">+1,25%   −0,98%   601,5 bi</span></td><td><code>Geist Mono 13 tabular</code></td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Ícones</h2>
+  <p style="margin: -6px 0 14px; font-size: 13px; color: var(--muted)">Traço de 2 px, 24×24, <code>stroke="currentColor"</code>: herdam a cor do texto. Arquivos em <code>/icones</code>.</p>
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(110px, 1fr))">
+    <div class="card icon"><img src="../icones/logo.svg" alt="" style="width: 32px; height: 32px; filter: none">logo</div>
+    <div class="card icon"><img src="../icones/trend-up.svg" alt="">trend-up</div>
+    <div class="card icon"><img src="../icones/trend-down.svg" alt="">trend-down</div>
+    <div class="card icon"><img src="../icones/trend-flat.svg" alt="">trend-flat</div>
+    <div class="card icon"><img src="../icones/chart-line.svg" alt="">chart-line</div>
+    <div class="card icon"><img src="../icones/target.svg" alt="">target</div>
+    <div class="card icon"><img src="../icones/shield.svg" alt="">shield</div>
+    <div class="card icon"><img src="../icones/news.svg" alt="">news</div>
+    <div class="card icon"><img src="../icones/sparkles.svg" alt="">sparkles</div>
+    <div class="card icon"><img src="../icones/alert-circle.svg" alt="">alert-circle</div>
+    <div class="card icon"><img src="../icones/alert-triangle.svg" alt="">alert-triangle</div>
+    <div class="card icon"><img src="../icones/check.svg" alt="">check</div>
+    <div class="card icon"><img src="../icones/x.svg" alt="">x</div>
+    <div class="card icon"><img src="../icones/arrow-left.svg" alt="">arrow-left</div>
+    <div class="card icon"><img src="../icones/chevron-down.svg" alt="">chevron-down</div>
+    <div class="card icon"><img src="../icones/chevron-right.svg" alt="">chevron-right</div>
+    <div class="card icon"><img src="../icones/refresh.svg" alt="">refresh</div>
+    <div class="card icon"><img src="../icones/user.svg" alt="">user</div>
+    <div class="card icon"><img src="../icones/log-out.svg" alt="">log-out</div>
+  </div>
+</section>
+
+<section>
+  <h2>Componentes</h2>
+  <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(360px, 1fr))">
+
+    <div class="card" style="padding: 20px">
+      <h3>ScoreBadge</h3>
+      <div class="row">
+        <span class="score-badge su tone-bg">78</span>
+        <span class="score-badge up tone-bg">64</span>
+        <span class="score-badge ne tone-bg">55</span>
+        <span class="score-badge dn tone-bg">31</span>
+        <span class="score-badge score-badge--large ne tone-bg">55</span>
+      </div>
+      <p style="font-size: 12px; color: var(--muted); margin: 12px 0 0">Normal 40×32 · grande 64×56. Faixas: &gt;70 Forte alta · &gt;60 Alta · 40–60 Lateral · &lt;40 Baixa.</p>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Pílulas e contadores</h3>
+      <div class="row">
+        <span class="pill su tone-bg">Operar</span>
+        <span class="pill ne tone-bg">Aguardar</span>
+        <span class="pill dn tone-bg">Evitar</span>
+        <span class="pill su tone-bg" style="font-weight: 500">Comprar:&nbsp;<b class="mono">3</b></span>
+        <span class="pill ne tone-bg" style="font-weight: 500">Observar:&nbsp;<b class="mono">5</b></span>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Chip</h3>
+      <div class="row" style="gap: 6px">
+        <span class="chip">RSI <b class="mono">61,3</b></span>
+        <span class="chip">ATR <b class="mono">0,36</b></span>
+        <span class="chip">vs Ibov <b class="mono">+3,80%</b></span>
+        <span class="chip">Tendência: <b>Alta</b></span>
+        <span class="chip">Médias alinhadas (alta)</span>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Level (Swing)</h3>
+      <div class="grid" style="grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+        <div class="level"><div class="level__label">Entrada</div><div class="level__value">15,42</div></div>
+        <div class="level"><div class="level__label">Stop</div><div class="level__value">14,70</div><div class="level__pct neg">−4,67%</div></div>
+        <div class="level"><div class="level__label">Alvo 1</div><div class="level__value">16,86</div><div class="level__pct pos">+9,34%</div></div>
+        <div class="level"><div class="level__label">Alvo 2</div><div class="level__value">17,58</div><div class="level__pct pos">+14,01%</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Kpi</h3>
+      <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div class="kpi"><div class="kpi__label">Ações analisadas</div><div class="kpi__value">12</div></div>
+        <div class="kpi"><div class="kpi__label">Ibovespa (20 dias)</div><div class="kpi__value pos">+2,35%</div><div class="kpi__hint">acima da MM50</div></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Sparkline</h3>
+      <svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true"><path d="M0,40 L0,30 L30,26 L60,28 L90,20 L120,22 L150,16 L180,18 L210,12 L240,14 L270,8 L300,5 L300,40 Z" fill="#10b981" fill-opacity=".1"/><polyline points="0,30 30,26 60,28 90,20 120,22 150,16 180,18 210,12 240,14 270,8 300,5" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>
+      <svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="40" aria-hidden="true" style="margin-top: 8px"><path d="M0,40 L0,8 L30,12 L60,10 L90,18 L120,16 L150,22 L180,20 L210,27 L240,25 L270,32 L300,34 L300,40 Z" fill="#ef4444" fill-opacity=".1"/><polyline points="0,8 30,12 60,10 90,18 120,16 150,22 180,20 210,27 240,25 270,32 300,34" fill="none" stroke="#ef4444" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg>
+      <p style="font-size: 12px; color: var(--muted); margin: 8px 0 0">Verde se subiu no período, vermelho se caiu. Área com 10% de opacidade, sem eixos.</p>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Campo, botões e alerta</h3>
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 500">E-mail<input class="input" type="email" placeholder="voce@exemplo.com"></label>
+        <div class="alert-error" role="alert"><img src="../icones/alert-circle.svg" width="16" height="16" alt="" style="filter: invert(17%) sepia(90%) saturate(4000%) hue-rotate(350deg)">E-mail ou senha inválidos.</div>
+        <div class="row"><button class="btn-primary">Entrar</button><button class="btn-primary" disabled>Entrando…</button><button class="btn-ghost">Sair</button></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Composição da nota</h3>
+      <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px">
+        <div><div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Técnicos</span><span class="mono" style="color: var(--muted)">35%</span></div><div class="bar"><span style="width: 35%"></span></div></div>
+        <div><div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Fundamentos</span><span class="mono" style="color: var(--muted)">30%</span></div><div class="bar"><span style="width: 30%"></span></div></div>
+        <div><div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Mercado</span><span class="mono" style="color: var(--muted)">20%</span></div><div class="bar"><span style="width: 20%"></span></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Esqueleto (carregando)</h3>
+      <div aria-busy="true" aria-label="Carregando" style="display: flex; flex-direction: column; gap: 10px">
+        <div class="skeleton" style="height: 20px; width: 40%"></div>
+        <div class="skeleton" style="height: 64px"></div>
+        <div class="skeleton" style="height: 64px"></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px">
+      <h3>Estado vazio</h3>
+      <div style="text-align: center; padding: 16px 8px">
+        <img src="../icones/chart-line.svg" width="28" height="28" alt="" style="opacity: .5">
+        <div style="font-weight: 600; margin-top: 8px">Nenhuma análise ainda</div>
+        <div style="font-size: 13px; color: var(--muted); margin-top: 4px">Rode o workflow em GitHub → Actions → Análise diária de ações.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Espaçamento, forma e layout</h2>
+  <div class="card" style="padding: 0">
+    <table class="spec">
+      <tr><td style="border-top: 0; color: var(--muted); width: 260px">Largura do conteúdo</td><td style="border-top: 0" class="mono">1280 px (max-w-7xl), margem lateral 16 px</td></tr>
+      <tr><td style="color: var(--muted)">Respiro vertical da página</td><td class="mono">32 px (py-8)</td></tr>
+      <tr><td style="color: var(--muted)">Espaço entre cartões</td><td class="mono">16 px · KPIs 12 px</td></tr>
+      <tr><td style="color: var(--muted)">Padding de cartão</td><td class="mono">20 px · KPIs 16 px</td></tr>
+      <tr><td style="color: var(--muted)">Raios</td><td class="mono">cartão 12 · campo/botão/nível 8 · etiqueta 6 · pílula 999</td></tr>
+      <tr><td style="color: var(--muted)">Pontos de quebra</td><td class="mono">sm 640 · md 768 · lg 1024 · xl 1280</td></tr>
+      <tr><td style="color: var(--muted)">Grade dos cards (Painel)</td><td class="mono">1 col · 2 a partir de 640 · 3 a partir de 1280</td></tr>
+      <tr><td style="color: var(--muted)">Grade dos cards (Swing)</td><td class="mono">1 col até 1024 · 2 acima</td></tr>
+    </table>
+  </div>
+</section>
+
+</div>
+<button class="btn-ghost toggle" onclick="var r=document.documentElement;r.classList.toggle('t-dark');r.classList.toggle('t-light', !r.classList.contains('t-dark'))" style="background: var(--surface)">Alternar tema</button>
+</body>
+</html>

@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swing Trade</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.t-light{--bg:#f7f8fa;--fg:#14171c;--surface:#ffffff;--surface2:#eef0f3;--line:#e2e5ea;--muted:#5d6673;--pos:#047857;--neg:#c81e1e;--su-fg:#047857;--up-fg:#047857;--ne-fg:#b45309;--dn-fg:#c81e1e}
+.t-dark{--bg:#0b0e13;--fg:#e8ebf0;--surface:#12161d;--surface2:#1b2029;--line:#232a35;--muted:#8b95a5;--pos:#34d399;--neg:#f87171;--su-fg:#34d399;--up-fg:#6ee7b7;--ne-fg:#fbbf24;--dn-fg:#f87171}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.su{--tone:#059669;--tone-fg:var(--su-fg)}
+.up{--tone:#10b981;--tone-fg:var(--up-fg)}
+.ne{--tone:#d97706;--tone-fg:var(--ne-fg)}
+.dn{--tone:#dc2626;--tone-fg:var(--dn-fg)}
+.tone-bg{background:color-mix(in srgb,var(--tone) 15%,transparent);color:var(--tone-fg)}
+.tone-fg{color:var(--tone-fg)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:inherit;text-decoration:none}
+.row:hover{background:var(--surface2)}
+.navl:hover{background:var(--surface2)}
+.ghost:hover{background:var(--surface2)}
+summary{cursor:pointer}
+</style>
+</head>
+<body>
+<div class="t-dark" style="min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-size: 14px">
+
+<header style="background: var(--surface); border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<a href="painel.html" style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px">
+<span style="display: inline-flex; width: 32px; height: 32px; border-radius: 8px; align-items: center; justify-content: center; background: #059669; color: #ffffff">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7" /><polyline points="15 7 21 7 21 13" /></svg>
+</span>
+Análise de Ações
+</a>
+<nav aria-label="Principal" style="display: flex; gap: 4px">
+<a href="painel.html" class="navl" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; color: var(--muted)">Painel</a>
+<a href="swing.html" aria-current="page" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface2)">Swing Trade</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: var(--muted)">usuario@exemplo.com</span>
+<a href="login.html" class="ghost" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 500">Sair</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 16px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em">Swing Trade · B3</h1>
+<span style="font-size: 13px; color: var(--muted)">Varredura de <span class="mono">16/11/2026 18:47</span></span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px">
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Ações varridas</div>
+<div class="mono" style="font-size: 26px; font-weight: 600; margin-top: 6px">90</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">universo de ações líquidas</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Passaram no filtro</div>
+<div class="mono" style="font-size: 26px; font-weight: 600; margin-top: 6px">74</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">liquidez ≥ R$ 20 mi/dia</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Avaliadas pela IA</div>
+<div style="display: flex; align-items: center; gap: 10px; margin-top: 6px"><span class="mono" style="font-size: 26px; font-weight: 600">8</span><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">3 Operar</span></div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">nota ≥ 55 e com setup</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 16px">
+<div style="font-size: 12px; color: var(--muted)">Ibovespa (20 dias)</div>
+<div class="mono pos" style="font-size: 26px; font-weight: 600; margin-top: 6px">+2,35%</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 2px">acima da MM50</div>
+</div>
+</div>
+
+<details style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 14px 20px">
+<summary style="font-size: 14px; font-weight: 600">Como as ações são escolhidas</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 28px; margin-top: 14px; font-size: 13px; line-height: 1.55; color: var(--muted)">
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Pontuação (0–100)</div>Tendência (30), momento (30), força relativa contra o Ibovespa (20) e setup (20). Penalidade de −15 para RSI acima de 75 e para preço mais de 8% acima da MM20.</div>
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Setups</div>Rompimento com volume, pullback na MM20 e tendência de alta. Ações sem setup não vão para a IA.</div>
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Stop e alvos</div>Stop no maior valor entre a mínima de 10 pregões e preço − 2×ATR. Alvo 1 = 2× o risco; alvo 2 = 3× o risco.</div>
+<div><div style="font-weight: 600; color: var(--fg); margin-bottom: 4px">Tamanho da posição</div><span class="mono" style="color: var(--fg)">quantidade = (capital × 1%) ÷ (entrada − stop)</span></div>
+</div>
+</details>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 520px), 1fr)); gap: 16px">
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#1</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">CXSE3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Pullback na MM20</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Caixa Seguridade</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="ne tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Aguardar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">90</span> · conf. média</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,37.0 L5.1,35.3 L10.2,32.8 L15.3,33.3 L20.3,30.8 L25.4,28.8 L30.5,28.2 L35.6,28.7 L40.7,30.3 L45.8,28.0 L50.8,28.4 L55.9,30.0 L61.0,27.8 L66.1,27.9 L71.2,28.5 L76.3,26.5 L81.4,24.1 L86.4,25.6 L91.5,26.6 L96.6,27.0 L101.7,24.4 L106.8,24.4 L111.9,26.2 L116.9,27.0 L122.0,24.9 L127.1,24.5 L132.2,24.7 L137.3,22.0 L142.4,23.7 L147.5,21.8 L152.5,23.0 L157.6,24.1 L162.7,21.6 L167.8,19.4 L172.9,20.0 L178.0,21.4 L183.1,21.1 L188.1,19.3 L193.2,16.9 L198.3,17.0 L203.4,18.7 L208.5,17.9 L213.6,19.6 L218.6,18.7 L223.7,17.7 L228.8,15.0 L233.9,13.4 L239.0,13.3 L244.1,13.5 L249.2,10.8 L254.2,10.6 L259.3,8.5 L264.4,7.5 L269.5,9.4 L274.6,8.1 L279.7,9.5 L284.7,7.9 L289.8,8.4 L294.9,5.2 L300.0,3.0 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,37.0 5.1,35.3 10.2,32.8 15.3,33.3 20.3,30.8 25.4,28.8 30.5,28.2 35.6,28.7 40.7,30.3 45.8,28.0 50.8,28.4 55.9,30.0 61.0,27.8 66.1,27.9 71.2,28.5 76.3,26.5 81.4,24.1 86.4,25.6 91.5,26.6 96.6,27.0 101.7,24.4 106.8,24.4 111.9,26.2 116.9,27.0 122.0,24.9 127.1,24.5 132.2,24.7 137.3,22.0 142.4,23.7 147.5,21.8 152.5,23.0 157.6,24.1 162.7,21.6 167.8,19.4 172.9,20.0 178.0,21.4 183.1,21.1 188.1,19.3 193.2,16.9 198.3,17.0 203.4,18.7 208.5,17.9 213.6,19.6 218.6,18.7 223.7,17.7 228.8,15.0 233.9,13.4 239.0,13.3 244.1,13.5 249.2,10.8 254.2,10.6 259.3,8.5 264.4,7.5 269.5,9.4 274.6,8.1 279.7,9.5 284.7,7.9 289.8,8.4 294.9,5.2 300.0,3.0" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 15,42</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 14,70</div><div class="mono neg" style="font-size: 11px">−4,67%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 16,86</div><div class="mono pos" style="font-size: 11px">+9,34%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 17,58</div><div class="mono pos" style="font-size: 11px">+14,01%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">61,3</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">0,36</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">+3,80%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 48,2 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">1,1×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+1,40%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">Seguradora com receita recorrente e dividendos altos. O pullback está bem formado, mas o volume fraco no toque pede confirmação antes da entrada.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Comprar se o próximo pregão fechar acima da máxima do candle de toque na MM20.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Realizar metade no alvo 1 e subir o stop para o preço de entrada; restante no alvo 2.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Preço acima da MM50</li><li>Toque na MM20 nos últimos 3 pregões</li><li>RSI entre 50 e 68</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Resultado do 4º tri pode frustrar</li><li>Volume abaixo da média</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>MM20 inclinada para cima</li><li>Força relativa positiva em 60 dias</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Caixa Seguridade raises payout guidance</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#2</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">EMBR3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Rompimento com volume</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Embraer</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="su tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Operar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">86</span> · conf. alta</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,37.0 L5.1,31.3 L10.2,30.7 L15.3,25.1 L20.3,29.0 L25.4,24.0 L30.5,22.9 L35.6,17.3 L40.7,14.0 L45.8,12.0 L50.8,13.8 L55.9,14.4 L61.0,12.2 L66.1,13.8 L71.2,16.1 L76.3,9.9 L81.4,9.6 L86.4,6.8 L91.5,9.5 L96.6,11.6 L101.7,13.8 L106.8,12.8 L111.9,7.0 L116.9,9.1 L122.0,8.6 L127.1,11.4 L132.2,14.6 L137.3,14.3 L142.4,16.9 L147.5,18.2 L152.5,13.5 L157.6,13.5 L162.7,15.7 L167.8,18.4 L172.9,19.2 L178.0,20.8 L183.1,17.8 L188.1,18.6 L193.2,14.0 L198.3,8.4 L203.4,3.9 L208.5,3.8 L213.6,4.8 L218.6,6.6 L223.7,6.8 L228.8,9.1 L233.9,3.0 L239.0,5.8 L244.1,9.9 L249.2,9.2 L254.2,12.1 L259.3,14.3 L264.4,17.1 L269.5,13.6 L274.6,16.1 L279.7,16.5 L284.7,16.4 L289.8,17.3 L294.9,15.3 L300.0,13.7 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,37.0 5.1,31.3 10.2,30.7 15.3,25.1 20.3,29.0 25.4,24.0 30.5,22.9 35.6,17.3 40.7,14.0 45.8,12.0 50.8,13.8 55.9,14.4 61.0,12.2 66.1,13.8 71.2,16.1 76.3,9.9 81.4,9.6 86.4,6.8 91.5,9.5 96.6,11.6 101.7,13.8 106.8,12.8 111.9,7.0 116.9,9.1 122.0,8.6 127.1,11.4 132.2,14.6 137.3,14.3 142.4,16.9 147.5,18.2 152.5,13.5 157.6,13.5 162.7,15.7 167.8,18.4 172.9,19.2 178.0,20.8 183.1,17.8 188.1,18.6 193.2,14.0 198.3,8.4 203.4,3.9 208.5,3.8 213.6,4.8 218.6,6.6 223.7,6.8 228.8,9.1 233.9,3.0 239.0,5.8 244.1,9.9 249.2,9.2 254.2,12.1 259.3,14.3 264.4,17.1 269.5,13.6 274.6,16.1 279.7,16.5 284.7,16.4 289.8,17.3 294.9,15.3 300.0,13.7" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 68,30</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 64,90</div><div class="mono neg" style="font-size: 11px">−4,98%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 75,10</div><div class="mono pos" style="font-size: 11px">+9,96%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 78,50</div><div class="mono pos" style="font-size: 11px">+14,93%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">64,8</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">1,70</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">+6,20%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 312,5 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">1,8×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+3,10%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">Rompeu a máxima de 20 pregões com volume 1,8× a média, puxado por novas encomendas da aviação executiva. Momento e força relativa fortes.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Entrada no fechamento acima da máxima de 20 pregões, com volume ≥ 1,3× a média.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Stop móvel na mínima dos 3 últimos pregões após atingir o alvo 1.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Rompimento confirmado no fechamento</li><li>Volume acima de 1,3×</li><li>Sem resistência próxima</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Câmbio pode reverter ganhos</li><li>RSI perto de 70</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>Volume crescente</li><li>MACD acelerando</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Embraer books 30 E2 orders at Dubai Airshow</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#3</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">SBSP3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Tendência de alta</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Sabesp</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="su tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Operar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">82</span> · conf. média</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,35.9 L5.1,37.0 L10.2,33.8 L15.3,32.6 L20.3,34.3 L25.4,31.1 L30.5,30.5 L35.6,29.3 L40.7,29.4 L45.8,30.1 L50.8,31.5 L55.9,30.4 L61.0,30.6 L66.1,32.1 L71.2,33.9 L76.3,35.2 L81.4,32.0 L86.4,33.0 L91.5,34.7 L96.6,36.4 L101.7,36.2 L106.8,35.1 L111.9,32.4 L116.9,33.7 L122.0,35.6 L127.1,33.4 L132.2,31.2 L137.3,28.3 L142.4,29.3 L147.5,27.2 L152.5,26.2 L157.6,25.0 L162.7,24.5 L167.8,24.3 L172.9,24.6 L178.0,24.8 L183.1,21.7 L188.1,18.8 L193.2,16.3 L198.3,15.7 L203.4,14.6 L208.5,15.3 L213.6,14.6 L218.6,11.5 L223.7,13.1 L228.8,12.8 L233.9,13.7 L239.0,11.0 L244.1,9.3 L249.2,11.6 L254.2,9.1 L259.3,7.8 L264.4,6.1 L269.5,6.0 L274.6,4.2 L279.7,3.0 L284.7,4.8 L289.8,5.4 L294.9,6.7 L300.0,7.3 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,35.9 5.1,37.0 10.2,33.8 15.3,32.6 20.3,34.3 25.4,31.1 30.5,30.5 35.6,29.3 40.7,29.4 45.8,30.1 50.8,31.5 55.9,30.4 61.0,30.6 66.1,32.1 71.2,33.9 76.3,35.2 81.4,32.0 86.4,33.0 91.5,34.7 96.6,36.4 101.7,36.2 106.8,35.1 111.9,32.4 116.9,33.7 122.0,35.6 127.1,33.4 132.2,31.2 137.3,28.3 142.4,29.3 147.5,27.2 152.5,26.2 157.6,25.0 162.7,24.5 167.8,24.3 172.9,24.6 178.0,24.8 183.1,21.7 188.1,18.8 193.2,16.3 198.3,15.7 203.4,14.6 208.5,15.3 213.6,14.6 218.6,11.5 223.7,13.1 228.8,12.8 233.9,13.7 239.0,11.0 244.1,9.3 249.2,11.6 254.2,9.1 259.3,7.8 264.4,6.1 269.5,6.0 274.6,4.2 279.7,3.0 284.7,4.8 289.8,5.4 294.9,6.7 300.0,7.3" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 121,40</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 116,20</div><div class="mono neg" style="font-size: 11px">−4,28%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 131,80</div><div class="mono pos" style="font-size: 11px">+8,57%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 137,00</div><div class="mono pos" style="font-size: 11px">+12,85%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">58,4</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">2,60</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">+4,10%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 285,0 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">1,2×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+2,70%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">Tendência de alta limpa após a privatização, com revisão tarifária favorável. Preço respeita a EMA9 há 12 pregões.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Entrada em recuo até a EMA9 com candle de reversão.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Manter enquanto fechar acima da EMA9; sair na perda da MM20.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Preço e MM20 acima da MM50</li><li>Preço acima da EMA9</li><li>Distância da MM20 menor que 8%</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Risco regulatório</li><li>Valuation esticado</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>Topos e fundos ascendentes</li><li>Acima do Ibovespa em 20 dias</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Sabesp tariff review approved by regulator</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#4</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">TOTS3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Pullback na MM20</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Totvs</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="su tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Operar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">79</span> · conf. média</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,30.3 L5.1,30.3 L10.2,29.5 L15.3,30.4 L20.3,31.8 L25.4,34.3 L30.5,33.6 L35.6,34.5 L40.7,37.0 L45.8,33.1 L50.8,35.4 L55.9,32.2 L61.0,34.1 L66.1,36.8 L71.2,32.9 L76.3,33.2 L81.4,32.6 L86.4,29.9 L91.5,32.2 L96.6,28.4 L101.7,26.3 L106.8,24.2 L111.9,21.3 L116.9,23.2 L122.0,21.2 L127.1,20.8 L132.2,19.9 L137.3,20.1 L142.4,20.6 L147.5,21.6 L152.5,22.6 L157.6,19.4 L162.7,16.7 L167.8,14.4 L172.9,14.4 L178.0,13.8 L183.1,15.4 L188.1,15.2 L193.2,12.2 L198.3,14.8 L203.4,15.2 L208.5,17.2 L213.6,14.6 L218.6,13.3 L223.7,9.4 L228.8,7.1 L233.9,6.3 L239.0,5.0 L244.1,5.6 L249.2,4.2 L254.2,3.5 L259.3,6.5 L264.4,8.0 L269.5,10.2 L274.6,11.7 L279.7,8.6 L284.7,5.4 L289.8,6.1 L294.9,3.0 L300.0,5.6 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,30.3 5.1,30.3 10.2,29.5 15.3,30.4 20.3,31.8 25.4,34.3 30.5,33.6 35.6,34.5 40.7,37.0 45.8,33.1 50.8,35.4 55.9,32.2 61.0,34.1 66.1,36.8 71.2,32.9 76.3,33.2 81.4,32.6 86.4,29.9 91.5,32.2 96.6,28.4 101.7,26.3 106.8,24.2 111.9,21.3 116.9,23.2 122.0,21.2 127.1,20.8 132.2,19.9 137.3,20.1 142.4,20.6 147.5,21.6 152.5,22.6 157.6,19.4 162.7,16.7 167.8,14.4 172.9,14.4 178.0,13.8 183.1,15.4 188.1,15.2 193.2,12.2 198.3,14.8 203.4,15.2 208.5,17.2 213.6,14.6 218.6,13.3 223.7,9.4 228.8,7.1 233.9,6.3 239.0,5.0 244.1,5.6 249.2,4.2 254.2,3.5 259.3,6.5 264.4,8.0 269.5,10.2 274.6,11.7 279.7,8.6 284.7,5.4 289.8,6.1 294.9,3.0 300.0,5.6" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 41,85</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 39,89</div><div class="mono neg" style="font-size: 11px">−4,68%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 45,77</div><div class="mono pos" style="font-size: 11px">+9,37%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 47,73</div><div class="mono pos" style="font-size: 11px">+14,05%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">55,2</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">0,98</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">+2,90%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 96,4 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">0,9×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+2,20%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">Recuo ordenado até a MM20 depois de resultado forte em SaaS. Relação risco/retorno de 1:3 com stop curto.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Comprar se o próximo pregão fechar acima da máxima do candle de toque na MM20.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Realizar metade no alvo 1 e subir o stop para o preço de entrada; restante no alvo 2.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Preço acima da MM50</li><li>Toque na MM20 nos últimos 3 pregões</li><li>RSI entre 50 e 68</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Juros altos afetam múltiplos de tecnologia</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>MM20 inclinada para cima</li><li>Força relativa positiva em 60 dias</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Totvs recurring revenue grows 17% year over year</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#5</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">EQTL3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Tendência de alta</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Equatorial</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="ne tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Aguardar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">74</span> · conf. média</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,36.4 L5.1,35.4 L10.2,37.0 L15.3,34.7 L20.3,35.3 L25.4,36.5 L30.5,36.1 L35.6,33.8 L40.7,32.5 L45.8,31.3 L50.8,28.6 L55.9,29.9 L61.0,27.7 L66.1,25.4 L71.2,23.2 L76.3,22.6 L81.4,24.4 L86.4,24.6 L91.5,26.4 L96.6,24.3 L101.7,21.7 L106.8,19.8 L111.9,18.2 L116.9,19.6 L122.0,20.2 L127.1,21.6 L132.2,22.3 L137.3,20.1 L142.4,20.0 L147.5,18.4 L152.5,15.6 L157.6,17.3 L162.7,18.9 L167.8,20.8 L172.9,20.6 L178.0,19.7 L183.1,19.6 L188.1,16.7 L193.2,14.9 L198.3,13.8 L203.4,15.3 L208.5,17.3 L213.6,14.4 L218.6,15.3 L223.7,13.8 L228.8,10.9 L233.9,9.0 L239.0,9.6 L244.1,6.7 L249.2,8.0 L254.2,9.2 L259.3,9.1 L264.4,7.3 L269.5,5.3 L274.6,3.5 L279.7,5.4 L284.7,4.8 L289.8,5.2 L294.9,5.2 L300.0,3.0 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,36.4 5.1,35.4 10.2,37.0 15.3,34.7 20.3,35.3 25.4,36.5 30.5,36.1 35.6,33.8 40.7,32.5 45.8,31.3 50.8,28.6 55.9,29.9 61.0,27.7 66.1,25.4 71.2,23.2 76.3,22.6 81.4,24.4 86.4,24.6 91.5,26.4 96.6,24.3 101.7,21.7 106.8,19.8 111.9,18.2 116.9,19.6 122.0,20.2 127.1,21.6 132.2,22.3 137.3,20.1 142.4,20.0 147.5,18.4 152.5,15.6 157.6,17.3 162.7,18.9 167.8,20.8 172.9,20.6 178.0,19.7 183.1,19.6 188.1,16.7 193.2,14.9 198.3,13.8 203.4,15.3 208.5,17.3 213.6,14.4 218.6,15.3 223.7,13.8 228.8,10.9 233.9,9.0 239.0,9.6 244.1,6.7 249.2,8.0 254.2,9.2 259.3,9.1 264.4,7.3 269.5,5.3 274.6,3.5 279.7,5.4 284.7,4.8 289.8,5.2 294.9,5.2 300.0,3.0" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 36,20</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 34,78</div><div class="mono neg" style="font-size: 11px">−3,92%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 39,04</div><div class="mono pos" style="font-size: 11px">+7,85%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 40,46</div><div class="mono pos" style="font-size: 11px">+11,77%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">66,9</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">0,71</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">+2,40%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 140,8 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">1,0×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+2,10%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">Tendência firme, mas o preço está 6% acima da MM20; melhor esperar recuo para reduzir o risco.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Entrada em recuo até a EMA9 com candle de reversão.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Manter enquanto fechar acima da EMA9; sair na perda da MM20.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Preço e MM20 acima da MM50</li><li>Preço acima da EMA9</li><li>Distância da MM20 menor que 8%</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Distância da MM20</li><li>Alavancagem elevada</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>Topos e fundos ascendentes</li><li>Acima do Ibovespa em 20 dias</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Equatorial wins transmission auction lots</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#6</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">PRIO3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Rompimento com volume</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">PRIO</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="ne tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Aguardar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">71</span> · conf. baixa</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,36.7 L5.1,34.0 L10.2,33.4 L15.3,32.7 L20.3,33.6 L25.4,35.8 L30.5,35.8 L35.6,35.0 L40.7,36.1 L45.8,37.0 L50.8,33.7 L55.9,34.5 L61.0,33.3 L66.1,31.1 L71.2,28.9 L76.3,27.1 L81.4,26.5 L86.4,23.2 L91.5,19.1 L96.6,17.2 L101.7,19.5 L106.8,16.0 L111.9,14.6 L116.9,17.9 L122.0,14.6 L127.1,12.2 L132.2,8.3 L137.3,9.5 L142.4,9.2 L147.5,11.3 L152.5,9.8 L157.6,11.5 L162.7,12.6 L167.8,14.0 L172.9,14.1 L178.0,12.1 L183.1,10.6 L188.1,10.2 L193.2,7.9 L198.3,10.6 L203.4,7.4 L208.5,4.1 L213.6,6.5 L218.6,3.0 L223.7,3.0 L228.8,5.3 L233.9,9.2 L239.0,13.2 L244.1,12.0 L249.2,10.3 L254.2,7.1 L259.3,4.2 L264.4,5.7 L269.5,5.9 L274.6,7.9 L279.7,9.7 L284.7,11.9 L289.8,13.2 L294.9,8.9 L300.0,8.2 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,36.7 5.1,34.0 10.2,33.4 15.3,32.7 20.3,33.6 25.4,35.8 30.5,35.8 35.6,35.0 40.7,36.1 45.8,37.0 50.8,33.7 55.9,34.5 61.0,33.3 66.1,31.1 71.2,28.9 76.3,27.1 81.4,26.5 86.4,23.2 91.5,19.1 96.6,17.2 101.7,19.5 106.8,16.0 111.9,14.6 116.9,17.9 122.0,14.6 127.1,12.2 132.2,8.3 137.3,9.5 142.4,9.2 147.5,11.3 152.5,9.8 157.6,11.5 162.7,12.6 167.8,14.0 172.9,14.1 178.0,12.1 183.1,10.6 188.1,10.2 193.2,7.9 198.3,10.6 203.4,7.4 208.5,4.1 213.6,6.5 218.6,3.0 223.7,3.0 228.8,5.3 233.9,9.2 239.0,13.2 244.1,12.0 249.2,10.3 254.2,7.1 259.3,4.2 264.4,5.7 269.5,5.9 274.6,7.9 279.7,9.7 284.7,11.9 289.8,13.2 294.9,8.9 300.0,8.2" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 44,10</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 41,40</div><div class="mono neg" style="font-size: 11px">−6,11%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 49,49</div><div class="mono pos" style="font-size: 11px">+12,23%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 52,19</div><div class="mono pos" style="font-size: 11px">+18,34%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">62,0</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">1,35</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">−0,80%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 260,2 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">1,5×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+3,20%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">O rompimento técnico é válido, mas o Brent em queda enfraquece a tese. Aguardar estabilização do petróleo.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Entrada no fechamento acima da máxima de 20 pregões, com volume ≥ 1,3× a média.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Stop móvel na mínima dos 3 últimos pregões após atingir o alvo 1.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Rompimento confirmado no fechamento</li><li>Volume acima de 1,3×</li><li>Sem resistência próxima</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Brent em queda</li><li>Correlação alta com commodities</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>Volume crescente</li><li>MACD acelerando</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Oil slips as U.S. crude inventories rise</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#7</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">CPLE6</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Tendência de alta</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Copel</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="dn tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Evitar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">66</span> · conf. baixa</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,32.6 L5.1,34.2 L10.2,35.6 L15.3,36.3 L20.3,36.1 L25.4,36.7 L30.5,36.3 L35.6,37.0 L40.7,34.4 L45.8,35.9 L50.8,34.0 L55.9,32.9 L61.0,33.0 L66.1,31.9 L71.2,30.7 L76.3,28.5 L81.4,29.9 L86.4,29.6 L91.5,27.1 L96.6,26.1 L101.7,25.9 L106.8,27.7 L111.9,26.9 L116.9,28.5 L122.0,28.1 L127.1,27.9 L132.2,26.6 L137.3,24.7 L142.4,23.8 L147.5,22.2 L152.5,22.3 L157.6,21.9 L162.7,20.7 L167.8,19.8 L172.9,19.2 L178.0,17.0 L183.1,14.6 L188.1,16.1 L193.2,14.5 L198.3,12.9 L203.4,11.7 L208.5,10.1 L213.6,9.9 L218.6,9.1 L223.7,9.8 L228.8,9.4 L233.9,9.9 L239.0,8.3 L244.1,8.9 L249.2,9.7 L254.2,9.0 L259.3,9.8 L264.4,7.5 L269.5,8.9 L274.6,6.9 L279.7,6.4 L284.7,3.7 L289.8,4.1 L294.9,3.0 L300.0,3.4 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,32.6 5.1,34.2 10.2,35.6 15.3,36.3 20.3,36.1 25.4,36.7 30.5,36.3 35.6,37.0 40.7,34.4 45.8,35.9 50.8,34.0 55.9,32.9 61.0,33.0 66.1,31.9 71.2,30.7 76.3,28.5 81.4,29.9 86.4,29.6 91.5,27.1 96.6,26.1 101.7,25.9 106.8,27.7 111.9,26.9 116.9,28.5 122.0,28.1 127.1,27.9 132.2,26.6 137.3,24.7 142.4,23.8 147.5,22.2 152.5,22.3 157.6,21.9 162.7,20.7 167.8,19.8 172.9,19.2 178.0,17.0 183.1,14.6 188.1,16.1 193.2,14.5 198.3,12.9 203.4,11.7 208.5,10.1 213.6,9.9 218.6,9.1 223.7,9.8 228.8,9.4 233.9,9.9 239.0,8.3 244.1,8.9 249.2,9.7 254.2,9.0 259.3,9.8 264.4,7.5 269.5,8.9 274.6,6.9 279.7,6.4 284.7,3.7 289.8,4.1 294.9,3.0 300.0,3.4" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 11,95</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 11,47</div><div class="mono neg" style="font-size: 11px">−4,02%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 12,91</div><div class="mono pos" style="font-size: 11px">+8,03%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 13,39</div><div class="mono pos" style="font-size: 11px">+12,05%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">71,8</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">0,24</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">+1,60%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 120,3 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">0,8×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+1,90%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">RSI perto de 72 e preço longe da MM20 indicam movimento esticado. A IA prefere evitar nova entrada agora.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Entrada em recuo até a EMA9 com candle de reversão.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Manter enquanto fechar acima da EMA9; sair na perda da MM20.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Preço e MM20 acima da MM50</li><li>Preço acima da EMA9</li><li>Distância da MM20 menor que 8%</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Sobrecompra</li><li>Possível realização</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>Topos e fundos ascendentes</li><li>Acima do Ibovespa em 20 dias</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Copel announces share buyback program</li></ul></div>
+</div>
+</details>
+</article>
+
+<article style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start">
+<div>
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span class="mono" style="font-size: 13px; color: var(--muted)">#8</span>
+<span class="mono" style="font-size: 18px; font-weight: 600">RADL3</span>
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; font-weight: 500">Pullback na MM20</span>
+</div>
+<div style="font-size: 13px; color: var(--muted); margin-top: 2px">Raia Drogasil</div>
+</div>
+<div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px">
+<span class="dn tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Evitar</span>
+<span style="font-size: 12px; color: var(--muted)">Nota <span class="mono" style="color: var(--fg); font-weight: 600">61</span> · conf. baixa</span>
+</div>
+</div>
+<svg viewBox="0 0 300 40" preserveAspectRatio="none" width="100%" height="44" aria-hidden="true" style="display: block">
+<path d="M0,40 L0.0,25.9 L5.1,28.8 L10.2,27.3 L15.3,22.1 L20.3,21.4 L25.4,23.1 L30.5,23.2 L35.6,17.9 L40.7,15.8 L45.8,12.3 L50.8,8.7 L55.9,3.0 L61.0,7.6 L66.1,7.0 L71.2,5.8 L76.3,11.5 L81.4,9.5 L86.4,15.6 L91.5,10.1 L96.6,10.0 L101.7,7.1 L106.8,11.9 L111.9,11.7 L116.9,17.8 L122.0,22.7 L127.1,27.5 L132.2,28.8 L137.3,31.3 L142.4,28.6 L147.5,31.9 L152.5,37.0 L157.6,34.2 L162.7,28.5 L167.8,23.4 L172.9,22.5 L178.0,16.3 L183.1,20.7 L188.1,18.6 L193.2,15.7 L198.3,18.5 L203.4,19.7 L208.5,18.3 L213.6,16.0 L218.6,19.3 L223.7,25.2 L228.8,21.9 L233.9,21.0 L239.0,21.6 L244.1,15.8 L249.2,11.6 L254.2,15.0 L259.3,12.8 L264.4,14.1 L269.5,9.7 L274.6,12.0 L279.7,9.0 L284.7,7.0 L289.8,9.1 L294.9,12.8 L300.0,18.0 L300,40 Z" fill="#10b981" fill-opacity="0.1" />
+<polyline points="0.0,25.9 5.1,28.8 10.2,27.3 15.3,22.1 20.3,21.4 25.4,23.1 30.5,23.2 35.6,17.9 40.7,15.8 45.8,12.3 50.8,8.7 55.9,3.0 61.0,7.6 66.1,7.0 71.2,5.8 76.3,11.5 81.4,9.5 86.4,15.6 91.5,10.1 96.6,10.0 101.7,7.1 106.8,11.9 111.9,11.7 116.9,17.8 122.0,22.7 127.1,27.5 132.2,28.8 137.3,31.3 142.4,28.6 147.5,31.9 152.5,37.0 157.6,34.2 162.7,28.5 167.8,23.4 172.9,22.5 178.0,16.3 183.1,20.7 188.1,18.6 193.2,15.7 198.3,18.5 203.4,19.7 208.5,18.3 213.6,16.0 218.6,19.3 223.7,25.2 228.8,21.9 233.9,21.0 239.0,21.6 244.1,15.8 249.2,11.6 254.2,15.0 259.3,12.8 264.4,14.1 269.5,9.7 274.6,12.0 279.7,9.0 284.7,7.0 289.8,9.1 294.9,12.8 300.0,18.0" fill="none" stroke="#10b981" stroke-width="1.6" vector-effect="non-scaling-stroke" />
+</svg>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Entrada</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 24,60</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Stop</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 23,36</div><div class="mono neg" style="font-size: 11px">−5,04%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 1</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 27,08</div><div class="mono pos" style="font-size: 11px">+10,08%</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 10px"><div style="font-size: 11px; color: var(--muted)">Alvo 2</div><div class="mono" style="font-size: 15px; font-weight: 600; margin-top: 2px">R$ 28,32</div><div class="mono pos" style="font-size: 11px">+15,12%</div></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">RSI <span class="mono" style="color: var(--fg)">50,4</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">ATR <span class="mono" style="color: var(--fg)">0,62</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">vs Ibov <span class="mono" style="color: var(--fg)">−1,20%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Liquidez <span class="mono" style="color: var(--fg)">R$ 110,7 mi</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Volume <span class="mono" style="color: var(--fg)">0,7×</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">dist. MM20 <span class="mono" style="color: var(--fg)">+1,50%</span></span>
+
+<span style="background: var(--surface2); border-radius: 6px; padding: 3px 8px; font-size: 11px; color: var(--muted)">Horizonte <span class="mono" style="color: var(--fg)">5–15 pregões</span></span>
+
+</div>
+<div>
+<div style="font-size: 12px; color: var(--muted); margin-bottom: 4px">Tese (IA)</div>
+<p style="margin: 0; font-size: 14px; line-height: 1.6">Força relativa negativa em 20 dias e margens pressionadas. O pullback ocorre em tendência que perde força.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gatilho de entrada</div>Comprar se o próximo pregão fechar acima da máxima do candle de toque na MM20.</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px; font-size: 13px; line-height: 1.5"><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Gestão</div>Realizar metade no alvo 1 e subir o stop para o preço de entrada; restante no alvo 2.</div>
+</div>
+<details style="border-top: 1px solid var(--line); padding-top: 12px">
+<summary style="font-size: 13px; font-weight: 600">Checklist, riscos e sinais</summary>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 12px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Checklist</div><ul style="margin: 0; padding-left: 18px"><li>Preço acima da MM50</li><li>Toque na MM20 nos últimos 3 pregões</li><li>RSI entre 50 e 68</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Riscos</div><ul style="margin: 0; padding-left: 18px"><li>Força relativa negativa</li><li>Competição no varejo farmacêutico</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Sinais a favor</div><ul style="margin: 0; padding-left: 18px"><li>MM20 inclinada para cima</li><li>Força relativa positiva em 60 dias</li></ul></div>
+<div><div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 4px">Notícias consideradas</div><ul style="margin: 0; padding-left: 18px"><li>Raia Drogasil margins squeezed by competition</li></ul></div>
+</div>
+</details>
+</article>
+
+</div>
+
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Ranking completo (top 30)</h2>
+<span style="font-size: 12px; color: var(--muted)">Desempate por força relativa</span>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 900px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="text-align: left; color: var(--muted); font-size: 12px">
+<th style="padding: 10px 20px; font-weight: 500">#</th>
+<th style="padding: 10px 12px; font-weight: 500">Ação</th>
+<th style="padding: 10px 12px; font-weight: 500">Setup</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: center">Nota</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Preço</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Stop</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Alvo 2R</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Risco</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">RSI</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">vs Ibov</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Liquidez</th>
+<th style="padding: 10px 20px; font-weight: 500">IA</th>
+</tr></thead>
+<tbody>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">1</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">CXSE3</td>
+<td style="padding: 9px 12px">Pullback na MM20</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">90</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">15,42</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">14,70</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">16,86</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,67%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">61,3</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,80%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">48,2 mi</td>
+<td style="padding: 9px 20px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Aguardar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">2</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">EMBR3</td>
+<td style="padding: 9px 12px">Rompimento com volume</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">86</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">68,30</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">64,90</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">75,10</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,98%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">64,8</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+6,20%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">312,5 mi</td>
+<td style="padding: 9px 20px"><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Operar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">3</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">SBSP3</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">82</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">121,40</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">116,20</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">131,80</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,28%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">58,4</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+4,10%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">285,0 mi</td>
+<td style="padding: 9px 20px"><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Operar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">4</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">TOTS3</td>
+<td style="padding: 9px 12px">Pullback na MM20</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">79</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">41,85</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">39,89</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">45,77</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,68%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">55,2</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+2,90%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">96,4 mi</td>
+<td style="padding: 9px 20px"><span class="su tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Operar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">5</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">EQTL3</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">74</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">36,20</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">34,78</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">39,04</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">3,92%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">66,9</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+2,40%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">140,8 mi</td>
+<td style="padding: 9px 20px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Aguardar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">6</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">PRIO3</td>
+<td style="padding: 9px 12px">Rompimento com volume</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono su tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">71</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">44,10</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">41,40</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">49,49</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,11%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">62,0</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−0,80%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">260,2 mi</td>
+<td style="padding: 9px 20px"><span class="ne tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Aguardar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">7</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">CPLE6</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono up tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">66</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">11,95</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">11,47</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">12,91</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,02%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">71,8</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+1,60%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">120,3 mi</td>
+<td style="padding: 9px 20px"><span class="dn tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Evitar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">8</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">RADL3</td>
+<td style="padding: 9px 12px">Pullback na MM20</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono up tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">61</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">24,60</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">23,36</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">27,08</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">5,04%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">50,4</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−1,20%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">110,7 mi</td>
+<td style="padding: 9px 20px"><span class="dn tone-bg" style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">Evitar</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">9</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">GGBR4</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">60</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">19,44</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">18,66</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">21,02</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,06%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">64,8</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+1,78%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">36,0 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">10</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">CMIG4</td>
+<td style="padding: 9px 12px">Pullback na MM20</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">59</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">21,73</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">20,58</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">24,03</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">5,30%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">44,5</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+2,24%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">135,2 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">11</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">KLBN11</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">58</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">47,15</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">44,16</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">53,12</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,34%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">48,7</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+0,40%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">101,6 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">12</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">VIVT3</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">57</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">51,44</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">47,56</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">59,19</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">7,54%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">59,9</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+1,62%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">39,6 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">13</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">TIMS3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">56</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">61,46</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">57,57</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">69,23</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,33%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">56,5</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−2,38%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">68,2 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">14</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">RAIL3</td>
+<td style="padding: 9px 12px">Pullback na MM20</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">55</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">41,83</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">38,60</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">48,29</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">7,73%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">62,2</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+2,07%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">143,7 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">15</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">HYPE3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">54</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">41,63</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">40,28</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">44,31</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">3,23%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">47,2</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,43%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">214,9 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">16</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">BBSE3</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">53</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">21,04</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">20,40</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">22,32</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">3,03%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">42,7</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,21%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">111,9 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">17</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">ENEV3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">52</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">18,03</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">16,84</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">20,42</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,60%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">50,8</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,50%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">168,8 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">18</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">CSMG3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">51</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">55,01</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">51,41</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">62,21</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,55%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">57,1</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−0,11%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">178,6 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">19</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">FLRY3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">50</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">25,49</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">24,00</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">28,47</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">5,84%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">61,6</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,67%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">82,9 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">20</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">MULT3</td>
+<td style="padding: 9px 12px">Tendência de alta</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">49</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">40,77</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">39,39</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">43,53</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">3,39%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">44,8</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−2,64%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">193,3 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">21</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">LREN3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">48</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">36,59</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">33,70</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">42,38</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">7,91%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">63,7</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−0,33%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">147,5 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">22</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">ASAI3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">47</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">19,80</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">18,78</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">21,84</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">5,16%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">59,4</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−0,34%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">197,9 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">23</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">SMTO3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">46</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">55,03</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">53,11</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">58,87</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">3,49%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">46,4</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+0,31%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">34,1 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">24</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">CYRE3</td>
+<td style="padding: 9px 12px">Pullback na MM20</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">45</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">51,36</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">47,39</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">59,30</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">7,73%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">69,5</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,43%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">138,1 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">25</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">DIRR3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">44</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">8,97</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">8,40</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">10,12</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,41%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">66,4</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−0,14%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">73,5 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">26</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">POMO4</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">43</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">65,82</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">61,00</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">75,48</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">7,33%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">58,1</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−2,98%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">107,7 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">27</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">VBBR3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">42</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">44,33</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">41,48</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">50,03</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">6,43%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">48,8</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+3,84%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">167,1 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">28</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">UGPA3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">41</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">58,00</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">55,09</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">63,82</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">5,02%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">57,1</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">−3,07%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">126,5 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">29</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">BRAP4</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">40</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">18,14</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">17,18</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">20,08</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">5,33%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">54,2</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+4,16%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">30,8 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 9px 20px; color: var(--muted)">30</td>
+<td class="mono" style="padding: 9px 12px; font-weight: 600">EGIE3</td>
+<td style="padding: 9px 12px">Sem setup</td>
+<td style="padding: 9px 12px; text-align: center"><span class="mono dn tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">39</span></td>
+<td class="mono" style="padding: 9px 12px; text-align: right">20,49</td>
+<td class="mono neg" style="padding: 9px 12px; text-align: right">19,58</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">22,30</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">4,42%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">59,9</td>
+<td class="mono pos" style="padding: 9px 12px; text-align: right">+1,56%</td>
+<td class="mono" style="padding: 9px 12px; text-align: right">51,2 mi</td>
+<td style="padding: 9px 20px"><span style="border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600">—</span></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<p style="margin: 8px 0 0; font-size: 12px; color: var(--muted); text-align: center; line-height: 1.6">Swing trade envolve risco de perda. Critérios técnicos sem backtest e vereditos gerados por IA. Não é recomendação de investimento.</p>
+</main>
+</div>
+</body>
+</html>

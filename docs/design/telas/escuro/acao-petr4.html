@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detalhe da ação · PETR4</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.t-light{--bg:#f7f8fa;--fg:#14171c;--surface:#ffffff;--surface2:#eef0f3;--line:#e2e5ea;--muted:#5d6673;--pos:#047857;--neg:#c81e1e;--su-fg:#047857;--up-fg:#047857;--ne-fg:#b45309;--dn-fg:#c81e1e}
+.t-dark{--bg:#0b0e13;--fg:#e8ebf0;--surface:#12161d;--surface2:#1b2029;--line:#232a35;--muted:#8b95a5;--pos:#34d399;--neg:#f87171;--su-fg:#34d399;--up-fg:#6ee7b7;--ne-fg:#fbbf24;--dn-fg:#f87171}
+.mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.su{--tone:#059669;--tone-fg:var(--su-fg)}
+.up{--tone:#10b981;--tone-fg:var(--up-fg)}
+.ne{--tone:#d97706;--tone-fg:var(--ne-fg)}
+.dn{--tone:#dc2626;--tone-fg:var(--dn-fg)}
+.tone-bg{background:color-mix(in srgb,var(--tone) 15%,transparent);color:var(--tone-fg)}
+.tone-fg{color:var(--tone-fg)}
+.pos{color:var(--pos)}.neg{color:var(--neg)}
+a{color:inherit;text-decoration:none}
+.row:hover{background:var(--surface2)}
+.navl:hover{background:var(--surface2)}
+.ghost:hover{background:var(--surface2)}
+.back:hover{color:var(--fg)!important}
+</style>
+</head>
+<body>
+<div class="t-dark" style="min-height: 100vh; background: var(--bg); color: var(--fg); font-family: 'Geist', ui-sans-serif, system-ui, sans-serif; font-size: 14px">
+
+<header style="background: var(--surface); border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px">
+<a href="painel.html" style="display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px">
+<span style="display: inline-flex; width: 32px; height: 32px; border-radius: 8px; align-items: center; justify-content: center; background: #059669; color: #ffffff">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 17 9 11 13 15 21 7" /><polyline points="15 7 21 7 21 13" /></svg>
+</span>
+Análise de Ações
+</a>
+<nav aria-label="Principal" style="display: flex; gap: 4px">
+<a href="painel.html" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; background: var(--surface2)">Painel</a>
+<a href="swing.html" class="navl" style="padding: 8px 12px; border-radius: 8px; font-size: 13px; color: var(--muted)">Swing Trade</a>
+</nav>
+<div style="margin-left: auto; display: flex; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: var(--muted)">usuario@exemplo.com</span>
+<a href="login.html" class="ghost" style="padding: 7px 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 13px; font-weight: 500">Sair</a>
+</div>
+</div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 16px; display: flex; flex-direction: column; gap: 16px">
+
+<a href="painel.html" class="back" style="font-size: 13px; color: var(--muted); align-self: flex-start">← Voltar ao painel</a>
+
+<!-- 1. Cabeçalho -->
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+<div>
+<div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
+<h1 class="mono" style="margin: 0; font-size: 30px; font-weight: 600">PETR4</h1>
+<span style="font-size: 16px; color: var(--muted)">Petróleo Brasileiro S.A. – Petrobras</span>
+</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 6px">Análise de <span class="mono">16/11/2026 18:36</span> · modelo <span class="mono">openai/gpt-oss-120b</span></div>
+</div>
+<div style="text-align: right">
+<div class="mono" style="font-size: 30px; font-weight: 600">R$ 44,02</div>
+<div class="mono neg" style="font-size: 14px">−0,44 (−0,98%)</div>
+</div>
+</div>
+
+<!-- 2 + 3 -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 2 1 560px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Conclusão</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span class="mono ne tone-bg" style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 56px; border-radius: 10px; font-size: 26px; font-weight: 700">55</span>
+<div><div class="ne tone-fg" style="font-size: 14px; font-weight: 600">Lateral</div><div style="font-size: 12px; color: var(--muted)">nota de 0 a 100</div></div>
+</div>
+<span class="ne tone-bg" style="border-radius: 999px; padding: 4px 14px; font-size: 13px; font-weight: 600">Observar</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px">
+<span><span style="color: var(--muted)">Recomendação:</span> Aguardar confirmação</span>
+<span><span style="color: var(--muted)">Tendência:</span> Lateral</span>
+<span><span style="color: var(--muted)">Confiança:</span> Média</span>
+</div>
+</div>
+<p style="margin: 0; font-size: 17px; font-weight: 500; line-height: 1.45; padding: 14px 16px; border-radius: 8px; background: var(--surface2)">Petrobras oscila entre R$ 42,10 e R$ 46,30 sem direção definida; dividendos seguram o preço, mas falta gatilho para nova alta.</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted)">O papel fechou em queda de 0,98%, acompanhando o recuo do Brent. As médias de 5 e 20 dias estão entrelaçadas e o RSI em 48 indica equilíbrio entre compradores e vendedores. Os fundamentos seguem sólidos (P/L de 4,1 e dividend yield acima de 12%), mas o mercado aguarda sinais sobre a política de preços e o plano de investimentos antes de uma nova pernada.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 14px">
+<div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px">Se você não tem a ação</div>
+<div style="font-size: 13px; line-height: 1.55">Aguarde o rompimento de R$ 46,30 com volume ou um recuo até a faixa de R$ 42,50 para entrar com stop curto.</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 14px">
+<div style="font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px">Se você já tem a ação</div>
+<div style="font-size: 13px; line-height: 1.55">Mantenha a posição pelos dividendos e proteja com stop em R$ 41,40, abaixo do suporte de 20 dias.</div>
+</div>
+</div>
+</section>
+
+<section style="flex: 1 1 320px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Pontos de entrada e saída</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Compra ideal</div><div class="mono" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 42,60</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Compra secundária</div><div class="mono" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 43,20</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Stop loss</div><div class="mono neg" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 41,40</div></div>
+<div style="border: 1px solid var(--line); border-radius: 8px; padding: 12px"><div style="font-size: 11px; color: var(--muted)">Alvo</div><div class="mono pos" style="font-size: 17px; font-weight: 600; margin-top: 4px">R$ 47,50</div></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px">
+<div style="display: flex; justify-content: space-between"><span style="color: var(--muted)">Potencial até o alvo</span><span class="mono pos" style="font-weight: 600">+7,91%</span></div>
+<div style="display: flex; justify-content: space-between"><span style="color: var(--muted)">Risco até o stop</span><span class="mono neg" style="font-weight: 600">−5,95%</span></div>
+</div>
+<div style="border-top: 1px solid var(--line); padding-top: 12px; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.5">
+<div><div style="font-size: 12px; color: var(--muted)">Posição sugerida</div>0% para novas entradas; manter até 15% para quem já tem.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Plano de entrada</div>Metade em R$ 42,60 e metade após fechamento acima de R$ 46,30.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Controle de risco</div>Perda máxima de 1% do capital por operação.</div>
+</div>
+</section>
+</div>
+
+<!-- 4 + 5 -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 2 1 560px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Gráfico · 60 pregões</h2>
+<div style="display: flex; gap: 14px; font-size: 12px; color: var(--muted)">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 2px; background: #10b981"></span>Fechamento</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 2px; background: #38bdf8"></span>MM5</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 14px; height: 2px; background: #fbbf24"></span>MM20</span>
+</div>
+</div>
+<svg viewBox="0 0 720 240" width="100%" role="img" aria-label="Gráfico de fechamento da PETR4 nos últimos 60 pregões com MM5 e MM20" style="display: block; overflow: visible">
+<line x1="0" y1="12.8" x2="672" y2="12.8" stroke="var(--line)" stroke-dasharray="4 4" />
+<line x1="0" y1="110.0" x2="672" y2="110.0" stroke="var(--line)" stroke-dasharray="4 4" />
+<line x1="0" y1="207.6" x2="672" y2="207.6" stroke="var(--line)" stroke-dasharray="4 4" />
+<text x="720" y="12.8" text-anchor="end" dy="4" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">46,96</text>
+<text x="720" y="110.0" text-anchor="end" dy="4" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">43,69</text>
+<text x="720" y="207.6" text-anchor="end" dy="4" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">40,41</text>
+<polyline points="0.0,42.9 11.4,40.4 22.8,37.9 34.2,36.1 45.6,34.7 56.9,33.0 68.3,32.0 79.7,31.3 91.1,31.2 102.5,30.1 113.9,30.9 125.3,30.3 136.7,31.6 148.1,34.0 159.5,36.1 170.8,39.3 182.2,42.7 193.6,46.0 205.0,47.8 216.4,48.6 227.8,50.5 239.2,53.0 250.6,55.0 262.0,58.3 273.4,62.5 284.7,66.6 296.1,71.2 307.5,75.5 318.9,79.7 330.3,84.7 341.7,88.6 353.1,94.2 364.5,98.1 375.9,100.6 387.3,104.2 398.6,108.8 410.0,113.8 421.4,119.4 432.8,125.7 444.2,132.9 455.6,139.9 467.0,146.3 478.4,152.8 489.8,157.9 501.2,162.5 512.5,166.8 523.9,170.5 535.3,172.9 546.7,174.9 558.1,176.9 569.5,177.9 580.9,177.2 592.3,176.8 603.7,176.9 615.1,176.1 626.4,174.0 637.8,171.0 649.2,166.7 660.6,163.1 672.0,158.4" fill="none" stroke="#fbbf24" stroke-width="1.5" />
+<polyline points="0.0,18.8 11.4,21.5 22.8,26.6 34.2,28.1 45.6,26.5 56.9,25.4 68.3,25.1 79.7,25.9 91.1,30.5 102.5,34.6 113.9,43.7 125.3,48.7 136.7,54.0 148.1,59.7 159.5,66.6 170.8,69.2 182.2,75.7 193.6,77.5 205.0,72.8 216.4,66.8 227.8,63.7 239.2,62.4 250.6,62.6 262.0,70.1 273.4,81.9 284.7,89.7 296.1,98.2 307.5,108.0 318.9,116.1 330.3,123.5 341.7,131.8 353.1,140.4 364.5,144.4 375.9,143.4 387.3,144.7 398.6,149.9 410.0,154.4 421.4,162.6 432.8,173.0 444.2,181.7 455.6,188.1 467.0,192.2 478.4,196.0 489.8,199.0 501.2,200.2 512.5,197.4 523.9,195.0 535.3,188.6 546.7,184.1 558.1,180.9 569.5,176.4 580.9,167.2 592.3,160.0 603.7,151.4 615.1,141.4 626.4,134.0 637.8,129.9 649.2,122.1 660.6,117.7 672.0,110.9" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+<polyline points="0.0,22.6 11.4,21.3 22.8,33.8 34.2,31.7 45.6,23.2 56.9,17.0 68.3,19.9 79.7,37.9 91.1,54.8 102.5,43.5 113.9,62.6 125.3,44.5 136.7,64.5 148.1,83.5 159.5,78.0 170.8,75.7 182.2,76.7 193.6,73.3 205.0,60.0 216.4,48.3 227.8,60.2 239.2,70.1 250.6,74.4 262.0,97.3 273.4,107.3 284.7,99.3 296.1,112.8 307.5,123.5 318.9,137.5 330.3,144.5 341.7,140.7 353.1,155.7 364.5,143.6 375.9,132.7 387.3,150.8 398.6,166.8 410.0,177.9 421.4,184.8 432.8,184.9 444.2,194.0 455.6,198.6 467.0,198.7 478.4,204.0 489.8,199.7 501.2,200.0 512.5,184.9 523.9,186.2 535.3,172.0 546.7,177.5 558.1,184.1 569.5,162.0 580.9,140.3 592.3,136.3 603.7,134.5 615.1,134.0 626.4,125.0 637.8,119.5 649.2,97.6 660.6,112.3 672.0,100.2" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linejoin="round" />
+<text x="0" y="236" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">20/08/2026</text>
+<text x="672" y="236" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Geist Mono, monospace">16/11/2026</text>
+</svg>
+</section>
+
+<section style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Pregão</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 13px">
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Abertura</span><span class="mono">44,48</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Máxima</span><span class="mono">44,71</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Mínima</span><span class="mono">43,82</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Fech. anterior</span><span class="mono">44,46</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Amplitude</span><span class="mono">2,02%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Volume</span><span class="mono">38,4 mi</span></div>
+
+</div>
+</div>
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Indicadores</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; font-size: 13px">
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">MM5</span><span class="mono">44,31</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">MM10</span><span class="mono">44,12</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">MM20</span><span class="mono">43,96</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">MM60</span><span class="mono">43,40</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Desvio MM5</span><span class="mono neg">−0,65%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Força tendência</span><span class="mono">Fraca</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Suporte</span><span class="mono">42,10</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Resistência</span><span class="mono">46,30</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">RSI 14</span><span class="mono">48,2</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">MACD</span><span class="mono pos">+0,08</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Volume rel.</span><span class="mono">1,02×</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Var. 5d</span><span class="mono neg">−1,74%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Var. 20d</span><span class="mono pos">+2,11%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Var. 60d</span><span class="mono pos">+5,38%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Máx. 52 sem.</span><span class="mono">49,12</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="color: var(--muted)">Mín. 52 sem.</span><span class="mono">35,66</span></div>
+
+</div>
+</div>
+</section>
+</div>
+
+<!-- 6 -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px">
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Checklist da operação</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; line-height: 1.45">
+
+<li style="display: flex; gap: 10px"><span class="su tone-bg mono" style="flex: none; display: inline-flex; width: 20px; height: 20px; border-radius: 6px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">✓</span><span>Fundamentos sólidos e dividendos previsíveis</span></li>
+
+<li style="display: flex; gap: 10px"><span class="su tone-bg mono" style="flex: none; display: inline-flex; width: 20px; height: 20px; border-radius: 6px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">✓</span><span>Preço acima da MM60</span></li>
+
+<li style="display: flex; gap: 10px"><span class="ne tone-bg mono" style="flex: none; display: inline-flex; width: 20px; height: 20px; border-radius: 6px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">!</span><span>Médias de curto prazo sem alinhamento</span></li>
+
+<li style="display: flex; gap: 10px"><span class="ne tone-bg mono" style="flex: none; display: inline-flex; width: 20px; height: 20px; border-radius: 6px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">!</span><span>Volume na média, sem confirmação</span></li>
+
+<li style="display: flex; gap: 10px"><span class="dn tone-bg mono" style="flex: none; display: inline-flex; width: 20px; height: 20px; border-radius: 6px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">✕</span><span>Brent em queda na semana</span></li>
+
+</ul>
+</section>
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.5">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">O que fazer agora</h2>
+<div><div style="font-size: 12px; color: var(--muted)">Ação imediata</div>Não abrir posição nova. Manter quem já está posicionado.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Próxima checagem</div>Após o fechamento de 18/11 ou se o Brent variar mais de 3%.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Condições a acompanhar</div>
+<ul style="margin: 4px 0 0; padding-left: 18px"><li>Fechamento acima de R$ 46,30 com volume ≥ 1,3×</li><li>Perda do suporte de R$ 42,10</li><li>Anúncio de reajuste de combustíveis</li></ul></div>
+</section>
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Composição da nota</h2>
+
+<div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Técnicos</span><span class="mono" style="color: var(--muted)">35%</span></div>
+<div style="height: 6px; border-radius: 999px; background: var(--surface2)"><div style="height: 6px; border-radius: 999px; background: #10b981; width: 35%"></div></div>
+</div>
+
+<div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Fundamentos</span><span class="mono" style="color: var(--muted)">30%</span></div>
+<div style="height: 6px; border-radius: 999px; background: var(--surface2)"><div style="height: 6px; border-radius: 999px; background: #10b981; width: 30%"></div></div>
+</div>
+
+<div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Mercado</span><span class="mono" style="color: var(--muted)">20%</span></div>
+<div style="height: 6px; border-radius: 999px; background: var(--surface2)"><div style="height: 6px; border-radius: 999px; background: #10b981; width: 20%"></div></div>
+</div>
+
+<div>
+<div style="display: flex; justify-content: space-between; margin-bottom: 5px"><span>Notícias</span><span class="mono" style="color: var(--muted)">15%</span></div>
+<div style="height: 6px; border-radius: 999px; background: var(--surface2)"><div style="height: 6px; border-radius: 999px; background: #10b981; width: 15%"></div></div>
+</div>
+
+<div style="border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; line-height: 1.45">
+<div><span style="color: var(--muted)">Sinal mais forte de alta:</span> dividend yield de 12,4%</div>
+<div><span style="color: var(--muted)">Sinal mais forte de baixa:</span> queda do Brent na semana</div>
+<div><span style="color: var(--muted)">Ajuste de nota:</span> <span class="mono neg">−3</span> por incerteza política</div>
+</div>
+</section>
+</div>
+
+<!-- 7 Fundamentos e manchetes -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px"><h2 style="margin: 0; font-size: 14px; font-weight: 600">Fundamentos</h2><span style="font-size: 11px; color: var(--muted); background: var(--surface2); border-radius: 6px; padding: 2px 8px">B3</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; font-size: 13px">
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">Setor</span><span class="mono" style="text-align: right">Energia</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">Indústria</span><span class="mono" style="text-align: right">Óleo e gás integrado</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">Valor de mercado</span><span class="mono" style="text-align: right">R$ 572,8 bi</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">P/L</span><span class="mono" style="text-align: right">4,1</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">P/L projetado</span><span class="mono" style="text-align: right">4,6</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">P/VP</span><span class="mono" style="text-align: right">1,12</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">ROE</span><span class="mono" style="text-align: right">27,3%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">Dividend yield</span><span class="mono" style="text-align: right">12,4%</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">Consenso</span><span class="mono" style="text-align: right">Compra</span></div>
+
+<div style="display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--line)"><span style="color: var(--muted)">Preço-alvo médio</span><span class="mono" style="text-align: right">R$ 49,80</span></div>
+
+</div>
+</section>
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h2 style="margin: 0 0 12px; font-size: 14px; font-weight: 600">Manchetes</h2>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">Oil slips as U.S. crude inventories rise more than expected</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">16/11</span> · Reuters</div>
+</li>
+
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">Petrobras sets record date for interim dividend payment</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">14/11</span> · Bloomberg</div>
+</li>
+
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">Brazil fuel prices: analysts see room for diesel cut</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">13/11</span> · Valor International</div>
+</li>
+
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">Petrobras output tops 2.8 million barrels per day in October</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">11/11</span> · Reuters</div>
+</li>
+
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">Emerging-market energy stocks lag as Brent falls</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">10/11</span> · Financial Times</div>
+</li>
+
+<li style="padding: 10px 0; border-bottom: 1px solid var(--line)">
+<div style="font-size: 13px; font-weight: 500; line-height: 1.4">Petrobras board reviews 2027–2031 investment plan</div>
+<div style="font-size: 12px; color: var(--muted); margin-top: 3px"><span class="mono">07/11</span> · Bloomberg</div>
+</li>
+
+</ul>
+</section>
+</div>
+
+<!-- 8 Notícias · Catalisadores -->
+<div style="display: flex; flex-wrap: wrap; gap: 16px">
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 12px; font-size: 13px; line-height: 1.55">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Notícias e resultados</h2>
+<div><div style="font-size: 12px; color: var(--muted)">Últimas notícias</div>Brent recua com aumento de estoques nos EUA; Petrobras confirma calendário de dividendos intermediários e mantém produção acima de 2,8 milhões de barris/dia.</div>
+<div><div style="font-size: 12px; color: var(--muted)">Sentimento</div><span class="ne tone-bg" style="display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; margin-top: 4px">Neutro</span></div>
+<div><div style="font-size: 12px; color: var(--muted)">Perspectiva de resultados</div>Lucro do 4º trimestre deve ficar estável, com menor preço do petróleo compensado por mais volume exportado.</div>
+</section>
+<section style="flex: 1 1 420px; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 14px; font-size: 13px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Catalisadores e alertas</h2>
+<div><div style="font-size: 12px; color: var(--muted); margin-bottom: 6px">Catalisadores positivos</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px">
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #10b981"></span>Pagamento de dividendos em dezembro</li>
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #10b981"></span>Novas plataformas entrando em operação no pré-sal</li>
+</ul></div>
+<div><div style="font-size: 12px; color: var(--muted); margin-bottom: 6px">Alertas de risco</div>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px">
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #dc2626"></span>Interferência na política de preços</li>
+<li style="display: flex; gap: 8px; align-items: baseline"><span style="flex: none; width: 7px; height: 7px; border-radius: 999px; background: #dc2626"></span>Brent abaixo de US$ 65 por barril</li>
+</ul></div>
+<div style="font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px">Limitações: manchetes em inglês de veículos internacionais; preço-alvo médio com 3 dias de atraso.</div>
+</section>
+</div>
+
+<!-- 9 Textos do relatório -->
+<section style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 600">Textos do relatório</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 16px">
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Pontos-chave</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">• Lateralização entre R$ 42,10 e R$ 46,30
+• Dividend yield acima de 12%
+• Brent pressiona no curto prazo</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Justificativa</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">A nota 55 reflete equilíbrio entre bons fundamentos e técnico neutro, com ajuste negativo pelo risco político.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Riscos</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">Mudança na política de preços, queda adicional do petróleo e revisão do plano de investimentos.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Curto prazo</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">Oscilação dentro da faixa atual; rompimento depende de volume e de notícias do setor.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Médio prazo</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">Viés levemente positivo se o Brent se estabilizar acima de US$ 70 e os dividendos forem mantidos.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Análise técnica</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">RSI em 48 e MACD perto de zero indicam ausência de tendência. MM60 ascendente segura o preço.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Médias móveis</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">MM5 e MM20 entrelaçadas; preço 0,65% abaixo da MM5.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Volume</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">Volume de 38,4 milhões, em linha com a média dos últimos 5 pregões.</p>
+</div>
+
+<div style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 20px">
+<h3 style="margin: 0 0 8px; font-size: 14px; font-weight: 600">Setor</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.65; color: var(--muted); white-space: pre-line">Petroleiras globais recuam com expectativa de oferta maior em 2027.</p>
+</div>
+
+</div>
+</section>
+
+<!-- 10 Histórico -->
+<section style="border: 1px solid var(--line); border-radius: 12px; background: var(--surface)">
+<div style="padding: 16px 20px; border-bottom: 1px solid var(--line)"><h2 style="margin: 0; font-size: 14px; font-weight: 600">Histórico de análises</h2></div>
+<div style="overflow-x: auto">
+<table style="width: 100%; min-width: 680px; border-collapse: collapse; font-size: 13px">
+<thead><tr style="text-align: left; color: var(--muted); font-size: 12px">
+<th style="padding: 10px 20px; font-weight: 500">Data</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: center">Nota</th>
+<th style="padding: 10px 12px; font-weight: 500">Recomendação</th>
+<th style="padding: 10px 12px; font-weight: 500">Tendência</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Compra</th>
+<th style="padding: 10px 12px; font-weight: 500; text-align: right">Stop</th>
+<th style="padding: 10px 20px; font-weight: 500; text-align: right">Alvo</th>
+</tr></thead>
+<tbody>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">16/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">55</span></td>
+<td style="padding: 10px 12px">Observar</td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">42,60</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">41,40</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">47,50</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">13/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">58</span></td>
+<td style="padding: 10px 12px">Observar</td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">43,10</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">41,80</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">47,90</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">12/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono up tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">61</span></td>
+<td style="padding: 10px 12px">Manter</td>
+<td style="padding: 10px 12px">Alta</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">43,40</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">42,00</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">48,20</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">11/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono up tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">63</span></td>
+<td style="padding: 10px 12px">Manter</td>
+<td style="padding: 10px 12px">Alta</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">43,20</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">41,90</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">48,00</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">10/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">60</span></td>
+<td style="padding: 10px 12px">Observar</td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">42,90</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">41,60</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">47,40</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">07/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">57</span></td>
+<td style="padding: 10px 12px">Observar</td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">42,40</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">41,20</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">46,90</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">06/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">52</span></td>
+<td style="padding: 10px 12px">Observar</td>
+<td style="padding: 10px 12px">Lateral</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">41,90</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">40,70</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">46,30</td>
+</tr>
+
+<tr class="row" style="border-top: 1px solid var(--line)">
+<td class="mono" style="padding: 10px 20px">05/11/2026</td>
+<td style="padding: 10px 12px; text-align: center"><span class="mono ne tone-bg" style="display: inline-block; min-width: 32px; border-radius: 6px; padding: 2px 6px; font-weight: 700">48</span></td>
+<td style="padding: 10px 12px">Observar</td>
+<td style="padding: 10px 12px">Baixa</td>
+<td class="mono" style="padding: 10px 12px; text-align: right">41,50</td>
+<td class="mono neg" style="padding: 10px 12px; text-align: right">40,30</td>
+<td class="mono pos" style="padding: 10px 20px; text-align: right">45,80</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<p style="margin: 8px 0 0; font-size: 12px; color: var(--muted); text-align: center">Conteúdo gerado por IA a partir de dados do Yahoo Finance. Não é recomendação de investimento.</p>
+</main>
+</div>
+</body>
+</html>

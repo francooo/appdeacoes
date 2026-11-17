@@ -1,0 +1,168 @@
+/* ==========================================================================
+   Análise de Ações · Design system
+   Tokens + classes de componente. Base: seção 7 do SISTEMA.md.
+   Fontes: Geist (texto) e Geist Mono (números), via Google Fonts:
+   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+/* ---------- Tokens de superfície (tema claro = padrão) ---------- */
+:root,
+.t-light {
+  --background: #f7f8fa;   /* fundo da página, campos */
+  --foreground: #14171c;   /* texto principal */
+  --surface:    #ffffff;   /* cartões */
+  --surface-2:  #eef0f3;   /* etiquetas, áreas internas, hover de linha */
+  --line:       #e2e5ea;   /* bordas e divisores */
+  --muted:      #5d6673;   /* texto secundário, rótulos */
+
+  /* Texto semântico (tons escurecidos para contraste ≥ 4,5:1 no claro) */
+  --pos:   #047857;
+  --neg:   #c81e1e;
+  --su-fg: #047857;
+  --up-fg: #047857;
+  --ne-fg: #b45309;
+  --dn-fg: #c81e1e;
+}
+
+.t-dark {
+  --background: #0b0e13;
+  --foreground: #e8ebf0;
+  --surface:    #12161d;
+  --surface-2:  #1b2029;
+  --line:       #232a35;
+  --muted:      #8b95a5;
+
+  --pos:   #34d399;
+  --neg:   #f87171;
+  --su-fg: #34d399;
+  --up-fg: #6ee7b7;
+  --ne-fg: #fbbf24;
+  --dn-fg: #f87171;
+}
+
+/* Tema automático pelo sistema operacional (sem classe forçada) */
+@media (prefers-color-scheme: dark) {
+  :root:not(.t-light) {
+    --background: #0b0e13; --foreground: #e8ebf0; --surface: #12161d;
+    --surface-2: #1b2029; --line: #232a35; --muted: #8b95a5;
+    --pos: #34d399; --neg: #f87171;
+    --su-fg: #34d399; --up-fg: #6ee7b7; --ne-fg: #fbbf24; --dn-fg: #f87171;
+  }
+}
+
+/* ---------- Tipografia ---------- */
+:root {
+  --font-sans: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Raios */
+  --radius-card:  12px; /* rounded-xl */
+  --radius-field: 8px;  /* rounded-lg: campos, botões, níveis */
+  --radius-tag:   6px;  /* rounded-md: etiquetas */
+  --radius-pill:  999px;
+
+  /* Layout */
+  --content-max: 1280px; /* max-w-7xl */
+  --gutter: 16px;        /* px-4 */
+  --gap: 16px;           /* gap-4 */
+  --gap-kpi: 12px;       /* gap-3 */
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* ---------- Cores semânticas (tons) ---------- */
+.tone-strong-up, .su { --tone: #059669; --tone-fg: var(--su-fg); } /* Forte alta · Comprar · Operar */
+.tone-up,        .up { --tone: #10b981; --tone-fg: var(--up-fg); } /* Alta · Manter */
+.tone-neutral,   .ne { --tone: #d97706; --tone-fg: var(--ne-fg); } /* Lateral · Observar · Aguardar */
+.tone-down,      .dn { --tone: #dc2626; --tone-fg: var(--dn-fg); } /* Baixa · Reduzir · Vender · Evitar */
+
+.tone-bg { background: color-mix(in srgb, var(--tone) 15%, transparent); color: var(--tone-fg); }
+.tone-fg { color: var(--tone-fg); }
+.pos { color: var(--pos); }
+.neg { color: var(--neg); }
+
+/* ---------- Componentes ---------- */
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+}
+.card--link { transition: border-color .15s; }
+.card--link:hover { border-color: color-mix(in srgb, #10b981 55%, transparent); }
+
+.input {
+  width: 100%; box-sizing: border-box;
+  border: 1px solid var(--line); border-radius: var(--radius-field);
+  background: var(--background); color: var(--foreground);
+  padding: 8px 12px; font: inherit; font-size: 14px; outline: none;
+}
+.input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, .2); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 42px; padding: 0 16px; border: 0; border-radius: var(--radius-field);
+  background: #059669; color: #fff; font: inherit; font-weight: 600; cursor: pointer;
+}
+.btn-primary:hover { background: #10b981; }
+.btn-primary:disabled { opacity: .6; cursor: default; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; padding: 7px 12px;
+  border: 1px solid var(--line); border-radius: var(--radius-field);
+  background: transparent; color: inherit; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+}
+.btn-ghost:hover { background: var(--surface-2); }
+
+/* Pílula (ação recomendada, veredito, contadores) */
+.pill { display: inline-flex; align-items: center; border-radius: var(--radius-pill); padding: 3px 12px; font-size: 12px; font-weight: 600; }
+
+/* ScoreBadge: selo da nota */
+.score-badge { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 32px; border-radius: var(--radius-field); font-family: var(--font-mono); font-weight: 700; font-size: 15px; }
+.score-badge--large { width: 64px; height: 56px; border-radius: 10px; font-size: 26px; }
+
+/* Chip: etiqueta técnica */
+.chip { display: inline-flex; gap: 4px; background: var(--surface-2); border-radius: var(--radius-tag); padding: 3px 8px; font-size: 11px; color: var(--muted); }
+.chip b { font-weight: 400; color: var(--foreground); }
+
+/* Level: bloco de preço (entrada, stop, alvo) */
+.level { border: 1px solid var(--line); border-radius: var(--radius-field); padding: 10px 12px; }
+.level__label { font-size: 11px; color: var(--muted); }
+.level__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 15px; font-weight: 600; margin-top: 2px; }
+.level__pct { font-family: var(--font-mono); font-size: 11px; }
+
+/* Kpi */
+.kpi { border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); padding: 16px; }
+.kpi__label { font-size: 12px; color: var(--muted); }
+.kpi__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 26px; font-weight: 600; margin-top: 6px; }
+.kpi__hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* Stat: rótulo/valor dos cards */
+.stat__label { font-size: 11px; color: var(--muted); }
+.stat__value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 13px; margin-top: 2px; }
+
+/* Alerta de erro */
+.alert-error { display: flex; gap: 8px; align-items: center; border: 1px solid rgba(220,38,38,.35); background: rgba(220,38,38,.1); color: var(--neg); border-radius: var(--radius-field); padding: 10px 12px; font-size: 13px; }
+
+/* Tabela */
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 13px; }
+.table th { text-align: left; color: var(--muted); font-size: 12px; font-weight: 500; padding: 10px 12px; }
+.table td { padding: 10px 12px; border-top: 1px solid var(--line); }
+.table tbody tr:hover { background: var(--surface-2); }
+
+/* Barra de composição da nota */
+.bar { height: 6px; border-radius: var(--radius-pill); background: var(--surface-2); }
+.bar > span { display: block; height: 100%; border-radius: inherit; background: #10b981; }
+
+/* Esqueleto de carregamento */
+.skeleton { background: var(--surface-2); border-radius: var(--radius-field); animation: pulse 1.6s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
