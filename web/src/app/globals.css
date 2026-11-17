@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f8fa;
+  --foreground: #14171c;
+  --surface: #ffffff;
+  --surface-2: #eef0f3;
+  --line: #e2e5ea;
+  --muted: #5d6673;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b0e13;
+    --foreground: #e8ebf0;
+    --surface: #12161d;
+    --surface-2: #1b2029;
+    --line: #232a35;
+    --muted: #8b95a5;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-line bg-surface;
+  }
+  .input {
+    @apply w-full rounded-lg border border-line bg-background px-3 py-2 text-sm outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20;
+  }
+}
+
+/* Faixas de nota (score) */
+.tone-strong-up { --tone: #059669; }
+.tone-up        { --tone: #10b981; }
+.tone-neutral   { --tone: #d97706; }
+.tone-down      { --tone: #dc2626; }
+.tone-bg { background: color-mix(in srgb, var(--tone) 15%, transparent); color: var(--tone); }
+.tone-fg { color: var(--tone); }

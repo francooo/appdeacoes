@@ -1,0 +1,108 @@
+name: Análise diária de ações
+
+on:
+  schedule:
+    # Seg–sex 21:30 UTC (18:30 em Brasília), depois do fechamento da B3.
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      force_run:
+        description: 'EUA: rodar mesmo fora de dia útil'
+        type: boolean
+        default: false
+
+concurrency:
+  group: daily-analysis
+  cancel-in-progress: false
+
+jobs:
+  # ---------------------------------------------------------------- B3 (principal)
+  b3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: b3/requirements.txt
+
+      - run: pip install -r b3/requirements.txt
+
+      - name: Analisar ações da B3 (Yahoo Finance + Groq)
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          B3_STOCK_LIST: ${{ vars.B3_STOCK_LIST || 'PETR4,VALE3,ITUB4,BBDC4,BBAS3,ABEV3,WEGE3,B3SA3,ITSA4,RENT3,SUZB3,MGLU3' }}
+        run: python b3/analyze_b3.py
+
+      - name: Screener de swing trade (B3)
+        if: always()
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SWING_TOP_N: ${{ vars.SWING_TOP_N || '8' }}
+        run: python b3/swing_screener.py
+
+  # ---------------------------------------------------------------- EUA (opcional)
+  # Usa o daily_stock_analysis original. Ative criando a variável ENABLE_US=true.
+  us:
+    if: ${{ vars.ENABLE_US == 'true' }}
+    needs: b3
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: daily_stock_analysis
+    env:
+      TZ: UTC
+      # IA: Groq via canal compatível com OpenAI. O modelo da Groq se chama
+      # "openai/gpt-oss-120b"; o prefixo extra "openai/" indica o protocolo ao LiteLLM.
+      LLM_CHANNELS: groq
+      LLM_GROQ_PROTOCOL: openai
+      LLM_GROQ_BASE_URL: https://api.groq.com/openai/v1
+      LLM_GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      LLM_GROQ_MODELS: openai/openai/gpt-oss-120b,openai/openai/gpt-oss-20b
+      LITELLM_MODEL: openai/openai/gpt-oss-120b
+      # No plano gratuito a Groq limita 8.000 tokens/min POR MODELO e cada análise usa ~8.000.
+      # Quando o modelo principal estoura o limite, cai para o reserva (limite separado).
+      LITELLM_FALLBACK_MODELS: openai/openai/gpt-oss-20b
+      MAX_WORKERS: '1'
+      STOCK_LIST: ${{ vars.STOCK_LIST || 'AAPL,MSFT,NVDA,GOOGL,AMZN' }}
+      REPORT_LANGUAGE: en
+      TAVILY_API_KEYS: ${{ secrets.TAVILY_API_KEYS }}
+      SERPAPI_API_KEYS: ${{ secrets.SERPAPI_API_KEYS }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            daily_stock_analysis/requirements.txt
+            sync/requirements.txt
+
+      - name: Instalar dependências
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r ../sync/requirements.txt
+
+      - name: Rodar análise
+        run: |
+          ARGS="--no-market-review --no-notify"
+          if [ "${{ github.event.inputs.force_run }}" = "true" ]; then
+            ARGS="$ARGS --force-run"
+          fi
+          python main.py $ARGS
+
+      - name: Sincronizar com o Postgres
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SOURCE_TZ: UTC
+        run: python ../sync/sync_to_postgres.py data/stock_analysis.db
