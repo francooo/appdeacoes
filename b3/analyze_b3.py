@@ -330,7 +330,9 @@ def save(conn: psycopg.Connection, code: str, name: str, result: dict, hist: pd.
 
 def main() -> int:
     for var in ("GROQ_API_KEY", "DATABASE_URL"):
-        if not os.environ.get(var):
+        # Secrets colados com espaço ou quebra de linha no fim quebram a conexão.
+        os.environ[var] = os.environ.get(var, "").strip()
+        if not os.environ[var]:
             print(f"ERRO: defina a variável {var}", file=sys.stderr)
             return 1
     codes = sys.argv[1:] or os.environ.get("B3_STOCK_LIST", DEFAULT_STOCKS).split(",")

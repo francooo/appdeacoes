@@ -282,7 +282,9 @@ def ai_review(client: OpenAI, pick: dict, name: str, ibov_trend: str) -> dict | 
 
 def main() -> int:
     for var in ("GROQ_API_KEY", "DATABASE_URL"):
-        if not os.environ.get(var):
+        # Secrets colados com espaço ou quebra de linha no fim quebram a conexão.
+        os.environ[var] = os.environ.get(var, "").strip()
+        if not os.environ[var]:
             print(f"ERRO: defina a variável {var}", file=sys.stderr)
             return 1
 
