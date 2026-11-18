@@ -20,7 +20,7 @@ export function Pill({
   return <span className={`pill ${sz} ${tone} tone-bg ${className}`}>{children}</span>;
 }
 
-export function Chip({ label, value }: { label: string; value?: ReactNode }) {
+export function Chip({ label, value }: { label: ReactNode; value?: ReactNode }) {
   return (
     <span className="chip">
       {label}
@@ -45,7 +45,7 @@ export function Level({
   pct,
   pctClass = "",
 }: {
-  label: string;
+  label: ReactNode;
   value: string;
   pct?: string;
   pctClass?: string;

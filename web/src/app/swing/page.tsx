@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense, type ReactNode } from "react";
 import { Header } from "@/components/header";
 import { ChevronDown } from "@/components/icons";
+import { InfoTip } from "@/components/info-tip";
 import { PageSkeleton } from "@/components/page-skeleton";
 import { Sparkline } from "@/components/sparkline";
 import { Chip, Disclaimer, EmptyState, Kpi, Level, PageHeading, Pill, ScoreChip, SectionTable } from "@/components/ui";
@@ -19,6 +20,7 @@ import {
   posNegClass,
   verdictTone,
 } from "@/lib/format";
+import { GLOSSARY as G, verdictHelp } from "@/lib/glossary";
 
 export const metadata: Metadata = { title: "Swing Trade · Análise de Ações" };
 
@@ -104,7 +106,8 @@ function Content({ run, picks, sparks }: { run: SwingRun; picks: SwingPick[]; sp
             Rompimento com volume, pullback na MM20 e tendência de alta. Ações sem setup não vão para a IA.
           </Explain>
           <Explain title="Stop e alvos">
-            Stop no maior valor entre a mínima de 10 pregões e preço − 2×ATR. Alvo 1 = 2× o risco; alvo 2 = 3× o risco.
+            Stop no maior valor entre a mínima de 10 pregões e preço − 2×ATR. Alvo 1 = 2× o risco (2R); alvo 2 = 3× o
+            risco (3R). Stop e alvos valem por preço, não por prazo; o prazo estimado aparece em &ldquo;Horizonte&rdquo;.
           </Explain>
           <Explain title="Tamanho da posição">
             Arrisque no máximo 1% do capital:{" "}
@@ -126,16 +129,16 @@ function Content({ run, picks, sparks }: { run: SwingRun; picks: SwingPick[]; sp
           <tr>
             <th>#</th>
             <th>Ação</th>
-            <th>Setup</th>
-            <th className="center">Nota</th>
-            <th className="num">Preço</th>
-            <th className="num">Stop</th>
-            <th className="num">Alvo 2R</th>
-            <th className="num">Risco</th>
-            <th className="num">RSI</th>
-            <th className="num">vs Ibov</th>
-            <th className="num">Liquidez</th>
-            <th>IA</th>
+            <th><InfoTip text={G.setup}>Setup</InfoTip></th>
+            <th className="center"><InfoTip text={G.nota}>Nota</InfoTip></th>
+            <th className="num"><InfoTip text={G.preco}>Preço</InfoTip></th>
+            <th className="num"><InfoTip text={G.stop}>Stop</InfoTip></th>
+            <th className="num"><InfoTip text={G.alvo2r}>Alvo 2R</InfoTip></th>
+            <th className="num"><InfoTip text={G.risco}>Risco</InfoTip></th>
+            <th className="num"><InfoTip text={G.rsi}>RSI</InfoTip></th>
+            <th className="num"><InfoTip text={G.vsIbov}>vs Ibov</InfoTip></th>
+            <th className="num"><InfoTip text={G.liquidez}>Liquidez</InfoTip></th>
+            <th><InfoTip text={G.ia}>IA</InfoTip></th>
           </tr>
         </thead>
         <tbody>
@@ -154,7 +157,9 @@ function Content({ run, picks, sparks }: { run: SwingRun; picks: SwingPick[]; sp
               <td className="num">{fmtCompact(p.fin_volume)}</td>
               <td>
                 {p.ai?.veredito ? (
-                  <Pill tone={verdictTone(p.ai.veredito)} size="sm">{p.ai.veredito}</Pill>
+                  <InfoTip text={verdictHelp(p.ai.veredito, p.ai.gatilho_entrada)} className="info-tip--plain">
+                    <Pill tone={verdictTone(p.ai.veredito)} size="sm">{p.ai.veredito}</Pill>
+                  </InfoTip>
                 ) : (
                   <span className="text-muted">—</span>
                 )}
@@ -200,9 +205,13 @@ function PickCard({ p, spark }: { p: SwingPick; spark: number[] }) {
           {p.name && <p className="mt-0.5 truncate text-[13px] text-muted">{p.name}</p>}
         </div>
         <div className="flex shrink-0 flex-col items-end gap-1.5">
-          {ai?.veredito && <Pill tone={verdictTone(ai.veredito)} size="md">{ai.veredito}</Pill>}
+          {ai?.veredito && (
+            <InfoTip text={verdictHelp(ai.veredito, ai.gatilho_entrada)} className="info-tip--plain">
+              <Pill tone={verdictTone(ai.veredito)} size="md">{ai.veredito}</Pill>
+            </InfoTip>
+          )}
           <span className="text-xs text-muted">
-            Nota <span className="mono font-semibold text-foreground">{p.score ?? "—"}</span>
+            <InfoTip text={G.nota}>Nota</InfoTip> <span className="mono font-semibold text-foreground">{p.score ?? "—"}</span>
             {ai?.confianca && ` · conf. ${confidenceLabel(ai.confianca).toLowerCase()}`}
           </span>
         </div>
@@ -211,20 +220,20 @@ function PickCard({ p, spark }: { p: SwingPick; spark: number[] }) {
       <Sparkline values={spark} height={44} />
 
       <div className="grid grid-cols-4 gap-2">
-        <Level label="Entrada" value={brl(p.entry)} />
-        <Level label="Stop" value={brl(p.stop)} pct={fmtPct(pctFrom(p.stop))} pctClass="neg" />
-        <Level label="Alvo 1" value={brl(p.target)} pct={fmtPct(pctFrom(p.target))} pctClass="pos" />
-        <Level label="Alvo 2" value={brl(p.target2)} pct={fmtPct(pctFrom(p.target2))} pctClass="pos" />
+        <Level label={<InfoTip text={G.entrada}>Entrada</InfoTip>} value={brl(p.entry)} />
+        <Level label={<InfoTip text={G.stop}>Stop</InfoTip>} value={brl(p.stop)} pct={fmtPct(pctFrom(p.stop))} pctClass="neg" />
+        <Level label={<InfoTip text={G.alvo1}>Alvo 1 (2R)</InfoTip>} value={brl(p.target)} pct={fmtPct(pctFrom(p.target))} pctClass="pos" />
+        <Level label={<InfoTip text={G.alvo2}>Alvo 2 (3R)</InfoTip>} value={brl(p.target2)} pct={fmtPct(pctFrom(p.target2))} pctClass="pos" />
       </div>
 
       <div className="flex flex-wrap gap-1.5">
-        <Chip label="RSI" value={fmtDecimal(p.rsi)} />
-        <Chip label="ATR" value={m.atr != null ? fmtPrice(m.atr) : fmtPctAbs(p.atr_pct)} />
-        <Chip label="vs Ibov" value={fmtPct(p.rs20)} />
-        <Chip label="Liquidez" value={p.fin_volume != null ? `R$ ${fmtCompact(p.fin_volume)}` : "—"} />
-        <Chip label="Volume" value={fmtRatio(m.vol_ratio)} />
-        <Chip label="dist. MM20" value={fmtPct(m.dist_ma20_pct)} />
-        <Chip label="Horizonte" value={ai?.horizonte ?? "—"} />
+        <Chip label={<InfoTip text={G.rsi}>RSI</InfoTip>} value={fmtDecimal(p.rsi)} />
+        <Chip label={<InfoTip text={G.atr}>ATR</InfoTip>} value={m.atr != null ? fmtPrice(m.atr) : fmtPctAbs(p.atr_pct)} />
+        <Chip label={<InfoTip text={G.vsIbov}>vs Ibov</InfoTip>} value={fmtPct(p.rs20)} />
+        <Chip label={<InfoTip text={G.liquidez}>Liquidez</InfoTip>} value={p.fin_volume != null ? `R$ ${fmtCompact(p.fin_volume)}` : "—"} />
+        <Chip label={<InfoTip text={G.volume}>Volume</InfoTip>} value={fmtRatio(m.vol_ratio)} />
+        <Chip label={<InfoTip text={G.distMM20}>dist. MM20</InfoTip>} value={fmtPct(m.dist_ma20_pct)} />
+        <Chip label={<InfoTip text={G.horizonte}>Horizonte</InfoTip>} value={ai?.horizonte ?? "—"} />
       </div>
 
       {ai?.tese && (
@@ -236,8 +245,8 @@ function PickCard({ p, spark }: { p: SwingPick; spark: number[] }) {
 
       {(ai?.gatilho_entrada || ai?.gestao) && (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-2.5">
-          {ai?.gatilho_entrada && <Box title="Gatilho de entrada" text={ai.gatilho_entrada} />}
-          {ai?.gestao && <Box title="Gestão" text={ai.gestao} />}
+          {ai?.gatilho_entrada && <Box title={<InfoTip text={G.gatilho}>Gatilho de entrada</InfoTip>} text={ai.gatilho_entrada} />}
+          {ai?.gestao && <Box title={<InfoTip text={G.gestao}>Gestão</InfoTip>} text={ai.gestao} />}
         </div>
       )}
 
@@ -257,7 +266,7 @@ function PickCard({ p, spark }: { p: SwingPick; spark: number[] }) {
   );
 }
 
-function Box({ title, text }: { title: string; text: string }) {
+function Box({ title, text }: { title: ReactNode; text: string }) {
   return (
     <div className="rounded-lg border border-line p-3 text-[13px] leading-normal">
       <p className="mb-1 text-xs font-semibold text-muted">{title}</p>
